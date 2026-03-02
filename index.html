@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Knowledge Base</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080f;
+    --surface: #0e0e1a;
+    --surface2: #13131f;
+    --border: #1c1c2e;
+    --border2: #252538;
+    --accent1: #d4ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff4f6a;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --accent6: #4de0c0;
+    --text: #e4e4f0;
+    --muted: #4a4a68;
+    --muted2: #7878a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Atmospheric background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(212,255,71,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(71,200,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(180,127,255,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Subtle dot grid */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    margin-bottom: 80px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent1);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 60px;
+    background: var(--accent1);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 11vw, 130px);
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+
+  h1 .line1 { display: block; color: var(--text); }
+  h1 .line2 { display: block; color: var(--accent1); }
+
+  .header-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border2);
+    margin-top: 32px;
+  }
+
+  .header-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted2);
+    max-width: 420px;
+    line-height: 1.9;
+  }
+
+  .header-desc strong {
+    color: var(--accent2);
+    font-weight: 400;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent1);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.15s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border2);
+  }
+
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+  }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px 30px 28px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    animation: fadeUp 0.6s ease both;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.2s; }
+  .card:nth-child(2) { animation-delay: 0.3s; }
+  .card:nth-child(3) { animation-delay: 0.4s; }
+  .card:nth-child(4) { animation-delay: 0.5s; }
+  .card:nth-child(5) { animation-delay: 0.6s; }
+  .card:nth-child(6) { animation-delay: 0.7s; }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--card-accent, var(--accent1));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  .card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+
+  .card:hover::before {
+    transform: scaleX(1);
+  }
+
+  /* glow on hover */
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, var(--card-glow, rgba(212,255,71,0.04)) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.35s;
+    pointer-events: none;
+  }
+  .card:hover::after { opacity: 1; }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--card-accent, var(--accent1));
+    background: rgba(212,255,71,0.06);
+    border: 1px solid currentColor;
+    padding: 3px 8px;
+    opacity: 0.8;
+  }
+
+  .card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .card-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .card-arrow {
+    font-size: 16px;
+    color: var(--card-accent, var(--accent1));
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+
+  .card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── UPCOMING SECTION ── */
+  .upcoming-section {
+    margin-top: 64px;
+    animation: fadeUp 0.6s 0.5s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .upcoming-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .upcoming-item {
+    background: var(--surface);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .upcoming-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .upcoming-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted2);
+  }
+
+  .upcoming-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    opacity: 0.3;
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    animation: fadeUp 0.6s 0.7s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .footer-right span {
+    color: var(--accent1);
+  }
+
+  /* ── LIVE BADGE ── */
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent6);
+    border: 1px solid rgba(77,224,192,0.25);
+    padding: 4px 10px;
+    background: rgba(77,224,192,0.04);
+  }
+
+  .live-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent6);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .container { padding: 40px 24px 80px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .header-stats { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow">Team AI Knowledge Base</div>
+    <h1>
+      <span class="line1">AI Training</span>
+      <span class="line2">Repository</span>
+    </h1>
+    <div class="header-bottom">
+      <div class="header-desc">
+        A living library of <strong>AI knowledge, techniques & training resources</strong>
+      </div>
+      <div class="header-stats">
+        <div class="stat">
+          <span class="stat-num" id="entry-count">02</span>
+          <span class="stat-label">Entries</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ENTRIES -->
+  <div class="section-header">
+    <span class="section-label">Published Entries</span>
+    <div class="section-line"></div>
+    <span class="section-count">02 total</span>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1: Prompting Cheatsheet -->
+    <a class="card" href="prompting-cheatsheet.html" style="--card-accent: #d4ff47; --card-glow: rgba(212,255,71,0.05);">
+      <div class="card-meta">
+        <span class="card-tag" style="background: rgba(212,255,71,0.06);">Prompting</span>
+        <span class="card-num">01</span>
+      </div>
+      <div class="card-title">Prompting Cheat Sheet</div>
+      <div class="card-desc">
+        Core techniques for writing effective AI prompts — from zero-shot to chain-of-thought, role prompting, output formatting and more.
+      </div>
+      <div class="card-footer">
+        <span class="card-date">Added — 2026</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Card 2: MacOS Training Plan -->
+    <a class="card" href="MacOS_App_Development_Training_Plan.html" style="--card-accent: #e8c547; --card-glow: rgba(232,197,71,0.05);">
+      <div class="card-meta">
+        <span class="card-tag" style="background: rgba(232,197,71,0.06); color: #e8c547; border-color: #e8c547;">Development</span>
+        <span class="card-num">02</span>
+      </div>
+      <div class="card-title">MacOS App Dev Training Plan</div>
+      <div class="card-desc">
+        A structured training plan for building macOS applications — covering Swift fundamentals, Xcode, app lifecycle, UI patterns and deployment.
+      </div>
+      <div class="card-footer">
+        <span class="card-date">Added — 2026</span>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">AI KNOWLEDGE BASE</div>
+    <div class="footer-right">Hosted on <span>GitHub Pages</span></div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompting Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #d4ff47;
+    --accent2: #ff4f6a;
+    --accent3: #47c8ff;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 48px 32px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(212,255,71,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(71,200,255,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(180,127,255,0.025) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--accent1);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(58px, 9vw, 108px);
+    line-height: 0.88;
+    letter-spacing: 0.015em;
+  }
+
+  h1 em { font-style: normal; color: var(--accent1); }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 2;
+    text-align: right;
+  }
+
+  .header-meta strong { color: var(--accent3); font-weight: 400; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+  }
+
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .card:hover { transform: translateY(-2px); }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.2s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+
+  .card-header {
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .card-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--border);
+    min-width: 36px;
+    flex-shrink: 0;
+    margin-top: -2px;
+    transition: color 0.2s;
+  }
+
+  .card:hover .card-number { color: var(--muted); }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 7px;
+    font-weight: 500;
+  }
+
+  .card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .card h2 .sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted2);
+    letter-spacing: 0;
+    display: block;
+    margin-top: 3px;
+  }
+
+  .card-body { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+
+  .card-desc { font-size: 13.5px; color: var(--muted2); line-height: 1.7; }
+  .card-desc strong { color: var(--text); font-weight: 500; }
+
+  .stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .stat { flex: 1; padding: 10px 12px; border-right: 1px solid var(--border); text-align: center; }
+  .stat:last-child { border-right: none; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .stat-value { font-family: 'DM Mono', monospace; font-size: 11.5px; font-weight: 500; }
+
+  .use-cases-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10.5px; padding: 3px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+
+  .example-block { background: #0c0c13; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .example-tab { display: flex; border-bottom: 1px solid var(--border); }
+  .example-tab span { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-right: 1px solid var(--border); }
+  .example-tab .tab-prompt { color: var(--accent3); }
+  .example-tab .tab-response { color: var(--accent1); }
+  .example-content { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .ex-row { display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: baseline; }
+  .ex-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 1px; }
+  .ex-label.prompt { color: var(--accent3); }
+  .ex-label.response { color: var(--accent1); }
+  .ex-label.note { color: var(--accent4); }
+  .ex-text { font-family: 'DM Mono', monospace; font-size: 11.5px; line-height: 1.6; color: #c8c8e0; }
+  .ex-text em { color: var(--muted2); font-style: italic; }
+  .ex-divider { border: none; border-top: 1px dashed var(--border); margin: 2px 0; }
+
+  .tip {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface2);
+    border-left: 2px solid;
+    border-radius: 0 2px 2px 0;
+    font-size: 12.5px;
+    color: var(--muted2);
+    line-height: 1.6;
+  }
+  .tip-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+  .card-1 { border-top: 2px solid var(--accent3); }
+  .card-1:hover { border-color: var(--accent3); }
+  .card-1 .card-tag { background: rgba(71,200,255,0.1); color: var(--accent3); }
+  .card-1 .tip { border-color: var(--accent3); }
+
+  .card-2 { border-top: 2px solid var(--accent4); }
+  .card-2:hover { border-color: var(--accent4); }
+  .card-2 .card-tag { background: rgba(180,127,255,0.1); color: var(--accent4); }
+  .card-2 .tip { border-color: var(--accent4); }
+
+  .card-3 { border-top: 2px solid var(--accent5); }
+  .card-3:hover { border-color: var(--accent5); }
+  .card-3 .card-tag { background: rgba(255,170,71,0.1); color: var(--accent5); }
+  .card-3 .tip { border-color: var(--accent5); }
+
+  .card-4 { border-top: 2px solid var(--accent2); }
+  .card-4:hover { border-color: var(--accent2); }
+  .card-4 .card-tag { background: rgba(255,79,106,0.1); color: var(--accent2); }
+  .card-4 .tip { border-color: var(--accent2); }
+
+  .card-5 { border-top: 2px solid var(--accent1); }
+  .card-5:hover { border-color: var(--accent1); }
+  .card-5 .card-tag { background: rgba(212,255,71,0.1); color: var(--accent1); }
+  .card-5 .tip { border-color: var(--accent1); }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; }
+  th:first-child { color: var(--text); }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--text); white-space: nowrap; }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10.5px; font-family: 'DM Mono', monospace; }
+  .pill-green { background: rgba(71,200,100,0.12); color: #47c878; }
+  .pill-yellow { background: rgba(212,255,71,0.1); color: var(--accent1); }
+  .pill-orange { background: rgba(255,170,71,0.12); color: var(--accent5); }
+  .pill-red { background: rgba(255,79,106,0.1); color: var(--accent2); }
+
+  .decision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; animation: fadeUp 0.5s 0.5s ease both; }
+  .decision-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; padding: 18px; }
+  .decision-q { font-size: 12.5px; color: var(--muted2); margin-bottom: 12px; font-style: italic; line-height: 1.6; }
+  .decision-a { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; }
+  .decision-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 640px) {
+    body { padding: 28px 16px 60px; }
+    .cards { grid-template-columns: 1fr; }
+    .ex-row { grid-template-columns: 48px 1fr; }
+    .header-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">AI Prompting Reference</div>
+      <h1>PROMPT<br><em>ENGINEERING</em><br>CHEAT SHEET</h1>
+    </div>
+    <div class="header-meta">
+      <strong>5 Core Techniques</strong><br>
+      Zero-Shot · Zero-Shot CoT<br>
+      One-Shot · Few-Shot<br>
+      Chain-of-Thought<br><br>
+      v1.0 · 2026
+    </div>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>Zero-Shot</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>Zero-Shot CoT</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>One-Shot</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>Few-Shot</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>Chain-of-Thought</div>
+  </div>
+
+  <div class="cards">
+
+    <!-- CARD 1: Zero-Shot -->
+    <div class="card card-1">
+      <div class="card-header">
+        <div class="card-number">01</div>
+        <div class="card-title-block">
+          <span class="card-tag">No Examples</span>
+          <h2>ZERO-SHOT <span class="sub">Direct instruction, nothing else</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Give the model a task with <strong>no examples</strong> — no demonstrations, no context. The model relies entirely on its pre-trained knowledge. Simple, fast, and effective for well-defined tasks.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Complexity</div><div class="stat-value" style="color:var(--accent3)">Low</div></div>
+          <div class="stat"><div class="stat-label">Token Cost</div><div class="stat-value" style="color:var(--accent3)">Minimal</div></div>
+          <div class="stat"><div class="stat-label">Best For</div><div class="stat-value" style="color:var(--text)">Simple tasks</div></div>
+        </div>
+        <div class="example-block">
+          <div class="example-tab"><span class="tab-prompt">Prompt</span><span class="tab-response">Response</span></div>
+          <div class="example-content">
+            <div class="ex-row"><span class="ex-label prompt">User</span><span class="ex-text">Translate "Good morning" into French.</span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label response">Model</span><span class="ex-text">Bonjour.</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Best used for</div>
+          <div class="tags">
+            <span class="tag">Translations</span><span class="tag">Summaries</span><span class="tag">Simple Q&A</span><span class="tag">Classification</span><span class="tag">Rewriting</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Start here. If output quality is insufficient, escalate to a more structured technique.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Zero-Shot CoT -->
+    <div class="card card-2">
+      <div class="card-header">
+        <div class="card-number">02</div>
+        <div class="card-title-block">
+          <span class="card-tag">Magic Phrase</span>
+          <h2>ZERO-SHOT COT <span class="sub">"Let's think step by step"</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">A zero-shot variant that <strong>unlocks reasoning</strong> with a single phrase. Adding <em>"Let's think step by step"</em> causes the model to reason methodically — no examples required. Discovered by Kojima et al. (2022).</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Complexity</div><div class="stat-value" style="color:var(--accent4)">Low</div></div>
+          <div class="stat"><div class="stat-label">Token Cost</div><div class="stat-value" style="color:var(--accent4)">Low–Med</div></div>
+          <div class="stat"><div class="stat-label">Best For</div><div class="stat-value" style="color:var(--text)">Reasoning</div></div>
+        </div>
+        <div class="example-block">
+          <div class="example-tab"><span class="tab-prompt">Prompt</span><span class="tab-response">Response</span></div>
+          <div class="example-content">
+            <div class="ex-row"><span class="ex-label prompt">User</span><span class="ex-text">If a train travels 60 mph for 2.5 hours, how far does it go? Let's think step by step.</span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label response">Model</span><span class="ex-text">Step 1: Speed = 60 mph. Step 2: Time = 2.5 hrs. Step 3: Distance = 60 × 2.5 = <em>150 miles.</em></span></div>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Trigger phrases that work</div>
+          <div class="tags">
+            <span class="tag">Let's think step by step</span><span class="tag">Think carefully</span><span class="tag">Reason through this</span><span class="tag">Work it out</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>The easiest performance upgrade. Add <em style="color:var(--accent4)">"Let's think step by step"</em> to almost any reasoning task for an instant boost.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 3: One-Shot -->
+    <div class="card card-3">
+      <div class="card-header">
+        <div class="card-number">03</div>
+        <div class="card-title-block">
+          <span class="card-tag">1 Example</span>
+          <h2>ONE-SHOT <span class="sub">Single input → output demo</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Provide <strong>a single example</strong> of the desired input/output before your actual request. This teaches the model your intended structure, tone, and format with minimal token overhead.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Complexity</div><div class="stat-value" style="color:var(--accent5)">Low–Med</div></div>
+          <div class="stat"><div class="stat-label">Token Cost</div><div class="stat-value" style="color:var(--accent5)">Low–Med</div></div>
+          <div class="stat"><div class="stat-label">Best For</div><div class="stat-value" style="color:var(--text)">Format tasks</div></div>
+        </div>
+        <div class="example-block">
+          <div class="example-tab"><span class="tab-prompt">Prompt</span><span class="tab-response">Response</span></div>
+          <div class="example-content">
+            <div class="ex-row"><span class="ex-label note">Example</span><span class="ex-text"><em>Product: Wireless headphones → Tagline: "Sound without limits."</em></span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label prompt">User</span><span class="ex-text">Product: Running shoes</span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label response">Model</span><span class="ex-text">Tagline: "Every step, further."</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Best used for</div>
+          <div class="tags">
+            <span class="tag">Taglines</span><span class="tag">Structured output</span><span class="tag">Tone matching</span><span class="tag">Email templates</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>When your example is crystal clear, one shot is often enough. Saves tokens compared to few-shot.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Few-Shot -->
+    <div class="card card-4">
+      <div class="card-header">
+        <div class="card-number">04</div>
+        <div class="card-title-block">
+          <span class="card-tag">2–8 Examples</span>
+          <h2>FEW-SHOT <span class="sub">Multiple demonstrations in context</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Provide <strong>2–8 input/output examples</strong> before your query. The model learns your pattern, style, and edge cases — no fine-tuning required. More diverse examples = more consistent output.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Complexity</div><div class="stat-value" style="color:var(--accent2)">Medium</div></div>
+          <div class="stat"><div class="stat-label">Token Cost</div><div class="stat-value" style="color:var(--accent2)">Medium–High</div></div>
+          <div class="stat"><div class="stat-label">Best For</div><div class="stat-value" style="color:var(--text)">Consistency</div></div>
+        </div>
+        <div class="example-block">
+          <div class="example-tab"><span class="tab-prompt">Prompt</span><span class="tab-response">Response</span></div>
+          <div class="example-content">
+            <div class="ex-row"><span class="ex-label note">Ex 1</span><span class="ex-text"><em>"I love this!" → Positive</em></span></div>
+            <div class="ex-row"><span class="ex-label note">Ex 2</span><span class="ex-text"><em>"Terrible service." → Negative</em></span></div>
+            <div class="ex-row"><span class="ex-label note">Ex 3</span><span class="ex-text"><em>"It was okay." → Neutral</em></span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label prompt">User</span><span class="ex-text">"Not what I expected."</span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label response">Model</span><span class="ex-text">Negative</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Best used for</div>
+          <div class="tags">
+            <span class="tag">Sentiment analysis</span><span class="tag">Data extraction</span><span class="tag">Classification</span><span class="tag">Style matching</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Use diverse, high-quality examples. Cover edge cases your real task will face. Garbage-in = garbage-out.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 5: CoT -->
+    <div class="card card-5">
+      <div class="card-header">
+        <div class="card-number">05</div>
+        <div class="card-title-block">
+          <span class="card-tag">Show Your Reasoning</span>
+          <h2>CHAIN-OF-THOUGHT <span class="sub">Demonstrate the thinking process</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Provide examples that <strong>include reasoning steps</strong>, not just the final answer. You teach the model <em>how to think</em>, not just what to output. It then mimics that reasoning on new problems. Pioneered by Wei et al. (2022).</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Complexity</div><div class="stat-value" style="color:var(--accent1)">High</div></div>
+          <div class="stat"><div class="stat-label">Token Cost</div><div class="stat-value" style="color:var(--accent1)">High</div></div>
+          <div class="stat"><div class="stat-label">Best For</div><div class="stat-value" style="color:var(--text)">Hard reasoning</div></div>
+        </div>
+        <div class="example-block">
+          <div class="example-tab"><span class="tab-prompt">Prompt</span><span class="tab-response">Response</span></div>
+          <div class="example-content">
+            <div class="ex-row"><span class="ex-label note">Shown</span><span class="ex-text"><em>Q: 5 apples, ate 2, gave 1. How many? → Started with 5. Ate 2: 5−2=3. Gave 1: 3−1=2. Answer: 2.</em></span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label prompt">User</span><span class="ex-text">Q: 10 books, sold 4, bought 3. How many?</span></div>
+            <hr class="ex-divider">
+            <div class="ex-row"><span class="ex-label response">Model</span><span class="ex-text">Started with 10. Sold 4: 10−4=6. Bought 3: 6+3=9. <em>Answer: 9.</em></span></div>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Best used for</div>
+          <div class="tags">
+            <span class="tag">Math problems</span><span class="tag">Logic puzzles</span><span class="tag">Multi-step tasks</span><span class="tag">Debugging</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Most powerful for complex problems. The quality of your shown reasoning directly shapes the model's output.</span></div>
+      </div>
+    </div>
+
+  </div><!-- /cards -->
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-label">Quick Comparison</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Technique</th>
+          <th>Examples Needed</th>
+          <th>Token Cost</th>
+          <th>Reasoning</th>
+          <th>When to Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent3)">Zero-Shot</td>
+          <td>None</td>
+          <td><span class="pill pill-green">Minimal</span></td>
+          <td>Implicit</td>
+          <td>Simple, well-defined tasks with clear instructions</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4)">Zero-Shot CoT</td>
+          <td>None</td>
+          <td><span class="pill pill-green">Low</span></td>
+          <td>Triggered</td>
+          <td>Reasoning tasks where examples aren't available</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent5)">One-Shot</td>
+          <td>1</td>
+          <td><span class="pill pill-yellow">Low–Med</span></td>
+          <td>By example</td>
+          <td>Format or style guidance with minimal overhead</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent2)">Few-Shot</td>
+          <td>2–8</td>
+          <td><span class="pill pill-orange">Medium</span></td>
+          <td>By pattern</td>
+          <td>Consistent classification, extraction, formatting</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent1)">Chain-of-Thought</td>
+          <td>1–5 (with steps)</td>
+          <td><span class="pill pill-red">High</span></td>
+          <td>Explicit</td>
+          <td>Complex multi-step logic, math, deep analysis</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DECISION GUIDE -->
+  <div class="section-label">Which Technique?</div>
+  <div class="decision-grid">
+    <div class="decision-card">
+      <div class="decision-q">"I need a quick answer and the task is clear."</div>
+      <div class="decision-a" style="color:var(--accent3)">Zero-Shot</div>
+      <div class="decision-note">No setup required. Default starting point.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">"The task needs reasoning but I have no examples."</div>
+      <div class="decision-a" style="color:var(--accent4)">Zero-Shot CoT</div>
+      <div class="decision-note">Just append "Let's think step by step."</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">"I need a specific format or tone matched exactly."</div>
+      <div class="decision-a" style="color:var(--accent5)">One-Shot</div>
+      <div class="decision-note">One clear example usually sets the pattern.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">"Outputs are inconsistent and I need reliability."</div>
+      <div class="decision-a" style="color:var(--accent2)">Few-Shot</div>
+      <div class="decision-note">3–5 diverse examples will stabilize outputs.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">"My task has multiple complex reasoning steps."</div>
+      <div class="decision-a" style="color:var(--accent1)">Chain-of-Thought</div>
+      <div class="decision-note">Show full reasoning in examples, not just answers.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Prompt Engineering Cheat Sheet · <span>5 Core Techniques</span></p>
+    <p>Zero-Shot · Zero-Shot CoT · One-Shot · Few-Shot · Chain-of-Thought</p>
+  </footer>
+
+</div>
+</body>
+</html>

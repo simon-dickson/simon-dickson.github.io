@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacOS App Development Training Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d0f;
+    --surface: #111518;
+    --surface2: #181d21;
+    --border: #1e2428;
+    --accent: #e8c547;
+    --accent2: #4de0c0;
+    --accent3: #f07060;
+    --text: #d8dde2;
+    --text-muted: #5c6870;
+    --text-dim: #8a9399;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(232,197,71,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,197,71,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .header-tag::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 1.2rem;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 1rem;
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Progress Overview */
+  .progress-section {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .progress-bar-outer {
+    background: var(--border);
+    height: 4px;
+    border-radius: 2px;
+    margin: 1rem 0 0.5rem;
+    overflow: hidden;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Phase tabs */
+  .phase-nav {
+    display: flex;
+    gap: 0;
+    margin: 2.5rem 0 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .phase-nav::-webkit-scrollbar { display: none; }
+
+  .phase-tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.4rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .phase-tab:hover { color: var(--text); }
+  .phase-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Phases */
+  .phase-content { display: none; padding: 2.5rem 0; }
+  .phase-content.active { display: block; }
+
+  .phase-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .phase-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  .phase-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 1rem;
+  }
+
+  .phase-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Week cards */
+  .weeks-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .week-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .week-card:hover { border-color: var(--text-muted); }
+  .week-card.completed { border-left: 3px solid var(--accent2); }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    gap: 1rem;
+    user-select: none;
+  }
+
+  .week-check {
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.8rem;
+  }
+
+  .week-card.completed .week-check {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: #000;
+  }
+
+  .week-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-width: 60px;
+  }
+
+  .week-title {
+    font-weight: 500;
+    color: #fff;
+    flex: 1;
+  }
+
+  .week-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .week-expand {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    margin-left: 0.5rem;
+  }
+
+  .week-card.open .week-expand { transform: rotate(180deg); }
+
+  .week-body {
+    display: none;
+    padding: 0 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .week-card.open .week-body { display: block; }
+
+  .week-desc {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin: 1rem 0 1.2rem;
+    line-height: 1.7;
+  }
+
+  /* Topics */
+  .topics-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .topic-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.7rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-dim);
+  }
+
+  /* Resources */
+  .resources { margin-top: 1rem; }
+
+  .resource-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .resource-item:last-child { border-bottom: none; }
+
+  .resource-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .ri-udemy { background: rgba(232,197,71,0.12); color: var(--accent); }
+  .ri-doc { background: rgba(77,224,192,0.12); color: var(--accent2); }
+  .ri-tool { background: rgba(240,112,96,0.12); color: var(--accent3); }
+  .ri-project { background: rgba(120,100,200,0.12); color: #a080e0; }
+
+  .resource-info { flex: 1; }
+
+  .resource-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .resource-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  /* AI Prompt tips */
+  .ai-tip {
+    background: var(--surface2);
+    border: 1px solid rgba(232,197,71,0.15);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem 1.2rem;
+    margin-top: 1.2rem;
+  }
+
+  .ai-tip-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .ai-tip p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Deliverable */
+  .deliverable {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: rgba(77,224,192,0.06);
+    border: 1px solid rgba(77,224,192,0.15);
+    border-radius: 3px;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--accent2);
+  }
+
+  /* Notes section */
+  .notes-area {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.8rem 1rem;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    resize: vertical;
+    min-height: 80px;
+    margin-top: 0.5rem;
+  }
+
+  .notes-area:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .notes-area::placeholder { color: var(--text-muted); }
+
+  /* Footer */
+  footer {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 1rem;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .reset-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .reset-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+  }
+
+  .section-divider span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .stats { gap: 1.5rem; }
+    .phase-tab { padding: 0.7rem 1rem; font-size: 0.65rem; }
+    h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-tag">Personal Development Roadmap</div>
+    <h1>MacOS App Dev<br><span>Training Plan</span></h1>
+    <p class="subtitle">A structured programme for a business analyst to build and ship a MacOS desktop application using AI-assisted development — no prior coding experience required.</p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-value" id="totalWeeks">16</span>
+        <span class="stat-label">Weeks Total</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">5</span>
+        <span class="stat-label">Phases</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="completedCount">0</span>
+        <span class="stat-label">Weeks Done</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="pctDone">0%</span>
+        <span class="stat-label">Progress</span>
+      </div>
+    </div>
+    <div class="progress-bar-outer" style="margin-top:1.5rem;">
+      <div class="progress-bar-inner" id="overallProgress" style="width:0%"></div>
+    </div>
+    <div class="progress-label">
+      <span>Start</span>
+      <span>Ship 🚀</span>
+    </div>
+  </header>
+
+  <nav class="phase-nav">
+    <button class="phase-tab active" onclick="switchPhase(0)">01 Foundations</button>
+    <button class="phase-tab" onclick="switchPhase(1)">02 Requirements</button>
+    <button class="phase-tab" onclick="switchPhase(2)">03 Build</button>
+    <button class="phase-tab" onclick="switchPhase(3)">04 Polish</button>
+    <button class="phase-tab" onclick="switchPhase(4)">05 Ship</button>
+  </nav>
+
+  <!-- PHASE 1 -->
+  <div class="phase-content active" id="phase-0">
+    <div class="phase-header">
+      <div class="phase-title-block">
+        <h2>Foundations</h2>
+        <div class="phase-meta">
+          <span>Weeks 1–3</span>
+          <span>·</span>
+          <span>~3 hrs/week</span>
+        </div>
+      </div>
+      <span class="phase-badge" style="background:rgba(232,197,71,0.1);color:var(--accent);">Starting Point</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:2rem;line-height:1.8;">Get your environment set up and build enough conceptual understanding of how MacOS apps work so you can have intelligent conversations with AI. You don't need to memorise syntax — you need to understand structure.</p>
+
+    <div class="weeks-grid">
+
+      <!-- Week 1 -->
+      <div class="week-card" data-week="0">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,0)">✓</div>
+          <span class="week-num">Week 01</span>
+          <span class="week-title">MacOS Ecosystem & Developer Tools Setup</span>
+          <span class="week-duration">3 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Get your machine ready and understand the landscape. MacOS apps can be built with multiple frameworks — you'll learn why Swift/SwiftUI is the right choice for native apps, and what Xcode is. No code yet; just orientation.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Xcode installation</span>
+            <span class="topic-tag">Swift overview</span>
+            <span class="topic-tag">SwiftUI vs AppKit</span>
+            <span class="topic-tag">Simulator setup</span>
+            <span class="topic-tag">File system basics</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Apple Developer: Getting Started with Xcode</div>
+                <div class="resource-detail">Free · developer.apple.com · 1 hr</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-udemy">🎓</div>
+              <div class="resource-info">
+                <div class="resource-title">iOS & Swift — The Complete iOS App Development Bootcamp (Angela Yu)</div>
+                <div class="resource-detail">Udemy · Watch Sections 1–3 only (Mac setup, Swift intro) · ~2 hrs</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-tool">🔧</div>
+              <div class="resource-info">
+                <div class="resource-title">Install: Xcode, Claude / ChatGPT, GitHub Desktop</div>
+                <div class="resource-detail">Free tools · Setup task</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Xcode installed, "Hello World" app running in Simulator</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p>Use Claude to explain any terms that confuse you: <em>"Explain what Xcode is to someone with no coding background, using analogies to Microsoft Office tools."</em></p>
+          </div>
+          <div class="section-divider"><span>Notes</span></div>
+          <textarea class="notes-area" placeholder="Add your notes, questions, or reflections here..." data-week="0"></textarea>
+        </div>
+      </div>
+
+      <!-- Week 2 -->
+      <div class="week-card" data-week="1">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,1)">✓</div>
+          <span class="week-num">Week 02</span>
+          <span class="week-title">Swift & SwiftUI Fundamentals (Conceptual)</span>
+          <span class="week-duration">3 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Learn enough Swift and SwiftUI to read code and give meaningful instructions to AI. Focus on understanding concepts — variables, functions, views, state — rather than writing from scratch. Think of it like reading architectural blueprints.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Variables & types</span>
+            <span class="topic-tag">Functions</span>
+            <span class="topic-tag">Views & Modifiers</span>
+            <span class="topic-tag">@State & @Binding</span>
+            <span class="topic-tag">VStack / HStack / List</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-udemy">🎓</div>
+              <div class="resource-info">
+                <div class="resource-title">SwiftUI Masterclass 2024 — iOS App Development & Swift (Robert Petras)</div>
+                <div class="resource-detail">Udemy · Sections 1–5 · ~3 hrs · Focus on following along, not memorising</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Apple's "Introducing SwiftUI" Tutorial</div>
+                <div class="resource-detail">Free · developer.apple.com/tutorials/swiftui · 1–2 hrs</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: A basic SwiftUI view with 2–3 interactive elements you built by following a tutorial</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p>When confused by code: <em>"I'm looking at this SwiftUI code [paste it]. Can you walk me through what each line does as if I'm a business analyst, not a developer?"</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="1"></textarea>
+        </div>
+      </div>
+
+      <!-- Week 3 -->
+      <div class="week-card" data-week="2">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,2)">✓</div>
+          <span class="week-num">Week 03</span>
+          <span class="week-title">Version Control with Git & GitHub</span>
+          <span class="week-duration">2 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Every serious project needs version control. Git lets you save snapshots of your work and undo mistakes. GitHub Desktop makes this accessible without command-line knowledge. This is your safety net throughout the project.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Repositories</span>
+            <span class="topic-tag">Commit & push</span>
+            <span class="topic-tag">Branches</span>
+            <span class="topic-tag">GitHub Desktop</span>
+            <span class="topic-tag">README basics</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-udemy">🎓</div>
+              <div class="resource-info">
+                <div class="resource-title">Git & GitHub — The Practical Guide (Maximilian Schwarzmüller)</div>
+                <div class="resource-detail">Udemy · Sections 1–4 only · ~2 hrs</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-tool">🔧</div>
+              <div class="resource-info">
+                <div class="resource-title">GitHub Desktop (free GUI client)</div>
+                <div class="resource-detail">desktop.github.com · Recommended over command line for beginners</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Your Hello World Xcode project committed to a private GitHub repo</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p>Ask AI to generate your commit messages: <em>"I made these changes to my project [describe]. Write me a clear Git commit message following best practices."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="2"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-content" id="phase-1">
+    <div class="phase-header">
+      <div class="phase-title-block">
+        <h2>Requirements & Planning</h2>
+        <div class="phase-meta">
+          <span>Weeks 4–6</span>
+          <span>·</span>
+          <span>~4 hrs/week</span>
+        </div>
+      </div>
+      <span class="phase-badge" style="background:rgba(77,224,192,0.1);color:var(--accent2);">Your Strength Zone</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:2rem;line-height:1.8;">This is where your BA background becomes a superpower. Define exactly what you're building before writing a line of code. A great PRD will become your primary input to AI — the better the document, the better the generated code.</p>
+
+    <div class="weeks-grid">
+
+      <div class="week-card" data-week="3">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,3)">✓</div>
+          <span class="week-num">Week 04</span>
+          <span class="week-title">Defining Your Application Idea & Scope</span>
+          <span class="week-duration">3 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Decide what you're building and ruthlessly scope it down to an MVP. Resist feature creep. A focused, finished app beats an ambitious unfinished one. Use AI to pressure-test your idea and identify scope risks early.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Problem statement</span>
+            <span class="topic-tag">Target user</span>
+            <span class="topic-tag">MVP definition</span>
+            <span class="topic-tag">Feature prioritisation (MoSCoW)</span>
+            <span class="topic-tag">Technical feasibility</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-project">📋</div>
+              <div class="resource-info">
+                <div class="resource-title">MoSCoW Prioritisation Framework</div>
+                <div class="resource-detail">Free · Use existing BA knowledge — apply to app features</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Y Combinator's "Startup = MVP" principles (adapted for personal projects)</div>
+                <div class="resource-detail">Free · paulgraham.com essays · Mindset reading</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: 1-page App Concept Brief — problem, user, core 3 features only</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"I want to build a MacOS app that [description]. Act as a senior product manager and challenge my scope. What am I overcomplicating? What's the true MVP? What technical constraints should I know about?"</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="3"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="4">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,4)">✓</div>
+          <span class="week-num">Week 05</span>
+          <span class="week-title">Writing Your Product Requirements Document (PRD)</span>
+          <span class="week-duration">5 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Create the PRD that will drive your entire build. A great PRD for AI-assisted development includes functional requirements written as user stories, acceptance criteria, data models, and UI behaviour descriptions. The AI will reference this document constantly.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">User stories</span>
+            <span class="topic-tag">Acceptance criteria</span>
+            <span class="topic-tag">Data model overview</span>
+            <span class="topic-tag">UI flow description</span>
+            <span class="topic-tag">Non-functional requirements</span>
+            <span class="topic-tag">Out of scope</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-project">📋</div>
+              <div class="resource-info">
+                <div class="resource-title">PRD Template for AI-Assisted Development (see AI tip)</div>
+                <div class="resource-detail">Use Claude to generate a tailored PRD template for your specific app type</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-udemy">🎓</div>
+              <div class="resource-info">
+                <div class="resource-title">The Complete Product Management Course (Cole Mercer)</div>
+                <div class="resource-detail">Udemy · Section on PRDs & User Stories only · ~2 hrs</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Full PRD document (3–8 pages) covering all core features with user stories and acceptance criteria</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"I am building a MacOS app [paste concept brief]. Generate a PRD template structured specifically so that a developer — or an AI acting as a developer — could use it to write the code. Include sections for user stories, data model, UI behaviour, and edge cases."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="4"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="5">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,5)">✓</div>
+          <span class="week-num">Week 06</span>
+          <span class="week-title">UI Wireframing & Technical Architecture</span>
+          <span class="week-duration">4 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Sketch your UI flows and establish the technical architecture before coding begins. Wireframes give AI a visual spec to work from. Basic architecture decisions (data storage, app structure) made now prevent costly rework later.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Lo-fi wireframes</span>
+            <span class="topic-tag">Navigation flow</span>
+            <span class="topic-tag">Data persistence options</span>
+            <span class="topic-tag">MVVM pattern basics</span>
+            <span class="topic-tag">App architecture diagram</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-tool">🔧</div>
+              <div class="resource-info">
+                <div class="resource-title">Whimsical or Balsamiq (free tier) for wireframes</div>
+                <div class="resource-detail">whimsical.com · No design skill needed · Draw boxes and arrows</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Apple Human Interface Guidelines — MacOS section</div>
+                <div class="resource-detail">Free · developer.apple.com/design/human-interface-guidelines · Layout conventions</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Wireframe for each screen + one-page architecture diagram. Attach both to your PRD.</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"Based on my PRD [paste], recommend a simple app architecture for a solo developer using SwiftUI. Explain the data storage options available (UserDefaults, CoreData, SQLite, JSON files) and which you'd recommend for my use case and why."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="5"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-content" id="phase-2">
+    <div class="phase-header">
+      <div class="phase-title-block">
+        <h2>AI-Assisted Build</h2>
+        <div class="phase-meta">
+          <span>Weeks 7–12</span>
+          <span>·</span>
+          <span>~5 hrs/week</span>
+        </div>
+      </div>
+      <span class="phase-badge" style="background:rgba(240,112,96,0.1);color:var(--accent3);">Core Build Phase</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:2rem;line-height:1.8;">This is where you build the app — primarily by prompting AI. Your job is director, not typist. You'll write precise prompts using your PRD, review generated code, understand it well enough to debug, and iterate. Commit to Git after every working feature.</p>
+
+    <div class="weeks-grid">
+
+      <div class="week-card" data-week="6">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,6)">✓</div>
+          <span class="week-num">Week 07</span>
+          <span class="week-title">Project Scaffold & App Shell</span>
+          <span class="week-duration">5 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Set up the Xcode project structure, configure the app target for MacOS only, and build the skeleton navigation (windows, menus, tab views). Get a blank-but-working app running with proper file organisation.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Xcode project structure</span>
+            <span class="topic-tag">App entry point</span>
+            <span class="topic-tag">NavigationSplitView</span>
+            <span class="topic-tag">MacOS window config</span>
+            <span class="topic-tag">Menu bar setup</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-udemy">🎓</div>
+              <div class="resource-info">
+                <div class="resource-title">SwiftUI Masterclass — macOS sections</div>
+                <div class="resource-detail">Udemy · Robert Petras · Search for macOS-specific content · ~2 hrs</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-tool">🔧</div>
+              <div class="resource-info">
+                <div class="resource-title">Claude / ChatGPT for code generation</div>
+                <div class="resource-detail">Use your PRD as context in every prompt session</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: MacOS app that launches, shows your main navigation structure, and is committed to GitHub</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"I'm building a MacOS SwiftUI app. Here is my PRD: [paste]. Generate the Xcode project structure and the main App file with a NavigationSplitView. The sidebar should have [X sections]. Explain what each piece of code does as inline comments."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="6"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="7">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,7)">✓</div>
+          <span class="week-num">Week 08–09</span>
+          <span class="week-title">Core Feature 1 — Full Implementation</span>
+          <span class="week-duration">10 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Pick the most important feature from your PRD and build it end-to-end. Include the UI, the data layer, and any business logic. Learn the pattern of: prompt → review → test → debug → commit. Repeat it for every subsequent feature.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Feature-by-feature prompting</span>
+            <span class="topic-tag">Data model implementation</span>
+            <span class="topic-tag">@Observable / ObservableObject</span>
+            <span class="topic-tag">Reading & debugging AI code</span>
+            <span class="topic-tag">Testing in Simulator</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-udemy">🎓</div>
+              <div class="resource-info">
+                <div class="resource-title">Build AI-Powered Apps with Claude & SwiftUI — search Udemy for current offerings</div>
+                <div class="resource-detail">Udemy · Search "SwiftUI AI development" for updated courses</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Hacking with Swift — Paul Hudson (free reference)</div>
+                <div class="resource-detail">hackingwithswift.com · Use as a lookup when AI output needs clarification</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Feature 1 working end-to-end, all acceptance criteria from PRD passing</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"Here is the user story I want to implement: [paste from PRD]. My current app code is: [paste]. Generate the SwiftUI view and ViewModel to fulfil this story. Add comments. Then tell me how to test it manually."</em> When something breaks: <em>"Here is the error I'm seeing: [paste]. Here is the relevant code: [paste]. Diagnose the issue and provide a fix."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="7"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="8">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,8)">✓</div>
+          <span class="week-num">Week 10–11</span>
+          <span class="week-title">Core Features 2 & 3 — Iterative Build</span>
+          <span class="week-duration">10 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Apply the same prompt-review-test-commit loop to your remaining core features. By now you'll be faster and more confident reading code. Focus on integration — making features work together, not just in isolation.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Feature integration</span>
+            <span class="topic-tag">Data sharing between views</span>
+            <span class="topic-tag">Error handling</span>
+            <span class="topic-tag">Persistence testing</span>
+            <span class="topic-tag">UI polish pass</span>
+          </div>
+          <div class="deliverable">🎯 Deliverable: All Must-Have features from your PRD working and committed</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"I've now built Feature 1 and Feature 2 separately. I need them to share data through a central data store. Here is my current code: [paste]. Refactor this to use a shared EnvironmentObject or @Observable class so both features can read and write the same data."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="8"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="9">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,9)">✓</div>
+          <span class="week-num">Week 12</span>
+          <span class="week-title">Data Persistence & Settings</span>
+          <span class="week-duration">4 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Ensure data survives app restarts. Implement user preferences and settings. This is often overlooked until late but is critical for a usable app. Choose the right persistence layer (UserDefaults for settings, Core Data or JSON for structured data).</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">UserDefaults</span>
+            <span class="topic-tag">JSON encoding/decoding</span>
+            <span class="topic-tag">Core Data basics</span>
+            <span class="topic-tag">Preferences window</span>
+            <span class="topic-tag">App sandboxing</span>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Data persists across app launches; settings panel working</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"My app stores [data type]. I need it to persist when the app closes. Based on my data model [paste], recommend whether to use UserDefaults, JSON file storage, or Core Data. Then implement the recommended approach."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="9"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-content" id="phase-3">
+    <div class="phase-header">
+      <div class="phase-title-block">
+        <h2>Polish & Testing</h2>
+        <div class="phase-meta">
+          <span>Weeks 13–14</span>
+          <span>·</span>
+          <span>~4 hrs/week</span>
+        </div>
+      </div>
+      <span class="phase-badge" style="background:rgba(120,100,200,0.1);color:#a080e0;">Quality Gate</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:2rem;line-height:1.8;">The app works — now make it feel good. MacOS users have high expectations for native app behaviour. Polish the UX, handle errors gracefully, and test thoroughly. Use AI to generate test cases from your acceptance criteria.</p>
+
+    <div class="weeks-grid">
+
+      <div class="week-card" data-week="10">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,10)">✓</div>
+          <span class="week-num">Week 13</span>
+          <span class="week-title">UX Polish & MacOS Native Behaviours</span>
+          <span class="week-duration">4 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Align your app with MacOS conventions — keyboard shortcuts, right-click menus, window management, dark mode support. Small native behaviours make the difference between an app that feels built and one that feels hacked together.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Keyboard shortcuts</span>
+            <span class="topic-tag">Context menus</span>
+            <span class="topic-tag">Dark/Light mode</span>
+            <span class="topic-tag">Toolbar customisation</span>
+            <span class="topic-tag">Accessibility basics</span>
+            <span class="topic-tag">Loading states</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Apple Human Interface Guidelines — Inputs, Menus, Windows</div>
+                <div class="resource-detail">Free · developer.apple.com/design/human-interface-guidelines/</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: App supports dark mode, has at least 3 keyboard shortcuts, all loading states handled</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"Review my app code [paste] and suggest 5 MacOS-specific UX improvements I'm missing — things a native Mac user would expect. Then implement the keyboard shortcut for [action]."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="10"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="11">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,11)">✓</div>
+          <span class="week-num">Week 14</span>
+          <span class="week-title">Testing, Bug Fixing & Error Handling</span>
+          <span class="week-duration">5 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Systematically test every acceptance criterion from your PRD. Use AI to generate test cases you wouldn't think of. Fix bugs. Add proper error messages so the app never silently fails. Test edge cases: empty states, large data, unexpected inputs.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Manual test scripts</span>
+            <span class="topic-tag">Error handling patterns</span>
+            <span class="topic-tag">Empty state UI</span>
+            <span class="topic-tag">Edge case testing</span>
+            <span class="topic-tag">Bug tracking (simple log)</span>
+          </div>
+          <div class="deliverable">🎯 Deliverable: Test log showing all PRD acceptance criteria tested and passing; bug fix log documented</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"Here are my acceptance criteria: [paste from PRD]. Generate a manual test script with specific steps, inputs, and expected outcomes for a tester with no technical knowledge. Include at least 3 edge cases per feature."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="11"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase-content" id="phase-4">
+    <div class="phase-header">
+      <div class="phase-title-block">
+        <h2>Release</h2>
+        <div class="phase-meta">
+          <span>Weeks 15–16</span>
+          <span>·</span>
+          <span>~3 hrs/week</span>
+        </div>
+      </div>
+      <span class="phase-badge" style="background:rgba(77,224,192,0.1);color:var(--accent2);">Finish Line</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:2rem;line-height:1.8;">Since you're not submitting to the App Store, distribution is straightforward. Package the app, document it, and make it easy to install on any Mac you own. Create release documentation and a simple changelog.</p>
+
+    <div class="weeks-grid">
+
+      <div class="week-card" data-week="12">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,12)">✓</div>
+          <span class="week-num">Week 15</span>
+          <span class="week-title">Build, Sign & Package for Distribution</span>
+          <span class="week-duration">3 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Build a release version of your app, add an app icon, and package it as a .app bundle or .dmg for easy installation. Since you're not going to the App Store, you can use a free Apple Developer account and ad-hoc distribution. Sign the app to avoid Gatekeeper warnings on your own machines.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">Release build config</span>
+            <span class="topic-tag">App icon creation</span>
+            <span class="topic-tag">Code signing</span>
+            <span class="topic-tag">Archive & export</span>
+            <span class="topic-tag">DMG creation</span>
+            <span class="topic-tag">Notarisation (optional)</span>
+          </div>
+          <div class="section-divider"><span>Resources</span></div>
+          <div class="resources">
+            <div class="resource-item">
+              <div class="resource-icon ri-doc">📄</div>
+              <div class="resource-info">
+                <div class="resource-title">Apple: Distributing Your App Outside the App Store</div>
+                <div class="resource-detail">Free · developer.apple.com · Direct distribution guide</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-tool">🔧</div>
+              <div class="resource-info">
+                <div class="resource-title">App Icon Generator — appicon.co</div>
+                <div class="resource-detail">Free · Generate all required icon sizes from one image</div>
+              </div>
+            </div>
+            <div class="resource-item">
+              <div class="resource-icon ri-tool">🔧</div>
+              <div class="resource-info">
+                <div class="resource-title">create-dmg (open source CLI tool)</div>
+                <div class="resource-detail">github.com/create-dmg/create-dmg · Package your app into a .dmg installer</div>
+              </div>
+            </div>
+          </div>
+          <div class="deliverable">🎯 Deliverable: A signed .app or .dmg that installs and runs cleanly on your Mac</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"Walk me through step by step how to archive and export a MacOS SwiftUI app from Xcode for direct distribution (not App Store). I want to share it as a .dmg. I have a free Apple Developer account."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="12"></textarea>
+        </div>
+      </div>
+
+      <div class="week-card" data-week="13">
+        <div class="week-header" onclick="toggleWeek(this)">
+          <div class="week-check" onclick="toggleComplete(event,13)">✓</div>
+          <span class="week-num">Week 16</span>
+          <span class="week-title">Documentation, Changelog & Retrospective</span>
+          <span class="week-duration">3 hrs</span>
+          <span class="week-expand">▼</span>
+        </div>
+        <div class="week-body">
+          <p class="week-desc">Write user documentation (even for personal use, this is good practice). Create a changelog. Do a proper project retrospective — what worked, what you'd do differently, what AI did well vs. poorly. Plan v2 if you want to continue.</p>
+          <div class="topics-label">Key Topics</div>
+          <div class="topics">
+            <span class="topic-tag">README writing</span>
+            <span class="topic-tag">Semantic versioning</span>
+            <span class="topic-tag">User guide</span>
+            <span class="topic-tag">Project retrospective</span>
+            <span class="topic-tag">v2 feature backlog</span>
+          </div>
+          <div class="deliverable">🎯 Deliverable: README, user guide, CHANGELOG.md, and retrospective document. Ship v1.0. 🎉</div>
+          <div class="ai-tip">
+            <div class="ai-tip-label">⚡ AI Prompt Strategy</div>
+            <p><em>"I've built [describe app]. Generate a user guide for a non-technical user. Also generate a retrospective framework asking the right questions about what I learned, what AI did well in the build process, and what to improve in v2."</em></p>
+          </div>
+          <textarea class="notes-area" placeholder="Notes..." data-week="13"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-text">
+      MACOS DEV TRAINING PLAN · 16 WEEKS · YOUR PROGRESS IS SAVED LOCALLY
+    </div>
+    <button class="reset-btn" onclick="resetProgress()">Reset Progress</button>
+  </footer>
+
+</div>
+
+<script>
+  const TOTAL_WEEKS = 14;
+
+  function switchPhase(idx) {
+    document.querySelectorAll('.phase-content').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.phase-tab').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  function toggleWeek(header) {
+    const card = header.closest('.week-card');
+    card.classList.toggle('open');
+  }
+
+  function toggleComplete(e, weekIdx) {
+    e.stopPropagation();
+    const card = document.querySelector(`[data-week="${weekIdx}"]`);
+    card.classList.toggle('completed');
+    saveProgress();
+    updateStats();
+  }
+
+  function updateStats() {
+    const completed = document.querySelectorAll('.week-card.completed').length;
+    const pct = Math.round((completed / TOTAL_WEEKS) * 100);
+    document.getElementById('completedCount').textContent = completed;
+    document.getElementById('pctDone').textContent = pct + '%';
+    document.getElementById('overallProgress').style.width = pct + '%';
+  }
+
+  function saveProgress() {
+    const state = {};
+    document.querySelectorAll('.week-card').forEach(card => {
+      const w = card.dataset.week;
+      state['completed_' + w] = card.classList.contains('completed');
+      const textarea = card.querySelector('.notes-area');
+      if (textarea) state['notes_' + w] = textarea.value;
+    });
+    try { localStorage.setItem('macDevPlan', JSON.stringify(state)); } catch(e) {}
+  }
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem('macDevPlan');
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      document.querySelectorAll('.week-card').forEach(card => {
+        const w = card.dataset.week;
+        if (state['completed_' + w]) card.classList.add('completed');
+        const textarea = card.querySelector('.notes-area');
+        if (textarea && state['notes_' + w]) textarea.value = state['notes_' + w];
+      });
+      updateStats();
+    } catch(e) {}
+  }
+
+  function resetProgress() {
+    if (!confirm('Reset all progress and notes? This cannot be undone.')) return;
+    try { localStorage.removeItem('macDevPlan'); } catch(e) {}
+    document.querySelectorAll('.week-card').forEach(c => c.classList.remove('completed'));
+    document.querySelectorAll('.notes-area').forEach(t => t.value = '');
+    updateStats();
+  }
+
+  // Auto-save notes
+  document.addEventListener('input', e => {
+    if (e.target.classList.contains('notes-area')) saveProgress();
+  });
+
+  loadProgress();
+</script>
+</body>
+</html>
