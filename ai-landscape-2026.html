@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Landscape 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080f;
+    --surface: #0e0e1a;
+    --surface2: #13131f;
+    --border: #1c1c2e;
+    --border2: #252538;
+    --accent1: #d4ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff4f6a;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --accent6: #4de0c0;
+    --text: #e4e4f0;
+    --muted: #4a4a68;
+    --muted2: #7878a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(71,200,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(180,127,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(77,224,192,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    margin-bottom: 72px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 60px;
+    background: var(--accent2);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 11vw, 130px);
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+
+  h1 .line1 { display: block; color: var(--text); }
+  h1 .line2 { display: block; color: var(--accent2); }
+
+  .header-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border2);
+    margin-top: 32px;
+  }
+
+  .header-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted2);
+    max-width: 480px;
+    line-height: 1.9;
+  }
+
+  .header-desc strong { color: var(--accent2); font-weight: 400; }
+
+  .header-stats { display: flex; gap: 32px; }
+
+  .stat { text-align: right; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent2);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-line { flex: 1; height: 1px; background: var(--border2); }
+
+  /* ── BIG NUMBERS ── */
+  .big-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 64px;
+    animation: fadeUp 0.6s 0.1s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .big-num-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .big-num-card:hover { background: var(--surface2); }
+
+  .big-num-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--bn-color, var(--accent2));
+  }
+
+  .big-num-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    color: var(--bn-color, var(--accent2));
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .big-num-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    line-height: 1.5;
+  }
+
+  .big-num-source {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── PLAYER GRID ── */
+  .players-section { margin-bottom: 64px; }
+
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .player-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 26px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .player-card:nth-child(1) { animation-delay: 0.15s; }
+  .player-card:nth-child(2) { animation-delay: 0.22s; }
+  .player-card:nth-child(3) { animation-delay: 0.29s; }
+  .player-card:nth-child(4) { animation-delay: 0.36s; }
+  .player-card:nth-child(5) { animation-delay: 0.43s; }
+  .player-card:nth-child(6) { animation-delay: 0.50s; }
+  .player-card:nth-child(7) { animation-delay: 0.57s; }
+  .player-card:nth-child(8) { animation-delay: 0.64s; }
+
+  .player-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--pc-color, var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .player-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+
+  .player-card:hover::before { transform: scaleX(1); }
+
+  .player-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .player-flag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pc-color, var(--accent2));
+    background: rgba(71,200,255,0.06);
+    border: 1px solid currentColor;
+    padding: 3px 8px;
+    opacity: 0.8;
+  }
+
+  .player-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .player-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .player-model {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--pc-color, var(--accent2));
+    margin-bottom: 14px;
+    opacity: 0.75;
+  }
+
+  .player-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+
+  .player-traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 18px;
+  }
+
+  .trait {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    padding: 2px 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--muted2);
+    letter-spacing: 0.06em;
+  }
+
+  .player-bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .player-bars { display: flex; flex-direction: column; gap: 6px; }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 72px 1fr 32px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bar-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .bar-track {
+    height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--pc-color, var(--accent2));
+    border-radius: 2px;
+    opacity: 0.7;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .bar-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted2);
+    text-align: right;
+  }
+
+  /* ── TRENDS GRID ── */
+  .trends-section { margin-bottom: 64px; }
+
+  .trends-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .trend-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 26px 24px;
+    animation: fadeUp 0.5s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .trend-card:hover { background: var(--surface2); }
+
+  .trend-card:nth-child(1) { animation-delay: 0.2s; }
+  .trend-card:nth-child(2) { animation-delay: 0.28s; }
+  .trend-card:nth-child(3) { animation-delay: 0.36s; }
+  .trend-card:nth-child(4) { animation-delay: 0.44s; }
+  .trend-card:nth-child(5) { animation-delay: 0.52s; }
+  .trend-card:nth-child(6) { animation-delay: 0.60s; }
+
+  .trend-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--border2);
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+
+  .trend-card:hover .trend-num { color: var(--border2); }
+
+  .trend-icon {
+    font-size: 20px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .trend-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+
+  .trend-title span { color: var(--tc-color, var(--accent2)); }
+
+  .trend-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted2);
+    line-height: 1.75;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .table-section { margin-bottom: 64px; }
+
+  .table-wrap {
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    animation: fadeUp 0.5s 0.2s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+
+  thead tr { background: var(--surface2); }
+
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border2);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  th:first-child { color: var(--text); }
+
+  td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+    vertical-align: middle;
+    color: var(--muted2);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  tr:hover td { background: rgba(255,255,255,0.012); }
+
+  .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .pill-green { background: rgba(77,224,192,0.1); color: var(--accent6); }
+  .pill-blue  { background: rgba(71,200,255,0.1); color: var(--accent2); }
+  .pill-yellow{ background: rgba(212,255,71,0.1);  color: var(--accent1); }
+  .pill-pink  { background: rgba(255,79,106,0.1);  color: var(--accent3); }
+  .pill-purple{ background: rgba(180,127,255,0.1); color: var(--accent4); }
+  .pill-orange{ background: rgba(255,170,71,0.1);  color: var(--accent5); }
+
+
+  /* ── GLOSSARY ── */
+  .glossary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+
+  .glossary-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent2);
+    padding: 18px 20px;
+  }
+
+  .glossary-term {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .glossary-unit {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .glossary-def {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.8;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    animation: fadeUp 0.6s 0.6s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .footer-right span { color: var(--accent2); }
+
+  .back-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--muted2);
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--accent2); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .big-numbers { grid-template-columns: repeat(2, 1fr); }
+    .trends-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 40px 20px 80px; }
+    .big-numbers { grid-template-columns: 1fr 1fr; }
+    .glossary-row { grid-template-columns: 1fr; }
+    .trends-grid { grid-template-columns: 1fr; }
+    .players-grid { grid-template-columns: 1fr; }
+    .header-stats { display: none; }
+    .quadrant-wrap { padding: 20px; }
+  }
+
+  /* animate bars on load */
+  .bar-fill { width: 0 !important; }
+  .bar-fill.animated { width: var(--bar-w) !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- NAV -->
+  <div style="margin-bottom:40px; animation: fadeUp 0.5s ease both;">
+    <a class="back-link" href="index.html">← Knowledge Base</a>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow">AI Knowledge Base · Entry 03</div>
+    <h1>
+      <span class="line1">AI Landscape</span>
+      <span class="line2">2026</span>
+    </h1>
+    <div class="header-bottom">
+      <div class="header-desc">
+        The state of <strong>large language models, major labs & key trends</strong> shaping AI in 2026 — from frontier model competition to open-source disruption.
+      </div>
+      <div class="header-stats">
+        <div class="stat">
+          <span class="stat-num">8</span>
+          <span class="stat-label">Major Players</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Key Trends</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BIG NUMBERS -->
+  <div class="section-header" style="animation-delay:0.1s;">
+    <span class="section-label">Market at a Glance</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="big-numbers">
+    <div class="big-num-card" style="--bn-color: var(--accent2);">
+      <span class="big-num-value">$9.98B</span>
+      <div class="big-num-label">LLM Market<br>Value 2026</div>
+      <div class="big-num-source">Mordor Intelligence</div>
+    </div>
+    <div class="big-num-card" style="--bn-color: var(--accent6);">
+      <span class="big-num-value">20%</span>
+      <div class="big-num-label">Market CAGR<br>Through 2031</div>
+      <div class="big-num-source">Mordor Intelligence</div>
+    </div>
+    <div class="big-num-card" style="--bn-color: var(--accent1);">
+      <span class="big-num-value">67%</span>
+      <div class="big-num-label">Organisations<br>Adopted LLMs</div>
+      <div class="big-num-source">Industry Survey 2026</div>
+    </div>
+    <div class="big-num-card" style="--bn-color: var(--accent5);">
+      <span class="big-num-value">$25B</span>
+      <div class="big-num-label">Projected Market<br>Size by 2031</div>
+      <div class="big-num-source">Mordor Intelligence</div>
+    </div>
+  </div>
+
+  <!-- MAJOR PLAYERS -->
+  <div class="section-header" style="animation-delay:0.2s;">
+    <span class="section-label">Major Players</span>
+    <div class="section-line"></div>
+    <span style="font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);">08 labs</span>
+  </div>
+
+  <div class="players-section">
+    <div class="players-grid">
+
+      <!-- OpenAI -->
+      <div class="player-card" style="--pc-color: var(--accent2);">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(71,200,255,0.06);">US · Private</span>
+          <span class="player-rank">01</span>
+        </div>
+        <div class="player-name">OpenAI</div>
+        <div class="player-model">Flagship: GPT-5.2 Pro</div>
+        <div class="player-desc">The market leader. GPT-5.2 Pro scores 90.2% on MMLU-Pro with 400K token context. Released first open-source model in Aug 2025 amid competitive pressure.</div>
+        <div class="player-traits">
+          <span class="trait">Frontier perf</span>
+          <span class="trait">Reasoning</span>
+          <span class="trait">API ecosystem</span>
+          <span class="trait">Multimodal</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:95%"></div></div>
+            <span class="bar-val">95</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:92%"></div></div>
+            <span class="bar-val">92</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:35%"></div></div>
+            <span class="bar-val">Mid–Hi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anthropic -->
+      <div class="player-card" style="--pc-color: var(--accent6);">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(77,224,192,0.06);color:var(--accent6);border-color:var(--accent6);">US · Safety-first</span>
+          <span class="player-rank">02</span>
+        </div>
+        <div class="player-name">Anthropic</div>
+        <div class="player-model">Flagship: Claude Opus 4.6</div>
+        <div class="player-desc">Safety-focused lab co-founded by ex-OpenAI researchers. Claude models lead on coding benchmarks and consistently top trust/safety evaluations. Claude 4 series scores 89%+ MMLU-Pro.</div>
+        <div class="player-traits">
+          <span class="trait">Safety research</span>
+          <span class="trait">Coding leader</span>
+          <span class="trait">Long context</span>
+          <span class="trait">Constitutional AI</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:91%"></div></div>
+            <span class="bar-val">91</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:94%"></div></div>
+            <span class="bar-val">94</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:40%"></div></div>
+            <span class="bar-val">Mid</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google DeepMind -->
+      <div class="player-card" style="--pc-color: var(--accent1);">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(212,255,71,0.06);color:var(--accent1);border-color:var(--accent1);">US · Big Tech</span>
+          <span class="player-rank">03</span>
+        </div>
+        <div class="player-name">Google</div>
+        <div class="player-model">Flagship: Gemini 3 Pro</div>
+        <div class="player-desc">Gemini 3 Pro holds the top overall benchmark position per some evaluations, with 1M+ token context windows. AlphaEvolve demonstrates AI-driven algorithm discovery. Deep Workspace integration.</div>
+        <div class="player-traits">
+          <span class="trait">Long context</span>
+          <span class="trait">Multimodal</span>
+          <span class="trait">Workspace integr.</span>
+          <span class="trait">AlphaEvolve</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:93%"></div></div>
+            <span class="bar-val">93</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:88%"></div></div>
+            <span class="bar-val">88</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:55%"></div></div>
+            <span class="bar-val">Low–Mid</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meta -->
+      <div class="player-card" style="--pc-color: var(--accent4);">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(180,127,255,0.06);color:var(--accent4);border-color:var(--accent4);">US · Open-source</span>
+          <span class="player-rank">04</span>
+        </div>
+        <div class="player-name">Meta</div>
+        <div class="player-model">Flagship: Llama 4 Scout</div>
+        <div class="player-desc">The open-weights champion. Llama 4 Scout offers an unprecedented 10M token context window, opening new categories of full-codebase and library-scale processing. Free for most commercial use.</div>
+        <div class="player-traits">
+          <span class="trait">Open weights</span>
+          <span class="trait">10M context</span>
+          <span class="trait">Self-host</span>
+          <span class="trait">Free to use</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:82%"></div></div>
+            <span class="bar-val">82</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:79%"></div></div>
+            <span class="bar-val">79</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:95%"></div></div>
+            <span class="bar-val">Free</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DeepSeek -->
+      <div class="player-card" style="--pc-color: var(--accent3);">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(255,79,106,0.06);color:var(--accent3);border-color:var(--accent3);">China · Open-source</span>
+          <span class="player-rank">05</span>
+        </div>
+        <div class="player-name">DeepSeek</div>
+        <div class="player-model">Flagship: DeepSeek-V3 / R1</div>
+        <div class="player-desc">The disruptor. DeepSeek's open-source release rattled US tech stocks and proved frontier-class performance at a fraction of typical compute cost. Inspired a wave of Chinese open-weight models.</div>
+        <div class="player-traits">
+          <span class="trait">Cost-efficient</span>
+          <span class="trait">Open-source</span>
+          <span class="trait">Reasoning</span>
+          <span class="trait">Disruptor</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:87%"></div></div>
+            <span class="bar-val">87</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:84%"></div></div>
+            <span class="bar-val">84</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:88%"></div></div>
+            <span class="bar-val">Very Low</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alibaba / Qwen -->
+      <div class="player-card" style="--pc-color: var(--accent5);">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(255,170,71,0.06);color:var(--accent5);border-color:var(--accent5);">China · Open-source</span>
+          <span class="player-rank">06</span>
+        </div>
+        <div class="player-name">Alibaba</div>
+        <div class="player-model">Flagship: Qwen3 / Qwen2.5-Max</div>
+        <div class="player-desc">The multilingual open-weight powerhouse. Qwen3 MoE models span 4B–1T+ parameters, support 119 languages and score 92.3% on AIME25. Over 8.8M downloads for Qwen2.5 alone.</div>
+        <div class="player-traits">
+          <span class="trait">119 languages</span>
+          <span class="trait">MoE architecture</span>
+          <span class="trait">Apache 2.0</span>
+          <span class="trait">Multilingual</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:86%"></div></div>
+            <span class="bar-val">86</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:83%"></div></div>
+            <span class="bar-val">83</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:85%"></div></div>
+            <span class="bar-val">Low</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- xAI -->
+      <div class="player-card" style="--pc-color: #c8a8ff;">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(200,168,255,0.06);color:#c8a8ff;border-color:#c8a8ff;">US · Data-rich</span>
+          <span class="player-rank">07</span>
+        </div>
+        <div class="player-name">xAI</div>
+        <div class="player-model">Flagship: Grok 4.1</div>
+        <div class="player-desc">Elon Musk's AI lab with a unique data moat — real-time X (Twitter) feeds and SpaceX telemetry. Grok is known for its unfiltered tone and up-to-the-minute knowledge of current events.</div>
+        <div class="player-traits">
+          <span class="trait">Real-time data</span>
+          <span class="trait">X integration</span>
+          <span class="trait">Current events</span>
+          <span class="trait">Uncensored</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:80%"></div></div>
+            <span class="bar-val">80</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:76%"></div></div>
+            <span class="bar-val">76</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:45%"></div></div>
+            <span class="bar-val">Mid</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mistral -->
+      <div class="player-card" style="--pc-color: #ff8f6b;">
+        <div class="player-meta">
+          <span class="player-flag" style="background:rgba(255,143,107,0.06);color:#ff8f6b;border-color:#ff8f6b;">EU · Efficient</span>
+          <span class="player-rank">08</span>
+        </div>
+        <div class="player-name">Mistral AI</div>
+        <div class="player-model">Flagship: Mistral Large 3 (675B MoE)</div>
+        <div class="player-desc">Europe's flagship AI lab. Mistral Large 3 delivers 92% of GPT-5.2 performance at ~15% of the cost. Ministral edge models run on drones and robotics hardware. Strong EU regulatory alignment.</div>
+        <div class="player-traits">
+          <span class="trait">Cost-efficient</span>
+          <span class="trait">EU-compliant</span>
+          <span class="trait">Edge models</span>
+          <span class="trait">Developer-friendly</span>
+        </div>
+        <div class="player-bar-label">Capability Profile</div>
+        <div class="player-bars">
+          <div class="bar-row">
+            <span class="bar-name">Reasoning</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:84%"></div></div>
+            <span class="bar-val">84</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Coding</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:86%"></div></div>
+            <span class="bar-val">86</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">Cost</span>
+            <div class="bar-track"><div class="bar-fill" style="--bar-w:82%"></div></div>
+            <span class="bar-val">Low</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODEL COMPARISON TABLE -->
+  <div class="section-header table-section" style="animation-delay:0.15s;">
+    <span class="section-label">Model Comparison</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="glossary-row">
+    <div class="glossary-item">
+      <div class="glossary-term">Context Window <span class="glossary-unit">tokens</span></div>
+      <div class="glossary-def">The maximum amount of text a model can "see" at once — both your input and its output combined. A token is roughly ¾ of a word. A 200K token window fits about 150,000 words, or a full novel. Larger windows let models work with longer documents, codebases, or conversation histories without losing track of earlier content.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">MMLU-Pro <span class="glossary-unit">benchmark score</span></div>
+      <div class="glossary-def">Massive Multitask Language Understanding — Professional. A standard benchmark testing a model's knowledge and reasoning across 57 academic subjects including law, medicine, maths, history and coding. Scores are expressed as a percentage of questions answered correctly. A score above 88% represents the current frontier of AI capability.</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Lab</th>
+          <th>Context Window</th>
+          <th>MMLU-Pro</th>
+          <th>Pricing</th>
+          <th>Open?</th>
+          <th>Strength</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="dot" style="background:var(--accent2)"></span>GPT-5.2 Pro</td>
+          <td>OpenAI</td>
+          <td>400K tokens</td>
+          <td>90.2%</td>
+          <td><span class="pill pill-pink">$2–10 / 1M tok</span></td>
+          <td><span class="pill pill-purple">Partial</span></td>
+          <td>Frontier reasoning & math</td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:var(--accent6)"></span>Claude Opus 4.6</td>
+          <td>Anthropic</td>
+          <td>200K tokens</td>
+          <td>89.0%</td>
+          <td><span class="pill pill-blue">Mid-range</span></td>
+          <td><span class="pill pill-purple">No</span></td>
+          <td>Coding & safety</td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:var(--accent1)"></span>Gemini 3 Pro</td>
+          <td>Google</td>
+          <td>1M+ tokens</td>
+          <td>~89%</td>
+          <td><span class="pill pill-yellow">Low–Mid</span></td>
+          <td><span class="pill pill-purple">No</span></td>
+          <td>Long context & Workspace</td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:var(--accent4)"></span>Llama 4 Scout</td>
+          <td>Meta</td>
+          <td>10M tokens</td>
+          <td>86.5%</td>
+          <td><span class="pill pill-green">Free (open)</span></td>
+          <td><span class="pill pill-green">Yes</span></td>
+          <td>Massive context, self-host</td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:var(--accent3)"></span>DeepSeek-R1</td>
+          <td>DeepSeek</td>
+          <td>128K tokens</td>
+          <td>~87%</td>
+          <td><span class="pill pill-green">Very low</span></td>
+          <td><span class="pill pill-green">Yes</span></td>
+          <td>Cost-efficient reasoning</td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:var(--accent5)"></span>Qwen3-Next</td>
+          <td>Alibaba</td>
+          <td>128K tokens</td>
+          <td>~86%</td>
+          <td><span class="pill pill-green">Very low</span></td>
+          <td><span class="pill pill-green">Yes</span></td>
+          <td>Multilingual (119 langs)</td>
+        </tr>
+        <tr>
+          <td><span class="dot" style="background:#ff8f6b"></span>Mistral Large 3</td>
+          <td>Mistral AI</td>
+          <td>128K tokens</td>
+          <td>~84%</td>
+          <td><span class="pill pill-green">Low</span></td>
+          <td><span class="pill pill-yellow">Partial</span></td>
+          <td>EU-compliant, efficient</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- KEY TRENDS -->
+  <div class="section-header trends-section" style="animation-delay:0.1s;">
+    <span class="section-label">Key Trends 2026</span>
+    <div class="section-line"></div>
+    <span style="font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);">06 trends</span>
+  </div>
+
+  <div class="trends-grid">
+
+    <div class="trend-card" style="--tc-color: var(--accent2);">
+      <span class="trend-num" style="color:var(--border2)">01</span>
+      <span class="trend-icon">🤖</span>
+      <div class="trend-title">Agentic AI <span>goes mainstream</span></div>
+      <div class="trend-desc">LLMs are graduating from chatbots to autonomous agents capable of multi-step task execution. Agentic workflows now handle entire business processes with minimal human oversight.</div>
+    </div>
+
+    <div class="trend-card" style="--tc-color: var(--accent6);">
+      <span class="trend-num" style="color:var(--border2)">02</span>
+      <span class="trend-icon">🌏</span>
+      <div class="trend-title">China's open-source <span>offensive</span></div>
+      <div class="trend-desc">DeepSeek's disruptive release triggered a wave of Chinese open-weight models. Qwen, GLM, Kimi and others are gaining global adoption despite geopolitical tensions over data handling.</div>
+    </div>
+
+    <div class="trend-card" style="--tc-color: var(--accent1);">
+      <span class="trend-num" style="color:var(--border2)">03</span>
+      <span class="trend-icon">📐</span>
+      <div class="trend-title">Context windows <span>explode</span></div>
+      <div class="trend-desc">Llama 4 Scout's 10M token context window enables entire codebase analysis. Gemini 3 holds 1M+. Long context is shifting what's architecturally possible in AI applications.</div>
+    </div>
+
+    <div class="trend-card" style="--tc-color: var(--accent4);">
+      <span class="trend-num" style="color:var(--border2)">04</span>
+      <span class="trend-icon">⚖️</span>
+      <div class="trend-title">Regulation <span>tightens</span></div>
+      <div class="trend-desc">The EU AI Act (effective Feb 2025) labels many LLM deployments as high-risk. US federal vs. state tensions intensify. Sovereign AI initiatives accelerate outside the US.</div>
+    </div>
+
+    <div class="trend-card" style="--tc-color: var(--accent5);">
+      <span class="trend-num" style="color:var(--border2)">05</span>
+      <span class="trend-icon">📱</span>
+      <div class="trend-title">On-device AI <span>rises</span></div>
+      <div class="trend-desc">Edge models from Mistral, Apple, Qualcomm and others run on laptops and phones without cloud connectivity. Privacy, latency and offline use cases drive adoption at the hardware layer.</div>
+    </div>
+
+    <div class="trend-card" style="--tc-color: var(--accent3);">
+      <span class="trend-num" style="color:var(--border2)">06</span>
+      <span class="trend-icon">🔬</span>
+      <div class="trend-title">AI-driven <span>science</span></div>
+      <div class="trend-desc">Google's AlphaEvolve demonstrated AI discovering new mathematical algorithms. 80% of initial healthcare diagnoses projected to involve AI analysis. Science acceleration is underway.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">AI KNOWLEDGE BASE · AI LANDSCAPE 2026</div>
+    <div class="footer-right">Sources: MIT Tech Review, Mordor Intelligence, Shakudo, RobotMunki · <span>March 2026</span></div>
+  </footer>
+
+</div>
+
+<script>
+  // Animate bars into view on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.classList.add('animated');
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.player-card').forEach(card => observer.observe(card));
+
+  // Immediately animate cards already in viewport
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(bar => {
+      bar.classList.add('animated');
+    });
+  }, 600);
+</script>
+</body>
+</html>
