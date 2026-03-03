@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Useful Links — AI Knowledge Base</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08080f;
+    --surface: #0e0e1a;
+    --surface2: #13131f;
+    --border: #1c1c2e;
+    --border2: #252538;
+    --accent1: #d4ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff4f6a;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --accent6: #4de0c0;
+    --text: #e4e4f0;
+    --muted: #4a4a68;
+    --muted2: #7878a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(71,200,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(180,127,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(77,224,192,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    margin-bottom: 64px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .back-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted2);
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent2); }
+  .back-link::before { content: '←'; font-size: 12px; }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 60px;
+    background: var(--accent2);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 9vw, 110px);
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+
+  h1 .line1 { display: block; color: var(--text); }
+  h1 .line2 { display: block; color: var(--accent2); }
+
+  .header-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border2);
+    margin-top: 32px;
+  }
+
+  .header-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted2);
+    max-width: 420px;
+    line-height: 1.9;
+  }
+
+  .header-desc strong { color: var(--accent2); font-weight: 400; }
+
+  .header-stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  .stat { text-align: right; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--accent2);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border2);
+  }
+
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── ADD LINK FORM ── */
+  .add-form-wrapper {
+    animation: fadeUp 0.6s 0.15s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    margin-bottom: 48px;
+  }
+
+  .add-form-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted2);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .add-form-toggle:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    background: rgba(71,200,255,0.04);
+  }
+  .add-form-toggle .plus { font-size: 14px; line-height: 1; }
+
+  .add-form {
+    display: none;
+    margin-top: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 28px 28px 24px;
+    animation: fadeUp 0.3s ease both;
+  }
+  .add-form.open { display: block; }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .form-field.full { grid-column: 1 / -1; }
+
+  .form-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .form-input {
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-input:focus { border-color: var(--accent2); }
+  .form-input::placeholder { color: var(--muted); }
+
+  .form-select {
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234a4a68'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+  .form-select:focus { border-color: var(--accent2); }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: var(--bg);
+  }
+  .btn-primary:hover { background: transparent; color: var(--accent2); }
+
+  .btn-secondary {
+    background: transparent;
+    border-color: var(--border2);
+    color: var(--muted2);
+  }
+  .btn-secondary:hover { border-color: var(--muted2); color: var(--text); }
+
+  /* ── CATEGORY FILTERS ── */
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.2s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent2);
+    color: var(--accent2);
+    background: rgba(71,200,255,0.05);
+  }
+
+  /* ── LINKS GRID ── */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+    animation: fadeUp 0.6s 0.3s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .link-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px 26px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .link-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--cat-color, var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  .link-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+  .link-card:hover::before { transform: scaleX(1); }
+
+  .link-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .link-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cat-color, var(--accent2));
+    background: rgba(71,200,255,0.06);
+    border: 1px solid currentColor;
+    padding: 3px 8px;
+    opacity: 0.85;
+    white-space: nowrap;
+  }
+
+  .link-actions {
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .link-card:hover .link-actions { opacity: 1; }
+
+  .link-action-btn {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .link-action-btn:hover { border-color: var(--muted2); color: var(--text); }
+  .link-action-btn.delete:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  .link-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .link-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.75;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+
+  .link-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .link-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .link-open {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--cat-color, var(--accent2));
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .link-open:hover { opacity: 1; }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    border: 1px dashed var(--border2);
+    grid-column: 1 / -1;
+  }
+
+  .empty-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .empty-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .empty-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent2);
+    padding: 12px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.success { border-left-color: var(--accent6); }
+  .toast.error { border-left-color: var(--accent3); }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-left {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+  }
+
+  .footer-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .footer-right span { color: var(--accent2); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 40px 24px 80px; }
+    .links-grid { grid-template-columns: 1fr; }
+    .header-stats { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="back-link">Back to Knowledge Base</a>
+    <div class="eyebrow">AI Knowledge Base</div>
+    <h1>
+      <span class="line1">Useful</span>
+      <span class="line2">Links</span>
+    </h1>
+    <div class="header-bottom">
+      <div class="header-desc">
+        A curated collection of <strong>tools, resources & references</strong> — add links below and they'll be saved to your browser.
+      </div>
+      <div class="header-stats">
+        <div class="stat">
+          <span class="stat-num" id="link-count">00</span>
+          <span class="stat-label">Links</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ADD LINK FORM -->
+  <div class="add-form-wrapper">
+    <div class="section-header" style="margin-bottom:14px;">
+      <span class="section-label">Add New Link</span>
+      <div class="section-line"></div>
+    </div>
+    <button class="add-form-toggle" id="toggle-form">
+      <span class="plus">+</span> Add a Link
+    </button>
+    <div class="add-form" id="add-form">
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Title *</label>
+          <input class="form-input" id="input-title" type="text" placeholder="e.g. Claude AI Docs" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">URL *</label>
+          <input class="form-input" id="input-url" type="url" placeholder="https://..." />
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Description</label>
+          <input class="form-input" id="input-desc" type="text" placeholder="What's this link for?" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Category</label>
+          <select class="form-input form-select" id="input-category">
+            <option value="General">General</option>
+            <option value="Tools">Tools</option>
+            <option value="Documentation">Documentation</option>
+            <option value="Research">Research</option>
+            <option value="Learning">Learning</option>
+            <option value="Community">Community</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" id="cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-btn">Save Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filters" id="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="General">General</button>
+    <button class="filter-btn" data-filter="Tools">Tools</button>
+    <button class="filter-btn" data-filter="Documentation">Documentation</button>
+    <button class="filter-btn" data-filter="Research">Research</button>
+    <button class="filter-btn" data-filter="Learning">Learning</button>
+    <button class="filter-btn" data-filter="Community">Community</button>
+  </div>
+
+  <!-- SECTION HEADER -->
+  <div class="section-header">
+    <span class="section-label">Saved Links</span>
+    <div class="section-line"></div>
+    <span class="section-count" id="visible-count">00 total</span>
+  </div>
+
+  <!-- LINKS GRID -->
+  <div class="links-grid" id="links-grid"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">AI KNOWLEDGE BASE — USEFUL LINKS</div>
+    <div class="footer-right">Hosted on <span>GitHub Pages</span></div>
+  </footer>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── Category colours ──
+  const CAT_COLORS = {
+    General:       '#47c8ff',
+    Tools:         '#d4ff47',
+    Documentation: '#b47fff',
+    Research:      '#ff4f6a',
+    Learning:      '#ffaa47',
+    Community:     '#4de0c0',
+  };
+
+  const STORAGE_KEY = 'ai-kb-useful-links';
+
+  // ── State ──
+  let links = [];
+  let activeFilter = 'all';
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      links = raw ? JSON.parse(raw) : [];
+    } catch(e) { links = []; }
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
+  }
+
+  // ── Render ──
+  function render() {
+    const grid = document.getElementById('links-grid');
+    const filtered = activeFilter === 'all'
+      ? links
+      : links.filter(l => l.category === activeFilter);
+
+    document.getElementById('link-count').textContent = String(links.length).padStart(2, '0');
+    document.getElementById('visible-count').textContent = `${String(filtered.length).padStart(2, '0')} total`;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">⬡</div>
+          <div class="empty-title">${links.length === 0 ? 'No Links Yet' : 'No Matches'}</div>
+          <div class="empty-desc">${links.length === 0
+            ? 'Click "+ Add a Link" above to get started'
+            : 'Try selecting a different category filter'}</div>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(link => {
+      const color = CAT_COLORS[link.category] || CAT_COLORS.General;
+      const displayUrl = link.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      return `
+        <div class="link-card" style="--cat-color: ${color};" data-id="${link.id}">
+          <div class="link-card-top">
+            <span class="link-category">${escHtml(link.category)}</span>
+            <div class="link-actions">
+              <a class="link-action-btn" href="${escHtml(link.url)}" target="_blank" rel="noopener" title="Open link">↗</a>
+              <button class="link-action-btn delete" onclick="deleteLink('${link.id}')" title="Delete">✕</button>
+            </div>
+          </div>
+          <div class="link-title">${escHtml(link.title)}</div>
+          ${link.desc ? `<div class="link-desc">${escHtml(link.desc)}</div>` : '<div class="link-desc" style="flex:1"></div>'}
+          <div class="link-footer">
+            <span class="link-url">${escHtml(displayUrl)}</span>
+            <a class="link-open" href="${escHtml(link.url)}" target="_blank" rel="noopener">Open →</a>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ── Add link ──
+  function addLink() {
+    const title    = document.getElementById('input-title').value.trim();
+    const url      = document.getElementById('input-url').value.trim();
+    const desc     = document.getElementById('input-desc').value.trim();
+    const category = document.getElementById('input-category').value;
+
+    if (!title) { showToast('Please enter a title.', 'error'); return; }
+    if (!url)   { showToast('Please enter a URL.', 'error'); return; }
+
+    let safeUrl = url;
+    if (!/^https?:\/\//i.test(safeUrl)) safeUrl = 'https://' + safeUrl;
+
+    links.unshift({ id: Date.now().toString(), title, url: safeUrl, desc, category, added: new Date().toISOString() });
+    save();
+    render();
+    closeForm();
+    showToast('Link saved! ✓', 'success');
+  }
+
+  window.deleteLink = function(id) {
+    links = links.filter(l => l.id !== id);
+    save();
+    render();
+    showToast('Link removed.', '');
+  };
+
+  // ── Form toggle ──
+  function closeForm() {
+    document.getElementById('add-form').classList.remove('open');
+    document.getElementById('toggle-form').innerHTML = '<span class="plus">+</span> Add a Link';
+    ['input-title','input-url','input-desc'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('input-category').value = 'General';
+  }
+
+  document.getElementById('toggle-form').addEventListener('click', function() {
+    const form = document.getElementById('add-form');
+    const open = form.classList.toggle('open');
+    this.innerHTML = open
+      ? '<span class="plus">−</span> Cancel'
+      : '<span class="plus">+</span> Add a Link';
+    if (open) setTimeout(() => document.getElementById('input-title').focus(), 50);
+  });
+
+  document.getElementById('cancel-btn').addEventListener('click', closeForm);
+  document.getElementById('save-btn').addEventListener('click', addLink);
+
+  // Enter key in inputs
+  ['input-title','input-url','input-desc'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') addLink();
+    });
+  });
+
+  // ── Filter ──
+  document.getElementById('filter-bar').addEventListener('click', function(e) {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+
+  // ── Toast ──
+  let toastTimer;
+  function showToast(msg, type) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show ' + (type || '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+  }
+
+  // ── Init ──
+  load();
+  render();
+</script>
+</body>
+</html>

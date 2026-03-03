@@ -436,11 +436,119 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* ── USEFUL LINKS BANNER ── */
+  .useful-links-section {
+    margin-top: 72px;
+    animation: fadeUp 0.6s 0.8s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .useful-links-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent2);
+    padding: 28px 32px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  }
+
+  .useful-links-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 100% at 100% 50%, rgba(71,200,255,0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.35s;
+    pointer-events: none;
+  }
+
+  .useful-links-banner:hover {
+    background: var(--surface2);
+    border-left-color: var(--accent2);
+    transform: translateX(4px);
+  }
+  .useful-links-banner:hover::after { opacity: 1; }
+
+  .useful-links-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .useful-links-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--accent2);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .useful-links-text {}
+
+  .useful-links-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .useful-links-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .useful-links-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .useful-links-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 1px solid rgba(71,200,255,0.3);
+    padding: 10px 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .useful-links-banner:hover .useful-links-cta {
+    background: rgba(71,200,255,0.08);
+    border-color: var(--accent2);
+  }
+
   /* Responsive */
   @media (max-width: 640px) {
     .container { padding: 40px 24px 80px; }
     .cards-grid { grid-template-columns: 1fr; }
     .header-stats { display: none; }
+    .useful-links-banner { flex-direction: column; align-items: flex-start; }
+    .useful-links-cta { width: 100%; justify-content: center; }
   }
 </style>
 </head>
@@ -449,7 +557,6 @@
 
   <!-- HEADER -->
   <header>
-    <div class="eyebrow">Team AI Knowledge Base</div>
     <h1>
       <span class="line1">AI Training</span>
       <span class="line2">Repository</span>
@@ -460,7 +567,7 @@
       </div>
       <div class="header-stats">
         <div class="stat">
-          <span class="stat-num" id="entry-count">03</span>
+          <span class="stat-num" id="entry-count">02</span>
           <span class="stat-label">Entries</span>
         </div>
       </div>
@@ -471,7 +578,7 @@
   <div class="section-header">
     <span class="section-label">Published Entries</span>
     <div class="section-line"></div>
-    <span class="section-count">03 total</span>
+    <span class="section-count">02 total</span>
   </div>
 
   <div class="cards-grid">
@@ -508,23 +615,29 @@
       </div>
     </a>
 
-    <!-- Card 3: AI Landscape 2026 -->
-    <a class="card" href="ai-landscape-2026.html" style="--card-accent: #47c8ff; --card-glow: rgba(71,200,255,0.05);">
-      <div class="card-meta">
-        <span class="card-tag" style="background: rgba(71,200,255,0.06); color: #47c8ff; border-color: #47c8ff;">Landscape</span>
-        <span class="card-num">03</span>
-      </div>
-      <div class="card-title">AI Landscape 2026</div>
-      <div class="card-desc">
-        The state of large language models, major labs & key trends — from frontier model competition to open-source disruption. Includes model comparison and market data.
-      </div>
-      <div class="card-footer">
-        <span class="card-date">Added — 2026</span>
-        <span class="card-arrow">→</span>
-      </div>
-    </a>
-
   </div>
+
+
+  <!-- USEFUL LINKS SECTION -->
+  <div class="useful-links-section">
+    <div class="section-header" style="margin-bottom: 16px;">
+      <span class="section-label">Resources</span>
+      <div class="section-line"></div>
+    </div>
+    <a href="useful-links.html" class="useful-links-banner">
+      <div class="useful-links-left">
+        <div class="useful-links-icon">⬡</div>
+        <div class="useful-links-text">
+          <div class="useful-links-eyebrow">Curated Resources</div>
+          <div class="useful-links-title">Useful Links</div>
+          <div class="useful-links-desc">A personal collection of tools, docs, and references. Add your own links and save them — all stored in your browser.</div>
+        </div>
+      </div>
+      <div class="useful-links-cta">Browse Links →</div>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-left">AI KNOWLEDGE BASE</div>
     <div class="footer-right">Hosted on <span>GitHub Pages</span></div>
