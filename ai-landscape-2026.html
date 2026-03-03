@@ -7,20 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #08080f;
-    --surface: #0e0e1a;
-    --surface2: #13131f;
-    --border: #1c1c2e;
-    --border2: #252538;
-    --accent1: #d4ff47;
-    --accent2: #47c8ff;
-    --accent3: #ff4f6a;
-    --accent4: #b47fff;
-    --accent5: #ffaa47;
-    --accent6: #4de0c0;
-    --text: #e4e4f0;
-    --muted: #4a4a68;
-    --muted2: #7878a0;
+    --bg: #F6F3F0;
+    --surface: #EDE9E4;
+    --surface2: #E4DFD9;
+    --border: #C8C0B8;
+    --border2: #B5ADA5;
+    --accent1: #FFC982;
+    --accent2: #4995FF;
+    --accent3: #FF7E51;
+    --accent4: #D14600;
+    --accent5: #FFAE41;
+    --accent6: #A1E6FF;
+    --text: #0E1020;
+    --muted: #6B6875;
+    --muted2: #9490A0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,9 +40,9 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(71,200,255,0.04) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(180,127,255,0.04) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(77,224,192,0.02) 0%, transparent 70%);
+      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(73,149,255,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(255,126,81,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(161,230,255,0.06) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -51,7 +51,7 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(14,16,32,0.06) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
@@ -284,7 +284,7 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--pc-color, var(--accent2));
-    background: rgba(71,200,255,0.06);
+    background: rgba(73,149,255,0.08);
     border: 1px solid currentColor;
     padding: 3px 8px;
     opacity: 0.8;
@@ -716,7 +716,7 @@
       <!-- OpenAI -->
       <div class="player-card" style="--pc-color: var(--accent2);">
         <div class="player-meta">
-          <span class="player-flag" style="background:rgba(71,200,255,0.06);">US · Private</span>
+          <span class="player-flag" style="background:rgba(73,149,255,0.08);">US · Private</span>
           <span class="player-rank">01</span>
         </div>
         <div class="player-name">OpenAI</div>

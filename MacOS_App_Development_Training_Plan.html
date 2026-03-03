@@ -7,16 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0d0f;
-    --surface: #111518;
-    --surface2: #181d21;
-    --border: #1e2428;
-    --accent: #e8c547;
-    --accent2: #4de0c0;
-    --accent3: #f07060;
-    --text: #d8dde2;
-    --text-muted: #5c6870;
-    --text-dim: #8a9399;
+    --bg: #F6F3F0;
+    --surface: #EDE9E4;
+    --surface2: #E4DFD9;
+    --border: #C8C0B8;
+    --accent: #FF7E51;
+    --accent2: #4995FF;
+    --accent3: #D14600;
+    --text: #0E1020;
+    --text-muted: #6B6875;
+    --text-dim: #9490A0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,8 +36,8 @@
     position: fixed;
     inset: 0;
     background-image: 
-      linear-gradient(rgba(232,197,71,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232,197,71,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(255,126,81,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,126,81,0.05) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
     z-index: 0;
@@ -269,7 +269,7 @@
   .week-card.completed .week-check {
     background: var(--accent2);
     border-color: var(--accent2);
-    color: #000;
+    color: #0E1020;
   }
 
   .week-num {
@@ -369,10 +369,10 @@
     margin-top: 1px;
   }
 
-  .ri-udemy { background: rgba(232,197,71,0.12); color: var(--accent); }
-  .ri-doc { background: rgba(77,224,192,0.12); color: var(--accent2); }
-  .ri-tool { background: rgba(240,112,96,0.12); color: var(--accent3); }
-  .ri-project { background: rgba(120,100,200,0.12); color: #a080e0; }
+  .ri-udemy { background: rgba(255,174,65,0.15); color: var(--accent); }
+  .ri-doc { background: rgba(73,149,255,0.12); color: var(--accent2); }
+  .ri-tool { background: rgba(209,70,0,0.10); color: var(--accent3); }
+  .ri-project { background: rgba(0,74,172,0.10); color: #004AAC; }
 
   .resource-info { flex: 1; }
 
@@ -392,7 +392,7 @@
   /* AI Prompt tips */
   .ai-tip {
     background: var(--surface2);
-    border: 1px solid rgba(232,197,71,0.15);
+    border: 1px solid rgba(255,174,65,0.18);
     border-left: 3px solid var(--accent);
     border-radius: 0 4px 4px 0;
     padding: 1rem 1.2rem;
@@ -1045,7 +1045,7 @@
           <span>~4 hrs/week</span>
         </div>
       </div>
-      <span class="phase-badge" style="background:rgba(120,100,200,0.1);color:#a080e0;">Quality Gate</span>
+      <span class="phase-badge" style="background:rgba(120,100,200,0.1);color:#004AAC;">Quality Gate</span>
     </div>
     <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:2rem;line-height:1.8;">The app works — now make it feel good. MacOS users have high expectations for native app behaviour. Polish the UX, handle errors gracefully, and test thoroughly. Use AI to generate test cases from your acceptance criteria.</p>
 
