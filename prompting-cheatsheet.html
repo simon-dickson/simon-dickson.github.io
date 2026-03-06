@@ -7,18 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F6F3F0;
-    --surface: #EDE9E4;
-    --surface2: #E4DFD9;
-    --border: #C8C0B8;
-    --accent1: #FFC982;
-    --accent2: #FFAE41;
-    --accent3: #FF7E51;
-    --accent4: #D14600;
-    --accent5: #A1E6FF;
-    --text: #0E1020;
-    --muted: #6B6875;
-    --muted2: #9490A0;
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #d4ff47;
+    --accent2: #ff4f6a;
+    --accent3: #47c8ff;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,9 +37,9 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(255,201,130,0.08) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(73,149,255,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,126,81,0.05) 0%, transparent 60%);
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(212,255,71,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(71,200,255,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(180,127,255,0.025) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
@@ -196,7 +196,7 @@
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag { font-family: 'DM Mono', monospace; font-size: 10.5px; padding: 3px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
 
-  .example-block { background: #DDD8D3; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .example-block { background: #0c0c13; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
   .example-tab { display: flex; border-bottom: 1px solid var(--border); }
   .example-tab span { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-right: 1px solid var(--border); }
   .example-tab .tab-prompt { color: var(--accent3); }
@@ -207,7 +207,7 @@
   .ex-label.prompt { color: var(--accent3); }
   .ex-label.response { color: var(--accent1); }
   .ex-label.note { color: var(--accent4); }
-  .ex-text { font-family: 'DM Mono', monospace; font-size: 11.5px; line-height: 1.6; color: #2A2840; }
+  .ex-text { font-family: 'DM Mono', monospace; font-size: 11.5px; line-height: 1.6; color: #c8c8e0; }
   .ex-text em { color: var(--muted2); font-style: italic; }
   .ex-divider { border: none; border-top: 1px dashed var(--border); margin: 2px 0; }
 
@@ -226,27 +226,27 @@
 
   .card-1 { border-top: 2px solid var(--accent3); }
   .card-1:hover { border-color: var(--accent3); }
-  .card-1 .card-tag { background: rgba(255,126,81,0.12); color: var(--accent3); }
+  .card-1 .card-tag { background: rgba(71,200,255,0.1); color: var(--accent3); }
   .card-1 .tip { border-color: var(--accent3); }
 
   .card-2 { border-top: 2px solid var(--accent4); }
   .card-2:hover { border-color: var(--accent4); }
-  .card-2 .card-tag { background: rgba(209,70,0,0.10); color: var(--accent4); }
+  .card-2 .card-tag { background: rgba(180,127,255,0.1); color: var(--accent4); }
   .card-2 .tip { border-color: var(--accent4); }
 
   .card-3 { border-top: 2px solid var(--accent5); }
   .card-3:hover { border-color: var(--accent5); }
-  .card-3 .card-tag { background: rgba(161,230,255,0.15); color: var(--accent5); }
+  .card-3 .card-tag { background: rgba(255,170,71,0.1); color: var(--accent5); }
   .card-3 .tip { border-color: var(--accent5); }
 
   .card-4 { border-top: 2px solid var(--accent2); }
   .card-4:hover { border-color: var(--accent2); }
-  .card-4 .card-tag { background: rgba(255,174,65,0.12); color: var(--accent2); }
+  .card-4 .card-tag { background: rgba(255,79,106,0.1); color: var(--accent2); }
   .card-4 .tip { border-color: var(--accent2); }
 
   .card-5 { border-top: 2px solid var(--accent1); }
   .card-5:hover { border-color: var(--accent1); }
-  .card-5 .card-tag { background: rgba(255,201,130,0.15); color: var(--accent1); }
+  .card-5 .card-tag { background: rgba(212,255,71,0.1); color: var(--accent1); }
   .card-5 .tip { border-color: var(--accent1); }
 
   .section-label {
@@ -271,13 +271,13 @@
   td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; color: var(--muted2); }
   tr:last-child td { border-bottom: none; }
   td:first-child { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--text); white-space: nowrap; }
-  tr:hover td { background: rgba(14,16,32,0.03); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
 
   .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10.5px; font-family: 'DM Mono', monospace; }
   .pill-green { background: rgba(71,200,100,0.12); color: #47c878; }
-  .pill-yellow { background: rgba(255,201,130,0.15); color: var(--accent1); }
-  .pill-orange { background: rgba(161,230,255,0.15); color: var(--accent5); }
-  .pill-red { background: rgba(255,174,65,0.12); color: var(--accent2); }
+  .pill-yellow { background: rgba(212,255,71,0.1); color: var(--accent1); }
+  .pill-orange { background: rgba(255,170,71,0.12); color: var(--accent5); }
+  .pill-red { background: rgba(255,79,106,0.1); color: var(--accent2); }
 
   .decision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; animation: fadeUp 0.5s 0.5s ease both; }
   .decision-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; padding: 18px; }

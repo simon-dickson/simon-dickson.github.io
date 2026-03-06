@@ -7,20 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F6F3F0;
-    --surface: #EDE9E4;
-    --surface2: #E4DFD9;
-    --border: #C8C0B8;
-    --border2: #B5ADA5;
-    --accent1: #FFC982;
-    --accent2: #FFAE41;
-    --accent3: #FF7E51;
-    --accent4: #D14600;
-    --accent5: #A1E6FF;
-    --accent6: #4995FF;
-    --text: #0E1020;
-    --muted: #6B6875;
-    --muted2: #9490A0;
+    --bg: #08080f;
+    --surface: #0e0e1a;
+    --surface2: #13131f;
+    --border: #1c1c2e;
+    --border2: #252538;
+    --accent1: #d4ff47;
+    --accent2: #47c8ff;
+    --accent3: #ff4f6a;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --accent6: #4de0c0;
+    --text: #e4e4f0;
+    --muted: #4a4a68;
+    --muted2: #7878a0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,9 +41,9 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(255,201,130,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(255,174,65,0.05) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(255,126,81,0.04) 0%, transparent 70%);
+      radial-gradient(ellipse 80% 40% at 10% 0%, rgba(212,255,71,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 100%, rgba(71,200,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(180,127,255,0.02) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -53,7 +53,7 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(14,16,32,0.05) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
@@ -244,7 +244,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 60% 60% at 50% 0%, var(--card-glow, rgba(255,201,130,0.06)) 0%, transparent 70%);
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, var(--card-glow, rgba(212,255,71,0.04)) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.35s;
     pointer-events: none;
@@ -264,7 +264,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--card-accent, var(--accent1));
-    background: rgba(255,201,130,0.10);
+    background: rgba(212,255,71,0.06);
     border: 1px solid currentColor;
     padding: 3px 8px;
     opacity: 0.8;
@@ -413,9 +413,9 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--accent6);
-    border: 1px solid rgba(73,149,255,0.35);
+    border: 1px solid rgba(77,224,192,0.25);
     padding: 4px 10px;
-    background: rgba(73,149,255,0.08);
+    background: rgba(77,224,192,0.04);
   }
 
   .live-dot {
@@ -464,7 +464,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 70% 100% at 100% 50%, rgba(255,174,65,0.07) 0%, transparent 70%);
+    background: radial-gradient(ellipse 70% 100% at 100% 50%, rgba(71,200,255,0.05) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.35s;
     pointer-events: none;
@@ -530,7 +530,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent2);
-    border: 1px solid rgba(73,149,255,0.3);
+    border: 1px solid rgba(71,200,255,0.3);
     padding: 10px 20px;
     white-space: nowrap;
     flex-shrink: 0;
@@ -538,7 +538,7 @@
   }
 
   .useful-links-banner:hover .useful-links-cta {
-    background: rgba(73,149,255,0.08);
+    background: rgba(71,200,255,0.08);
     border-color: var(--accent2);
   }
 
@@ -584,9 +584,9 @@
   <div class="cards-grid">
 
     <!-- Card 1: Prompting Cheatsheet -->
-    <a class="card" href="prompting-cheatsheet.html" style="--card-accent: #FFC982; --card-glow: rgba(255,201,130,0.08);">
+    <a class="card" href="prompting-cheatsheet.html" style="--card-accent: #d4ff47; --card-glow: rgba(212,255,71,0.05);">
       <div class="card-meta">
-        <span class="card-tag" style="background: rgba(255,201,130,0.12);">Prompting</span>
+        <span class="card-tag" style="background: rgba(212,255,71,0.06);">Prompting</span>
         <span class="card-num">01</span>
       </div>
       <div class="card-title">Prompting Cheat Sheet</div>
@@ -599,15 +599,15 @@
       </div>
     </a>
 
-    <!-- Card 2: MacOS Training Plan -->
-    <a class="card" href="MacOS_App_Development_Training_Plan.html" style="--card-accent: #FFAE41; --card-glow: rgba(255,174,65,0.06);">
+    <!-- Card 2: PCEP Study Guide -->
+    <a class="card" href="pcep-study-guide.html" style="--card-accent: #f7c948; --card-glow: rgba(247,201,72,0.05);">
       <div class="card-meta">
-        <span class="card-tag" style="background: rgba(255,174,65,0.12); color: #FFAE41; border-color: #FFAE41;">Development</span>
+        <span class="card-tag" style="background: rgba(247,201,72,0.06); color: #f7c948; border-color: #f7c948;">Python</span>
         <span class="card-num">02</span>
       </div>
-      <div class="card-title">MacOS App Dev Training Plan</div>
+      <div class="card-title">PCEP — Certified Entry-Level Python Programmer Study Guide</div>
       <div class="card-desc">
-        A structured training plan for building macOS applications — covering Swift fundamentals, Xcode, app lifecycle, UI patterns and deployment.
+        Full study guide for the PCEP-30-02 certification — covering all 4 exam blocks, code examples, cheat sheets, operator tables and a practice quiz.
       </div>
       <div class="card-footer">
         <span class="card-date">Added — 2026</span>
@@ -616,9 +616,9 @@
     </a>
 
     <!-- Card 3: AI Landscape 2026 -->
-    <a class="card" href="ai-landscape-2026.html" style="--card-accent: #FF7E51; --card-glow: rgba(255,126,81,0.06);">
+    <a class="card" href="ai-landscape-2026.html" style="--card-accent: #ff4f6a; --card-glow: rgba(255,79,106,0.05);">
       <div class="card-meta">
-        <span class="card-tag" style="background: rgba(255,126,81,0.12); color: #FF7E51; border-color: #FF7E51;">Landscape</span>
+        <span class="card-tag" style="background: rgba(255,79,106,0.06); color: #ff4f6a; border-color: #ff4f6a;">Landscape</span>
         <span class="card-num">03</span>
       </div>
       <div class="card-title">AI Landscape 2026</div>

@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCEP Study Guide — Python Institute Certification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e2a;
+    --border: #252b3b;
+    --accent: #f7c948;
+    --accent2: #4fc3f7;
+    --accent3: #a78bfa;
+    --accent4: #34d399;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #0a0c12;
+    --danger: #f87171;
+    --block1: #f7c948;
+    --block2: #4fc3f7;
+    --block3: #a78bfa;
+    --block4: #34d399;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,15,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 56px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--text); }
+
+  nav {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  nav a:hover { color: var(--text); background: var(--surface2); }
+  nav a.b1:hover { color: var(--block1); }
+  nav a.b2:hover { color: var(--block2); }
+  nav a.b3:hover { color: var(--block3); }
+  nav a.b4:hover { color: var(--block4); }
+
+  /* HERO */
+  .hero {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero p {
+    color: var(--muted);
+    max-width: 520px;
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .exam-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-width: 240px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+  }
+
+  .exam-card .label { color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .exam-card .value { color: var(--accent); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; }
+
+  /* BLOCK OVERVIEW */
+  .blocks-overview {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .block-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .block-card:hover { transform: translateY(-2px); }
+  .block-card.b1 { border-top: 3px solid var(--block1); }
+  .block-card.b1:hover { border-color: var(--block1); }
+  .block-card.b2 { border-top: 3px solid var(--block2); }
+  .block-card.b2:hover { border-color: var(--block2); }
+  .block-card.b3 { border-top: 3px solid var(--block3); }
+  .block-card.b3:hover { border-color: var(--block3); }
+  .block-card.b4 { border-top: 3px solid var(--block4); }
+  .block-card.b4:hover { border-color: var(--block4); }
+
+  .block-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    opacity: 0.07;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    line-height: 1;
+  }
+
+  .block-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .b1 .block-tag { background: rgba(247,201,72,0.15); color: var(--block1); }
+  .b2 .block-tag { background: rgba(79,195,247,0.15); color: var(--block2); }
+  .b3 .block-tag { background: rgba(167,139,250,0.15); color: var(--block3); }
+  .b4 .block-tag { background: rgba(52,211,153,0.15); color: var(--block4); }
+
+  .block-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+
+  .block-meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* SECTION STYLING */
+  .section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+  }
+
+  .s1 .section-badge { background: rgba(247,201,72,0.15); color: var(--block1); border: 1px solid rgba(247,201,72,0.3); }
+  .s2 .section-badge { background: rgba(79,195,247,0.15); color: var(--block2); border: 1px solid rgba(79,195,247,0.3); }
+  .s3 .section-badge { background: rgba(167,139,250,0.15); color: var(--block3); border: 1px solid rgba(167,139,250,0.3); }
+  .s4 .section-badge { background: rgba(52,211,153,0.15); color: var(--block4); border: 1px solid rgba(52,211,153,0.3); }
+
+  .section-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-header .weight {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  /* TOPIC CARDS */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .topic-card:hover { border-color: #3a4260; }
+
+  .topic-card-header {
+    padding: 0.9rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .topic-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .topic-card-header h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    flex: 1;
+  }
+
+  .topic-card-body { padding: 1.2rem; }
+
+  .topic-card-body ul {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+
+  .topic-card-body ul li {
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding: 0.2rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .topic-card-body ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0.75rem 0;
+    font-size: 0.82rem;
+  }
+
+  .code-header {
+    background: var(--surface2);
+    padding: 0.4rem 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .code-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: #f87171; }
+  .dot-y { background: #fbbf24; }
+  .dot-g { background: #34d399; }
+
+  .code-block pre {
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+  }
+
+  /* Syntax highlighting */
+  .kw { color: #c792ea; font-weight: 600; }
+  .fn { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .num { color: #f78c6c; }
+  .cm { color: #546e7a; font-style: italic; }
+  .op { color: #89ddff; }
+  .builtin { color: #ffcb6b; }
+
+  /* CHEAT SHEET */
+  .cheatsheet {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+
+  .cheatsheet-header {
+    background: var(--surface2);
+    padding: 0.75rem 1.25rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0;
+  }
+
+  .cs-item {
+    padding: 0.75rem 1.25rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cs-item:last-child { border-right: none; }
+
+  .cs-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .cs-val {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  /* QUIZ / PRACTICE */
+  .quiz-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .quiz-section h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+
+  .quiz-q {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .quiz-q .q-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .quiz-opt {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text);
+    text-align: left;
+  }
+
+  .quiz-opt:hover { border-color: var(--accent); color: var(--accent); }
+  .quiz-opt.correct { border-color: var(--accent4); background: rgba(52,211,153,0.1); color: var(--accent4); }
+  .quiz-opt.wrong { border-color: var(--danger); background: rgba(248,113,113,0.1); color: var(--danger); }
+
+  .quiz-answer { display: none; margin-top: 0.75rem; font-size: 0.8rem; color: var(--muted); }
+  .quiz-answer.show { display: block; }
+  .quiz-answer .ans { color: var(--accent4); font-weight: 600; }
+
+  /* OPERATOR TABLE */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0.75rem 0;
+  }
+
+  .ref-table th {
+    background: var(--surface2);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ref-table td {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: var(--surface2); }
+
+  .ref-table td:first-child { color: var(--accent2); }
+  .ref-table td:nth-child(2) { color: var(--muted); font-family: 'DM Sans', sans-serif; }
+
+  /* DIVIDER */
+  .divider {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* NOTE BOX */
+  .note {
+    border-left: 3px solid var(--accent);
+    background: rgba(247,201,72,0.05);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.82rem;
+    margin: 0.75rem 0;
+    color: var(--muted);
+  }
+
+  .note strong { color: var(--accent); }
+
+  .warn {
+    border-left: 3px solid var(--danger);
+    background: rgba(248,113,113,0.05);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.82rem;
+    margin: 0.75rem 0;
+    color: var(--muted);
+  }
+
+  .warn strong { color: var(--danger); }
+
+  /* PROGRESS BAR DECORATION */
+  .section-stripe {
+    height: 3px;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+
+  .s1 .section-stripe { background: linear-gradient(90deg, var(--block1), transparent); }
+  .s2 .section-stripe { background: linear-gradient(90deg, var(--block2), transparent); }
+  .s3 .section-stripe { background: linear-gradient(90deg, var(--block3), transparent); }
+  .s4 .section-stripe { background: linear-gradient(90deg, var(--block4), transparent); }
+
+  /* FOOTER */
+  footer {
+    max-width: 1400px;
+    margin: 4rem auto 0;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .blocks-overview { grid-template-columns: 1fr 1fr; }
+    .hero { grid-template-columns: 1fr; }
+    .exam-card { min-width: auto; }
+    .quiz-options { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .blocks-overview { grid-template-columns: 1fr; }
+    .topics-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero { animation: fadeUp 0.5s ease; }
+  .blocks-overview { animation: fadeUp 0.6s ease; }
+
+  /* TAB nav decoration */
+  .tab-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tab-btn:hover, .tab-btn.active { background: var(--surface2); color: var(--text); border-color: #3a4260; }
+
+  /* INLINE PILL */
+  .pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    background: var(--surface2);
+    color: var(--accent2);
+    border: 1px solid var(--border);
+    margin: 0 0.15rem;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  .full-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">PCEP<span>™</span> Study</div>
+    <nav>
+      <a href="#block1" class="b1">Block 1 · Fundamentals</a>
+      <a href="#block2" class="b2">Block 2 · Control Flow</a>
+      <a href="#block3" class="b3">Block 3 · Data Collections</a>
+      <a href="#block4" class="b4">Block 4 · Functions & Exceptions</a>
+      <a href="#cheatsheet">Cheat Sheet</a>
+      <a href="#quiz">Practice Quiz</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <h1>PCEP<em>™</em><br>Certification<br>Study Guide</h1>
+    <p>PCEP-30-02 · Comprehensive training materials, examples, cheat sheets and practice questions for every exam block. Supplemental to Edube.org.</p>
+  </div>
+  <div class="exam-card">
+    <div class="label">Exam Code</div>
+    <div class="value">PCEP-30-02</div>
+    <div class="label">Questions</div>
+    <div class="value">30 items</div>
+    <div class="label">Duration</div>
+    <div class="value">40 minutes</div>
+    <div class="label">Pass Score</div>
+    <div class="value">70%</div>
+    <div class="label">Format</div>
+    <div class="value" style="font-size:0.85rem">MCQ · Drag&Drop · Multi-select</div>
+  </div>
+</div>
+
+<!-- BLOCK OVERVIEW -->
+<div class="blocks-overview">
+  <div class="block-card b1" onclick="document.getElementById('block1').scrollIntoView({behavior:'smooth'})">
+    <div class="block-num">1</div>
+    <div class="block-tag">Block 1 · 18%</div>
+    <h3>Computer Programming &amp; Python Fundamentals</h3>
+    <div class="block-meta">7 exam items · 180 raw score pts</div>
+  </div>
+  <div class="block-card b2" onclick="document.getElementById('block2').scrollIntoView({behavior:'smooth'})">
+    <div class="block-num">2</div>
+    <div class="block-tag">Block 2 · 29%</div>
+    <h3>Control Flow — Conditional Blocks &amp; Loops</h3>
+    <div class="block-meta">8 exam items · 290 raw score pts</div>
+  </div>
+  <div class="block-card b3" onclick="document.getElementById('block3').scrollIntoView({behavior:'smooth'})">
+    <div class="block-num">3</div>
+    <div class="block-tag">Block 3 · 25%</div>
+    <h3>Data Collections — Tuples, Dicts, Lists, Strings</h3>
+    <div class="block-meta">7 exam items · 250 raw score pts</div>
+  </div>
+  <div class="block-card b4" onclick="document.getElementById('block4').scrollIntoView({behavior:'smooth'})">
+    <div class="block-num">4</div>
+    <div class="block-tag">Block 4 · 28%</div>
+    <h3>Functions &amp; Exceptions</h3>
+    <div class="block-meta">8 exam items · 280 raw score pts</div>
+  </div>
+</div>
+
+<!-- ===== BLOCK 1 ===== -->
+<div id="block1" class="section s1">
+  <div class="section-stripe"></div>
+  <div class="section-header">
+    <span class="section-badge">Block 1</span>
+    <h2>Computer Programming &amp; Python Fundamentals</h2>
+    <span class="weight">18% · 7 items</span>
+  </div>
+
+  <div class="topics-grid">
+
+    <!-- 1.1 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 1.1</span>
+        <h4>Fundamental Terms &amp; Definitions</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Interpretation vs. Compilation</li>
+          <li>Interpreter vs. Compiler</li>
+          <li>Lexis, Syntax, Semantics</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> concept.py</div>
+          <pre><span class="cm"># Python is INTERPRETED — runs line by line</span>
+<span class="cm"># No compile step needed; .py → CPython bytecode</span>
+
+<span class="cm"># LEXIS  = valid characters & tokens</span>
+<span class="cm"># SYNTAX = grammar rules (structure)</span>
+<span class="cm"># SEMANTICS = meaning of the code</span>
+
+<span class="cm"># SyntaxError — wrong structure:</span>
+<span class="cm"># print "hello"   ← valid Python 2, error in 3</span>
+
+<span class="cm"># SemanticError — wrong meaning:</span>
+x = <span class="num">1</span> / <span class="num">0</span>  <span class="cm"># ZeroDivisionError at runtime</span></pre>
+        </div>
+        <div class="note"><strong>Key fact:</strong> Python uses an interpreter. Source code is compiled to bytecode first, then the interpreter (CPython) executes that bytecode.</div>
+      </div>
+    </div>
+
+    <!-- 1.2 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 1.2</span>
+        <h4>Python's Logic and Structure</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Keywords (reserved words)</li>
+          <li>Instructions and statements</li>
+          <li>Indentation rules</li>
+          <li>Comments with #</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> structure.py</div>
+          <pre><span class="cm"># Python KEYWORDS — cannot be used as variable names</span>
+<span class="cm"># False, None, True, and, as, assert, async, await,</span>
+<span class="cm"># break, class, continue, def, del, elif, else,</span>
+<span class="cm"># except, finally, for, from, global, if, import,</span>
+<span class="cm"># in, is, lambda, nonlocal, not, or, pass, raise,</span>
+<span class="cm"># return, try, while, with, yield</span>
+
+<span class="kw">if</span> <span class="kw">True</span>:          <span class="cm"># colon starts a block</span>
+    <span class="fn">print</span>(<span class="str">"indented"</span>)  <span class="cm"># 4 spaces = standard</span>
+    <span class="fn">print</span>(<span class="str">"same block"</span>)
+<span class="cm"># Back to no indent = out of block</span></pre>
+        </div>
+        <div class="warn"><strong>Exam trap:</strong> Mixing tabs and spaces causes IndentationError. Always use 4 spaces (PEP 8).</div>
+      </div>
+    </div>
+
+    <!-- 1.3 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 1.3</span>
+        <h4>Literals, Variables &amp; Numeral Systems</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Boolean, integer, float, string literals</li>
+          <li>Scientific notation</li>
+          <li>Binary (0b), Octal (0o), Hexadecimal (0x)</li>
+          <li>Variable naming (PEP 8)</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> literals.py</div>
+          <pre><span class="cm"># INTEGER literals</span>
+decimal   = <span class="num">255</span>
+binary    = <span class="num">0b11111111</span>   <span class="cm"># = 255</span>
+octal     = <span class="num">0o377</span>        <span class="cm"># = 255</span>
+hexadec   = <span class="num">0xFF</span>         <span class="cm"># = 255</span>
+big_num   = <span class="num">1_000_000</span>   <span class="cm"># underscores OK</span>
+
+<span class="cm"># FLOAT literals</span>
+pi    = <span class="num">3.14159</span>
+sci   = <span class="num">2.5e3</span>   <span class="cm"># = 2500.0</span>
+tiny  = <span class="num">1e-6</span>   <span class="cm"># = 0.000001</span>
+
+<span class="cm"># BOOLEAN — subclass of int!</span>
+<span class="fn">print</span>(<span class="kw">True</span> + <span class="kw">True</span>)   <span class="cm"># → 2</span>
+<span class="fn">print</span>(<span class="kw">True</span> * <span class="num">5</span>)     <span class="cm"># → 5</span>
+
+<span class="cm"># Naming conventions (PEP 8)</span>
+my_var     = <span class="num">1</span>    <span class="cm"># snake_case ✓</span>
+_private   = <span class="num">2</span>    <span class="cm"># leading underscore ✓</span>
+<span class="cm"># 2bad = 1       # starts with digit ✗</span>
+<span class="cm"># for = 1        # keyword ✗</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 1.4</span>
+        <h4>Operators &amp; Data Types</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Arithmetic: ** * / % // + –</li>
+          <li>String: * + (concatenation &amp; repetition)</li>
+          <li>Assignment shortcuts: +=, -=, *=, etc.</li>
+          <li>Unary / binary, priorities, binding</li>
+          <li>Bitwise: ~ &amp; ^ | &lt;&lt; &gt;&gt;</li>
+          <li>Boolean: not and or</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> operators.py</div>
+          <pre><span class="cm"># Arithmetic — KNOW the precedence!</span>
+<span class="fn">print</span>(<span class="num">2</span> <span class="op">**</span> <span class="num">3</span>)     <span class="cm"># 8  (highest priority)</span>
+<span class="fn">print</span>(<span class="num">7</span> <span class="op">//</span> <span class="num">2</span>)     <span class="cm"># 3  (floor division)</span>
+<span class="fn">print</span>(<span class="op">-</span><span class="num">7</span> <span class="op">//</span> <span class="num">2</span>)    <span class="cm"># -4 (rounds toward -∞)</span>
+<span class="fn">print</span>(<span class="num">7</span> <span class="op">%</span> <span class="num">2</span>)      <span class="cm"># 1  (modulo)</span>
+
+<span class="cm"># Bitwise operators</span>
+<span class="fn">print</span>(<span class="num">5</span> <span class="op">&amp;</span> <span class="num">3</span>)      <span class="cm"># 1   (AND: 101 & 011 = 001)</span>
+<span class="fn">print</span>(<span class="num">5</span> <span class="op">|</span> <span class="num">3</span>)      <span class="cm"># 7   (OR:  101 | 011 = 111)</span>
+<span class="fn">print</span>(<span class="num">5</span> <span class="op">^</span> <span class="num">3</span>)      <span class="cm"># 6   (XOR: 101 ^ 011 = 110)</span>
+<span class="fn">print</span>(<span class="op">~</span><span class="num">5</span>)         <span class="cm"># -6  (NOT: -(n+1))</span>
+<span class="fn">print</span>(<span class="num">5</span> <span class="op">&lt;&lt;</span> <span class="num">1</span>)     <span class="cm"># 10  (left shift = *2)</span>
+<span class="fn">print</span>(<span class="num">5</span> <span class="op">&gt;&gt;</span> <span class="num">1</span>)     <span class="cm"># 2   (right shift = //2)</span>
+
+<span class="cm"># Short-circuit evaluation</span>
+x = <span class="kw">None</span>
+result = x <span class="kw">or</span> <span class="str">"default"</span>   <span class="cm"># → "default"</span>
+check  = x <span class="kw">and</span> x.value    <span class="cm"># safe — no AttributeError</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.5 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 1.5</span>
+        <h4>I/O Operations: print() &amp; input()</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>print() — sep, end, file parameters</li>
+          <li>input() — always returns a string</li>
+          <li>Type conversion: int(), float(), str()</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> io.py</div>
+          <pre><span class="cm"># print() parameters</span>
+<span class="fn">print</span>(<span class="str">"a"</span>, <span class="str">"b"</span>, <span class="str">"c"</span>, sep=<span class="str">"-"</span>)    <span class="cm"># a-b-c</span>
+<span class="fn">print</span>(<span class="str">"no newline"</span>, end=<span class="str">""</span>)      <span class="cm"># stays same line</span>
+<span class="fn">print</span>(<span class="str">"line1"</span>)
+<span class="fn">print</span>(<span class="str">"line2"</span>)
+
+<span class="cm"># input() always returns str</span>
+age = <span class="fn">input</span>(<span class="str">"Enter age: "</span>)    <span class="cm"># "25" (string!)</span>
+age_int = <span class="fn">int</span>(age)             <span class="cm"># 25 (now an int)</span>
+
+<span class="cm"># One-liner</span>
+n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Number: "</span>))
+
+<span class="cm"># Type conversion functions</span>
+<span class="fn">int</span>(<span class="str">"42"</span>)       <span class="cm"># 42</span>
+<span class="fn">float</span>(<span class="str">"3.14"</span>)   <span class="cm"># 3.14</span>
+<span class="fn">str</span>(<span class="num">100</span>)        <span class="cm"># "100"</span>
+<span class="fn">bool</span>(<span class="num">0</span>)         <span class="cm"># False</span>
+<span class="fn">bool</span>(<span class="str">""</span>)        <span class="cm"># False</span>
+<span class="fn">bool</span>([])        <span class="cm"># False</span></pre>
+        </div>
+        <div class="note"><strong>Exam tip:</strong> <span class="pill">input()</span> always returns a <span class="pill">str</span>. You must explicitly convert with <span class="pill">int()</span> or <span class="pill">float()</span>.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Operator Precedence Cheat Sheet -->
+  <div class="cheatsheet">
+    <div class="cheatsheet-header">⚡ Operator Precedence (highest → lowest)</div>
+    <div class="full-table-wrap" style="margin:0;border:none;border-radius:0">
+      <table class="ref-table">
+        <thead><tr><th>Priority</th><th>Operator(s)</th><th>Description</th><th>Associativity</th></tr></thead>
+        <tbody>
+          <tr><td>1 (highest)</td><td>**</td><td>Exponentiation</td><td>Right-to-left</td></tr>
+          <tr><td>2</td><td>+x, -x, ~x</td><td>Unary plus, minus, bitwise NOT</td><td>Right-to-left</td></tr>
+          <tr><td>3</td><td>* / // %</td><td>Multiplication, division, floor div, modulo</td><td>Left-to-right</td></tr>
+          <tr><td>4</td><td>+ –</td><td>Addition, subtraction</td><td>Left-to-right</td></tr>
+          <tr><td>5</td><td>&lt;&lt; &gt;&gt;</td><td>Bitwise shifts</td><td>Left-to-right</td></tr>
+          <tr><td>6</td><td>&amp;</td><td>Bitwise AND</td><td>Left-to-right</td></tr>
+          <tr><td>7</td><td>^</td><td>Bitwise XOR</td><td>Left-to-right</td></tr>
+          <tr><td>8</td><td>|</td><td>Bitwise OR</td><td>Left-to-right</td></tr>
+          <tr><td>9</td><td>== != &lt; &gt; &lt;= &gt;= is in not in</td><td>Comparisons, identity, membership</td><td>Left-to-right</td></tr>
+          <tr><td>10</td><td>not</td><td>Boolean NOT</td><td>Right-to-left</td></tr>
+          <tr><td>11</td><td>and</td><td>Boolean AND</td><td>Left-to-right</td></tr>
+          <tr><td>12 (lowest)</td><td>or</td><td>Boolean OR</td><td>Left-to-right</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== BLOCK 2 ===== -->
+<div id="block2" class="section s2">
+  <div class="section-stripe"></div>
+  <div class="section-header">
+    <span class="section-badge">Block 2</span>
+    <h2>Control Flow — Conditional Blocks &amp; Loops</h2>
+    <span class="weight">29% · 8 items</span>
+  </div>
+
+  <div class="topics-grid">
+
+    <!-- 2.1 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 2.1</span>
+        <h4>Conditional Statements: if / elif / else</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>if, if-else, if-elif-else chains</li>
+          <li>Nested conditionals</li>
+          <li>Truthy / falsy values</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> conditionals.py</div>
+          <pre>score = <span class="num">75</span>
+
+<span class="kw">if</span> score <span class="op">&gt;=</span> <span class="num">90</span>:
+    <span class="fn">print</span>(<span class="str">"Distinction"</span>)
+<span class="kw">elif</span> score <span class="op">&gt;=</span> <span class="num">70</span>:
+    <span class="fn">print</span>(<span class="str">"Pass"</span>)          <span class="cm"># ← this runs</span>
+<span class="kw">elif</span> score <span class="op">&gt;=</span> <span class="num">50</span>:
+    <span class="fn">print</span>(<span class="str">"Borderline"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Fail"</span>)
+
+<span class="cm"># FALSY values: 0, 0.0, "", [], {}, (), None, False</span>
+<span class="cm"># TRUTHY: everything else</span>
+
+<span class="cm"># Nested if</span>
+x = <span class="num">10</span>
+<span class="kw">if</span> x <span class="op">&gt;</span> <span class="num">0</span>:
+    <span class="kw">if</span> x <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>:
+        <span class="fn">print</span>(<span class="str">"positive even"</span>)</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.2 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 2.2</span>
+        <h4>while Loop</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>while condition, while-else</li>
+          <li>break, continue, pass</li>
+          <li>Infinite loops with break</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> while_loop.py</div>
+          <pre>i = <span class="num">0</span>
+<span class="kw">while</span> i <span class="op">&lt;</span> <span class="num">5</span>:
+    <span class="fn">print</span>(i, end=<span class="str">" "</span>)    <span class="cm"># 0 1 2 3 4</span>
+    i <span class="op">+=</span> <span class="num">1</span>
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"\ndone"</span>)    <span class="cm"># runs if no break</span>
+
+<span class="cm"># break exits the loop (else doesn't run)</span>
+<span class="kw">while</span> <span class="kw">True</span>:
+    user = <span class="fn">input</span>(<span class="str">"Type 'quit': "</span>)
+    <span class="kw">if</span> user <span class="op">==</span> <span class="str">"quit"</span>:
+        <span class="kw">break</span>
+
+<span class="cm"># continue skips to next iteration</span>
+i = <span class="num">0</span>
+<span class="kw">while</span> i <span class="op">&lt;</span> <span class="num">5</span>:
+    i <span class="op">+=</span> <span class="num">1</span>
+    <span class="kw">if</span> i <span class="op">==</span> <span class="num">3</span>:
+        <span class="kw">continue</span>          <span class="cm"># skip 3</span>
+    <span class="fn">print</span>(i, end=<span class="str">" "</span>)  <span class="cm"># 1 2 4 5</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.3 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 2.3</span>
+        <h4>for Loop &amp; range()</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>for-in, for-else</li>
+          <li>range(start, stop, step)</li>
+          <li>Nested loops</li>
+          <li>break and continue in for loops</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> for_loop.py</div>
+          <pre><span class="cm"># range() — stop is EXCLUSIVE</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="fn">print</span>(i, end=<span class="str">" "</span>)      <span class="cm"># 0 1 2 3 4</span>
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):
+    <span class="fn">print</span>(i, end=<span class="str">" "</span>)      <span class="cm"># 1 2 3 4 5</span>
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>, <span class="num">0</span>, <span class="op">-</span><span class="num">2</span>):
+    <span class="fn">print</span>(i, end=<span class="str">" "</span>)      <span class="cm"># 10 8 6 4 2</span>
+
+<span class="cm"># for-else: else runs if no break</span>
+<span class="kw">for</span> n <span class="kw">in</span> [<span class="num">2</span>, <span class="num">3</span>, <span class="num">5</span>]:
+    <span class="kw">if</span> n <span class="op">==</span> <span class="num">4</span>:
+        <span class="kw">break</span>
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"4 not found"</span>)   <span class="cm"># ← runs</span>
+
+<span class="cm"># Nested loops — multiplication table</span>
+<span class="kw">for</span> r <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">4</span>):
+    <span class="kw">for</span> c <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">4</span>):
+        <span class="fn">print</span>(f<span class="str">"{r*c:3}"</span>, end=<span class="str">""</span>)
+    <span class="fn">print</span>()</pre>
+        </div>
+        <div class="note"><strong>Remember:</strong> <span class="pill">range(5)</span> = 0,1,2,3,4. The stop value is never included.</div>
+      </div>
+    </div>
+
+    <!-- 2.4 Comparison / Logic -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 2.4</span>
+        <h4>Comparison, Logic &amp; Flow Control</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Comparison: == != &lt; &gt; &lt;= &gt;=</li>
+          <li>Identity: is, is not</li>
+          <li>Membership: in, not in</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> comparison.py</div>
+          <pre><span class="cm"># == checks VALUE equality</span>
+<span class="cm"># is  checks IDENTITY (same object in memory)</span>
+a = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
+b = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
+<span class="fn">print</span>(a <span class="op">==</span> b)    <span class="cm"># True  (same values)</span>
+<span class="fn">print</span>(a <span class="kw">is</span> b)    <span class="cm"># False (different objects)</span>
+
+c = a
+<span class="fn">print</span>(c <span class="kw">is</span> a)    <span class="cm"># True  (same object)</span>
+
+<span class="cm"># Chaining comparisons</span>
+x = <span class="num">5</span>
+<span class="fn">print</span>(<span class="num">1</span> <span class="op">&lt;</span> x <span class="op">&lt;</span> <span class="num">10</span>)    <span class="cm"># True — Python supports this!</span>
+
+<span class="cm"># Membership</span>
+<span class="fn">print</span>(<span class="num">3</span> <span class="kw">in</span> [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>])     <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="str">"py"</span> <span class="kw">in</span> <span class="str">"python"</span>)   <span class="cm"># True</span></pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cheatsheet">
+    <div class="cheatsheet-header">🔄 Loop Control — Quick Reference</div>
+    <div class="cs-grid">
+      <div class="cs-item"><div class="cs-key">break</div><div class="cs-val">Exit loop immediately. The else clause does NOT run.</div></div>
+      <div class="cs-item"><div class="cs-key">continue</div><div class="cs-val">Skip rest of loop body, jump to next iteration.</div></div>
+      <div class="cs-item"><div class="cs-key">pass</div><div class="cs-val">Do nothing — placeholder for empty blocks.</div></div>
+      <div class="cs-item"><div class="cs-key">while-else</div><div class="cs-val">else runs only if loop ends without break.</div></div>
+      <div class="cs-item"><div class="cs-key">for-else</div><div class="cs-val">else runs only if loop ends without break.</div></div>
+      <div class="cs-item"><div class="cs-key">range(n)</div><div class="cs-val">0 to n-1. range(a,b,s): start, stop (exclusive), step.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== BLOCK 3 ===== -->
+<div id="block3" class="section s3">
+  <div class="section-stripe"></div>
+  <div class="section-header">
+    <span class="section-badge">Block 3</span>
+    <h2>Data Collections — Tuples, Dicts, Lists &amp; Strings</h2>
+    <span class="weight">25% · 7 items</span>
+  </div>
+
+  <div class="topics-grid">
+
+    <!-- 3.1 Lists -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 3.1</span>
+        <h4>Lists</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Indexing (positive &amp; negative)</li>
+          <li>Slicing [start:stop:step]</li>
+          <li>Mutability — lists can be changed</li>
+          <li>List methods</li>
+          <li>List comprehensions</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> lists.py</div>
+          <pre>nums = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>]
+
+<span class="cm"># Positive and negative indexing</span>
+<span class="fn">print</span>(nums[<span class="num">0</span>])    <span class="cm"># 10 (first)</span>
+<span class="fn">print</span>(nums[<span class="op">-</span><span class="num">1</span>])   <span class="cm"># 50 (last)</span>
+<span class="fn">print</span>(nums[<span class="op">-</span><span class="num">2</span>])   <span class="cm"># 40</span>
+
+<span class="cm"># Slicing [start:stop:step]</span>
+<span class="fn">print</span>(nums[<span class="num">1</span>:<span class="num">4</span>])    <span class="cm"># [20, 30, 40]</span>
+<span class="fn">print</span>(nums[:<span class="num">3</span>])     <span class="cm"># [10, 20, 30]</span>
+<span class="fn">print</span>(nums[<span class="num">2</span>:])     <span class="cm"># [30, 40, 50]</span>
+<span class="fn">print</span>(nums[::<span class="op">-</span><span class="num">1</span>])   <span class="cm"># [50, 40, 30, 20, 10] reversed</span>
+
+<span class="cm"># Common methods</span>
+nums.append(<span class="num">60</span>)       <span class="cm"># add to end</span>
+nums.insert(<span class="num">0</span>, <span class="num">5</span>)     <span class="cm"># insert at index 0</span>
+nums.remove(<span class="num">30</span>)       <span class="cm"># remove first occurrence</span>
+popped = nums.pop()    <span class="cm"># remove and return last</span>
+nums.sort()            <span class="cm"># sort in-place</span>
+nums.reverse()         <span class="cm"># reverse in-place</span>
+<span class="fn">print</span>(<span class="fn">len</span>(nums))       <span class="cm"># length</span>
+
+<span class="cm"># List comprehension</span>
+squares = [x<span class="op">**</span><span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>)]   <span class="cm"># [0,1,4,9,16]</span>
+evens   = [x <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>) <span class="kw">if</span> x <span class="op">%</span> <span class="num">2</span> <span class="op">==</span> <span class="num">0</span>]</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.2 Tuples -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 3.2</span>
+        <h4>Tuples</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Immutable — cannot be changed</li>
+          <li>Indexing and slicing (same as lists)</li>
+          <li>Tuple packing and unpacking</li>
+          <li>One-element tuple needs trailing comma</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> tuples.py</div>
+          <pre>point = (<span class="num">3</span>, <span class="num">7</span>)       <span class="cm"># tuple</span>
+single = (<span class="num">42</span>,)      <span class="cm"># one-element — comma required!</span>
+also   = <span class="num">42</span>,         <span class="cm"># also a tuple (parens optional)</span>
+
+<span class="cm"># Unpacking</span>
+x, y = point
+<span class="fn">print</span>(x, y)    <span class="cm"># 3 7</span>
+
+a, b, c = <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>   <span class="cm"># packing then unpacking</span>
+a, b = b, a          <span class="cm"># swap values!</span>
+
+<span class="cm"># Tuples are immutable</span>
+<span class="kw">try</span>:
+    point[<span class="num">0</span>] = <span class="num">99</span>    <span class="cm"># TypeError!</span>
+<span class="kw">except</span> <span class="builtin">TypeError</span> <span class="kw">as</span> e:
+    <span class="fn">print</span>(e)
+
+<span class="cm"># Methods: only count() and index()</span>
+t = (<span class="num">1</span>, <span class="num">2</span>, <span class="num">2</span>, <span class="num">3</span>)
+<span class="fn">print</span>(t.count(<span class="num">2</span>))    <span class="cm"># 2</span>
+<span class="fn">print</span>(t.index(<span class="num">3</span>))    <span class="cm"># 3</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.3 Dictionaries -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 3.3</span>
+        <h4>Dictionaries</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Key-value pairs — keys must be immutable</li>
+          <li>Accessing, adding, modifying, deleting</li>
+          <li>Methods: keys(), values(), items()</li>
+          <li>get(), pop(), update()</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> dicts.py</div>
+          <pre>person = {<span class="str">"name"</span>: <span class="str">"Alice"</span>, <span class="str">"age"</span>: <span class="num">30</span>, <span class="str">"city"</span>: <span class="str">"London"</span>}
+
+<span class="cm"># Access</span>
+<span class="fn">print</span>(person[<span class="str">"name"</span>])          <span class="cm"># "Alice"</span>
+<span class="fn">print</span>(person.get(<span class="str">"score"</span>, <span class="num">0</span>))  <span class="cm"># 0 (default if missing)</span>
+
+<span class="cm"># Add / modify</span>
+person[<span class="str">"score"</span>] = <span class="num">95</span>
+person[<span class="str">"age"</span>] = <span class="num">31</span>
+
+<span class="cm"># Delete</span>
+<span class="kw">del</span> person[<span class="str">"city"</span>]
+removed = person.pop(<span class="str">"score"</span>)  <span class="cm"># returns value</span>
+
+<span class="cm"># Iteration</span>
+<span class="kw">for</span> key <span class="kw">in</span> person.keys():
+    <span class="fn">print</span>(key)
+
+<span class="kw">for</span> val <span class="kw">in</span> person.values():
+    <span class="fn">print</span>(val)
+
+<span class="kw">for</span> k, v <span class="kw">in</span> person.items():
+    <span class="fn">print</span>(f<span class="str">"{k}: {v}"</span>)
+
+<span class="cm"># Check membership (checks KEYS)</span>
+<span class="fn">print</span>(<span class="str">"name"</span> <span class="kw">in</span> person)   <span class="cm"># True</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.4 Strings -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 3.4</span>
+        <h4>Strings</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Immutable — indexing and slicing same as list</li>
+          <li>Escape sequences: \n \t \\ \'</li>
+          <li>Multi-line strings with triple quotes</li>
+          <li>String methods</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> strings.py</div>
+          <pre>s = <span class="str">"Hello, World!"</span>
+
+<span class="cm"># Indexing &amp; slicing (same as lists)</span>
+<span class="fn">print</span>(s[<span class="num">0</span>])       <span class="cm"># 'H'</span>
+<span class="fn">print</span>(s[<span class="op">-</span><span class="num">1</span>])      <span class="cm"># '!'</span>
+<span class="fn">print</span>(s[<span class="num">7</span>:<span class="num">12</span>])    <span class="cm"># 'World'</span>
+
+<span class="cm"># Methods</span>
+<span class="fn">print</span>(s.upper())          <span class="cm"># 'HELLO, WORLD!'</span>
+<span class="fn">print</span>(s.lower())          <span class="cm"># 'hello, world!'</span>
+<span class="fn">print</span>(s.strip())          <span class="cm"># remove whitespace</span>
+<span class="fn">print</span>(s.replace(<span class="str">"o"</span>, <span class="str">"0"</span>))  <span class="cm"># 'Hell0, W0rld!'</span>
+<span class="fn">print</span>(s.split(<span class="str">","</span>))       <span class="cm"># ['Hello', ' World!']</span>
+<span class="fn">print</span>(s.find(<span class="str">"World"</span>))    <span class="cm"># 7 (index), -1 if not found</span>
+<span class="fn">print</span>(s.startswith(<span class="str">"He"</span>))  <span class="cm"># True</span>
+<span class="fn">print</span>(s.endswith(<span class="str">"!"</span>))    <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="str">"-"</span>.join([<span class="str">"a"</span>, <span class="str">"b"</span>, <span class="str">"c"</span>]))  <span class="cm"># 'a-b-c'</span>
+
+<span class="cm"># Escape sequences</span>
+<span class="fn">print</span>(<span class="str">"Line1\nLine2"</span>)     <span class="cm"># newline</span>
+<span class="fn">print</span>(<span class="str">"Tab\there"</span>)        <span class="cm"># tab</span>
+<span class="fn">print</span>(<span class="str">"She said \"hi\""</span>)  <span class="cm"># escaped quotes</span></pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Collections Cheat Sheet -->
+  <div class="cheatsheet">
+    <div class="cheatsheet-header">📦 Data Collections — Key Comparisons</div>
+    <div class="full-table-wrap" style="margin:0;border:none;border-radius:0">
+      <table class="ref-table">
+        <thead><tr><th>Type</th><th>Syntax</th><th>Mutable?</th><th>Ordered?</th><th>Duplicates?</th><th>Key fact</th></tr></thead>
+        <tbody>
+          <tr><td>list</td><td>[ ]</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Most flexible sequence</td></tr>
+          <tr><td>tuple</td><td>( ) or val,</td><td>No</td><td>Yes</td><td>Yes</td><td>Immutable; faster than list</td></tr>
+          <tr><td>dict</td><td>{ k:v }</td><td>Yes</td><td>Yes (3.7+)</td><td>Keys: No</td><td>Keys must be immutable/hashable</td></tr>
+          <tr><td>str</td><td>"" or ''</td><td>No</td><td>Yes</td><td>Yes</td><td>Sequence of characters</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== BLOCK 4 ===== -->
+<div id="block4" class="section s4">
+  <div class="section-stripe"></div>
+  <div class="section-header">
+    <span class="section-badge">Block 4</span>
+    <h2>Functions &amp; Exceptions</h2>
+    <span class="weight">28% · 8 items</span>
+  </div>
+
+  <div class="topics-grid">
+
+    <!-- 4.1 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 4.1</span>
+        <h4>Defining &amp; Invoking Functions</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>def keyword, return statement</li>
+          <li>None — returned when no return</li>
+          <li>Recursion</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> functions.py</div>
+          <pre><span class="kw">def</span> <span class="fn">greet</span>(name):
+    <span class="kw">return</span> f<span class="str">"Hello, {name}!"</span>
+
+<span class="fn">print</span>(<span class="fn">greet</span>(<span class="str">"Alice"</span>))   <span class="cm"># Hello, Alice!</span>
+
+<span class="cm"># Function with no return → returns None</span>
+<span class="kw">def</span> <span class="fn">say_hi</span>():
+    <span class="fn">print</span>(<span class="str">"Hi"</span>)
+
+result = <span class="fn">say_hi</span>()
+<span class="fn">print</span>(result)      <span class="cm"># None</span>
+
+<span class="cm"># Multiple return values → returns a tuple</span>
+<span class="kw">def</span> <span class="fn">min_max</span>(lst):
+    <span class="kw">return</span> <span class="fn">min</span>(lst), <span class="fn">max</span>(lst)
+
+lo, hi = <span class="fn">min_max</span>([<span class="num">3</span>, <span class="num">1</span>, <span class="num">4</span>, <span class="num">1</span>, <span class="num">5</span>])
+
+<span class="cm"># Recursion — factorial</span>
+<span class="kw">def</span> <span class="fn">factorial</span>(n):
+    <span class="kw">if</span> n <span class="op">&lt;=</span> <span class="num">1</span>:
+        <span class="kw">return</span> <span class="num">1</span>
+    <span class="kw">return</span> n <span class="op">*</span> <span class="fn">factorial</span>(n <span class="op">-</span> <span class="num">1</span>)
+
+<span class="fn">print</span>(<span class="fn">factorial</span>(<span class="num">5</span>))   <span class="cm"># 120</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.2 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 4.2</span>
+        <h4>Parameters, Arguments &amp; Scope</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>Positional, keyword, mixed arguments</li>
+          <li>Default parameter values</li>
+          <li>Name scope — local vs global</li>
+          <li>global keyword</li>
+          <li>Name shadowing</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> scope.py</div>
+          <pre><span class="cm"># Default parameters</span>
+<span class="kw">def</span> <span class="fn">power</span>(base, exp=<span class="num">2</span>):
+    <span class="kw">return</span> base <span class="op">**</span> exp
+
+<span class="fn">print</span>(<span class="fn">power</span>(<span class="num">3</span>))       <span class="cm"># 9  (exp defaults to 2)</span>
+<span class="fn">print</span>(<span class="fn">power</span>(<span class="num">2</span>, <span class="num">10</span>))  <span class="cm"># 1024</span>
+
+<span class="cm"># Keyword arguments</span>
+<span class="fn">power</span>(exp=<span class="num">3</span>, base=<span class="num">4</span>)   <span class="cm"># order doesn't matter</span>
+
+<span class="cm"># SCOPE — LEGB rule</span>
+x = <span class="str">"global"</span>
+
+<span class="kw">def</span> <span class="fn">outer</span>():
+    x = <span class="str">"enclosing"</span>
+    <span class="kw">def</span> <span class="fn">inner</span>():
+        x = <span class="str">"local"</span>   <span class="cm"># shadows outer x</span>
+        <span class="fn">print</span>(x)      <span class="cm"># "local"</span>
+    <span class="fn">inner</span>()
+    <span class="fn">print</span>(x)          <span class="cm"># "enclosing"</span>
+
+<span class="fn">outer</span>()
+<span class="fn">print</span>(x)              <span class="cm"># "global"</span>
+
+<span class="cm"># global keyword</span>
+counter = <span class="num">0</span>
+<span class="kw">def</span> <span class="fn">increment</span>():
+    <span class="kw">global</span> counter
+    counter <span class="op">+=</span> <span class="num">1</span>    <span class="cm"># modifies global</span></pre>
+        </div>
+        <div class="note"><strong>LEGB Rule:</strong> Python looks up names in: Local → Enclosing → Global → Built-in</div>
+      </div>
+    </div>
+
+    <!-- 4.3 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 4.3</span>
+        <h4>Python Built-In Exceptions Hierarchy</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>BaseException → Exception hierarchy</li>
+          <li>SystemExit, KeyboardInterrupt</li>
+          <li>ArithmeticError → ZeroDivisionError</li>
+          <li>LookupError → IndexError, KeyError</li>
+          <li>TypeError, ValueError, AttributeError</li>
+          <li>assert keyword → AssertionError</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> exceptions_hierarchy.py</div>
+          <pre><span class="cm"># Common exceptions — know these cold!</span>
+
+<span class="cm"># ZeroDivisionError</span>
+<span class="num">1</span> / <span class="num">0</span>
+
+<span class="cm"># IndexError</span>
+[][<span class="num">0</span>]
+
+<span class="cm"># KeyError</span>
+{}[<span class="str">"key"</span>]
+
+<span class="cm"># TypeError</span>
+<span class="str">"a"</span> <span class="op">+</span> <span class="num">1</span>
+
+<span class="cm"># ValueError</span>
+<span class="fn">int</span>(<span class="str">"abc"</span>)
+
+<span class="cm"># NameError</span>
+<span class="fn">print</span>(undefined_var)
+
+<span class="cm"># AttributeError</span>
+<span class="num">42</span>.upper()
+
+<span class="cm"># assert — raises AssertionError if False</span>
+x = <span class="num">5</span>
+<span class="kw">assert</span> x <span class="op">&gt;</span> <span class="num">0</span>, <span class="str">"x must be positive"</span>
+<span class="kw">assert</span> x <span class="op">&gt;</span> <span class="num">10</span>  <span class="cm"># AssertionError!</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4.4 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span class="topic-id">PCEP 4.4</span>
+        <h4>Exception Handling: try / except</h4>
+      </div>
+      <div class="topic-card-body">
+        <ul>
+          <li>try-except block</li>
+          <li>Multiple except clauses — order matters</li>
+          <li>else clause (runs if no exception)</li>
+          <li>finally clause (always runs)</li>
+          <li>Propagating exceptions</li>
+          <li>raise statement</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-dot dot-r"></span><span class="code-dot dot-y"></span><span class="code-dot dot-g"></span> exception_handling.py</div>
+          <pre><span class="kw">try</span>:
+    x = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Enter a number: "</span>))
+    result = <span class="num">100</span> / x
+<span class="kw">except</span> <span class="builtin">ValueError</span>:
+    <span class="fn">print</span>(<span class="str">"Not a valid number!"</span>)
+<span class="kw">except</span> <span class="builtin">ZeroDivisionError</span>:
+    <span class="fn">print</span>(<span class="str">"Cannot divide by zero!"</span>)
+<span class="kw">except</span> <span class="builtin">Exception</span> <span class="kw">as</span> e:
+    <span class="fn">print</span>(f<span class="str">"Unexpected: {e}"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(f<span class="str">"Result: {result}"</span>)   <span class="cm"># no exception</span>
+<span class="kw">finally</span>:
+    <span class="fn">print</span>(<span class="str">"Always runs"</span>)          <span class="cm"># cleanup</span>
+
+<span class="cm"># raise — re-raise or raise custom</span>
+<span class="kw">def</span> <span class="fn">validate</span>(n):
+    <span class="kw">if</span> n <span class="op">&lt;</span> <span class="num">0</span>:
+        <span class="kw">raise</span> <span class="builtin">ValueError</span>(<span class="str">"Must be positive"</span>)
+    <span class="kw">return</span> n
+
+<span class="cm"># Propagation — if no except matches,</span>
+<span class="cm"># exception bubbles up to caller</span>
+<span class="kw">def</span> <span class="fn">outer</span>():
+    <span class="kw">try</span>:
+        <span class="fn">inner</span>()           <span class="cm"># inner raises</span>
+    <span class="kw">except</span> <span class="builtin">ValueError</span>:
+        <span class="fn">print</span>(<span class="str">"caught here"</span>)
+
+<span class="kw">def</span> <span class="fn">inner</span>():
+    <span class="kw">raise</span> <span class="builtin">ValueError</span>(<span class="str">"from inner"</span>)</pre>
+        </div>
+        <div class="warn"><strong>Order matters!</strong> Put specific exceptions BEFORE general ones. ZeroDivisionError before Exception, not after — or it will never be reached.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Exception hierarchy visual -->
+  <div class="cheatsheet">
+    <div class="cheatsheet-header">🔴 Exception Hierarchy (PCEP relevant)</div>
+    <div class="cs-grid">
+      <div class="cs-item"><div class="cs-key">BaseException</div><div class="cs-val">Root of all exceptions. Rarely caught directly.</div></div>
+      <div class="cs-item"><div class="cs-key">SystemExit</div><div class="cs-val">Raised by sys.exit(). Subclass of BaseException.</div></div>
+      <div class="cs-item"><div class="cs-key">KeyboardInterrupt</div><div class="cs-val">Ctrl+C. Subclass of BaseException.</div></div>
+      <div class="cs-item"><div class="cs-key">Exception</div><div class="cs-val">Base for all "normal" exceptions. catch-all.</div></div>
+      <div class="cs-item"><div class="cs-key">ArithmeticError</div><div class="cs-val">Parent of ZeroDivisionError, OverflowError.</div></div>
+      <div class="cs-item"><div class="cs-key">LookupError</div><div class="cs-val">Parent of IndexError and KeyError.</div></div>
+      <div class="cs-item"><div class="cs-key">TypeError</div><div class="cs-val">Wrong type: "a" + 1 → TypeError</div></div>
+      <div class="cs-item"><div class="cs-key">ValueError</div><div class="cs-val">Right type, wrong value: int("abc")</div></div>
+      <div class="cs-item"><div class="cs-key">AssertionError</div><div class="cs-val">Raised by a failing assert statement.</div></div>
+      <div class="cs-item"><div class="cs-key">NameError</div><div class="cs-val">Variable not defined.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== MASTER CHEAT SHEET ===== -->
+<div id="cheatsheet" class="section">
+  <div class="section-header">
+    <span class="section-badge" style="background:rgba(255,255,255,0.05);color:var(--text);border:1px solid var(--border)">Reference</span>
+    <h2>Master Cheat Sheet</h2>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="cheatsheet">
+        <div class="cheatsheet-header">📝 String Methods</div>
+        <div class="full-table-wrap" style="margin:0;border:none;border-radius:0">
+          <table class="ref-table">
+            <thead><tr><th>Method</th><th>Returns / Effect</th></tr></thead>
+            <tbody>
+              <tr><td>s.upper()</td><td>All uppercase copy</td></tr>
+              <tr><td>s.lower()</td><td>All lowercase copy</td></tr>
+              <tr><td>s.title()</td><td>Title Case copy</td></tr>
+              <tr><td>s.strip()</td><td>Remove leading/trailing whitespace</td></tr>
+              <tr><td>s.lstrip() / s.rstrip()</td><td>Left / right strip only</td></tr>
+              <tr><td>s.replace(old,new)</td><td>New string with replacements</td></tr>
+              <tr><td>s.split(sep)</td><td>List of substrings</td></tr>
+              <tr><td>sep.join(iterable)</td><td>String joined by sep</td></tr>
+              <tr><td>s.find(sub)</td><td>Index of first match, -1 if not found</td></tr>
+              <tr><td>s.index(sub)</td><td>Like find() but raises ValueError</td></tr>
+              <tr><td>s.startswith(p)</td><td>True/False</td></tr>
+              <tr><td>s.endswith(p)</td><td>True/False</td></tr>
+              <tr><td>s.isdigit()</td><td>True if all digits</td></tr>
+              <tr><td>s.isalpha()</td><td>True if all alphabetic</td></tr>
+              <tr><td>s.isalnum()</td><td>True if alphanumeric</td></tr>
+              <tr><td>len(s)</td><td>Character count</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cheatsheet" style="margin-top:1rem">
+        <div class="cheatsheet-header">📋 List Methods</div>
+        <div class="full-table-wrap" style="margin:0;border:none;border-radius:0">
+          <table class="ref-table">
+            <thead><tr><th>Method</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td>lst.append(x)</td><td>Add x to end</td></tr>
+              <tr><td>lst.insert(i, x)</td><td>Insert x at index i</td></tr>
+              <tr><td>lst.extend(iter)</td><td>Append all items of iterable</td></tr>
+              <tr><td>lst.remove(x)</td><td>Remove first x (ValueError if missing)</td></tr>
+              <tr><td>lst.pop(i=-1)</td><td>Remove &amp; return item at i (default: last)</td></tr>
+              <tr><td>lst.index(x)</td><td>Index of first x</td></tr>
+              <tr><td>lst.count(x)</td><td>Number of x occurrences</td></tr>
+              <tr><td>lst.sort()</td><td>Sort in-place (returns None!)</td></tr>
+              <tr><td>sorted(lst)</td><td>Return new sorted list</td></tr>
+              <tr><td>lst.reverse()</td><td>Reverse in-place</td></tr>
+              <tr><td>lst.clear()</td><td>Remove all items</td></tr>
+              <tr><td>lst.copy()</td><td>Shallow copy</td></tr>
+              <tr><td>len(lst)</td><td>Number of items</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cheatsheet">
+        <div class="cheatsheet-header">🔢 Built-in Functions (PCEP relevant)</div>
+        <div class="full-table-wrap" style="margin:0;border:none;border-radius:0">
+          <table class="ref-table">
+            <thead><tr><th>Function</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>print(*args, sep, end)</td><td>Output to console</td></tr>
+              <tr><td>input(prompt)</td><td>Read string from user</td></tr>
+              <tr><td>int(x) / float(x)</td><td>Convert to int/float</td></tr>
+              <tr><td>str(x) / bool(x)</td><td>Convert to str/bool</td></tr>
+              <tr><td>len(x)</td><td>Length of sequence/collection</td></tr>
+              <tr><td>range(start,stop,step)</td><td>Integer sequence</td></tr>
+              <tr><td>type(x)</td><td>Return type of x</td></tr>
+              <tr><td>isinstance(x, T)</td><td>True if x is instance of T</td></tr>
+              <tr><td>abs(x)</td><td>Absolute value</td></tr>
+              <tr><td>round(x, n)</td><td>Round to n decimal places</td></tr>
+              <tr><td>min(iter) / max(iter)</td><td>Minimum / maximum</td></tr>
+              <tr><td>sum(iter)</td><td>Sum of iterable</td></tr>
+              <tr><td>sorted(iter)</td><td>New sorted list</td></tr>
+              <tr><td>reversed(iter)</td><td>Reversed iterator</td></tr>
+              <tr><td>enumerate(iter)</td><td>Index-value pairs</td></tr>
+              <tr><td>zip(a, b)</td><td>Pair elements from iterables</td></tr>
+              <tr><td>list() / tuple() / dict()</td><td>Convert to collection type</td></tr>
+              <tr><td>id(x)</td><td>Memory address (identity)</td></tr>
+              <tr><td>chr(n) / ord(c)</td><td>Int→char / char→int (Unicode)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cheatsheet" style="margin-top:1rem">
+        <div class="cheatsheet-header">⚠️ Common Exam Traps</div>
+        <div class="cs-grid" style="grid-template-columns:1fr">
+          <div class="cs-item"><div class="cs-key">sort() vs sorted()</div><div class="cs-val">sort() returns None and modifies in-place. sorted() returns a new list.</div></div>
+          <div class="cs-item"><div class="cs-key">Floor division with negatives</div><div class="cs-val">-7 // 2 = -4 (rounds toward -infinity, not zero)</div></div>
+          <div class="cs-item"><div class="cs-key">Boolean is a subclass of int</div><div class="cs-val">True == 1, False == 0. True + True = 2.</div></div>
+          <div class="cs-item"><div class="cs-key">Mutable default arguments</div><div class="cs-val">def f(lst=[]): bad! The same list is shared across calls.</div></div>
+          <div class="cs-item"><div class="cs-key">range stop is exclusive</div><div class="cs-val">range(1, 5) = 1, 2, 3, 4 — never includes 5.</div></div>
+          <div class="cs-item"><div class="cs-key">Single-element tuple</div><div class="cs-val">(42,) is a tuple. (42) is just parentheses around an int.</div></div>
+          <div class="cs-item"><div class="cs-key">else on loops</div><div class="cs-val">Loop else only skipped if loop exits via break.</div></div>
+          <div class="cs-item"><div class="cs-key">is vs ==</div><div class="cs-val">is checks identity (same object). == checks value equality.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== PRACTICE QUIZ ===== -->
+<div id="quiz" class="section">
+  <div class="section-header">
+    <span class="section-badge" style="background:rgba(255,255,255,0.05);color:var(--text);border:1px solid var(--border)">Practice</span>
+    <h2>Practice Quiz</h2>
+  </div>
+
+  <div class="quiz-section">
+    <h4>🧠 Test Your Knowledge — Click an option to check</h4>
+
+    <!-- Q1 -->
+    <div class="quiz-q">
+      <div class="q-text">What is the output of:<br><br>print(7 // -2)</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) -3</button>
+        <button class="quiz-opt" onclick="answer(this, true)">B) -4</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) 3</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) -3.5</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">B) -4</span> — Floor division rounds toward negative infinity. 7/-2 = -3.5, rounded down = -4.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q">
+      <div class="q-text">Which of the following is a valid one-element tuple?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) (42)</button>
+        <button class="quiz-opt" onclick="answer(this, true)">B) (42,)</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) [42]</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) {42}</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">B) (42,)</span> — The trailing comma is required. (42) is just an integer in parentheses.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q">
+      <div class="q-text">What does this print?<br><br>
+x = [1, 2, 3]<br>
+y = x<br>
+y.append(4)<br>
+print(x)</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) [1, 2, 3]</button>
+        <button class="quiz-opt" onclick="answer(this, true)">B) [1, 2, 3, 4]</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) [4]</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) Error</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">B) [1, 2, 3, 4]</span> — y = x assigns the same reference. Both x and y point to the same list object in memory.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q">
+      <div class="q-text">What value does input() always return?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) int</button>
+        <button class="quiz-opt" onclick="answer(this, false)">B) float</button>
+        <button class="quiz-opt" onclick="answer(this, true)">C) str</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) depends on what user types</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">C) str</span> — input() always returns a string, regardless of what the user enters. You must convert with int() or float().</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q">
+      <div class="q-text">What is the output of:<br><br>
+for i in range(3):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pass<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("done")</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) nothing</button>
+        <button class="quiz-opt" onclick="answer(this, true)">B) done</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) Error</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) done done done</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">B) done</span> — The loop's else clause runs when the loop completes without a break statement.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q">
+      <div class="q-text">Which exception is raised by: int("hello")</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) TypeError</button>
+        <button class="quiz-opt" onclick="answer(this, true)">B) ValueError</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) AttributeError</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) NameError</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">B) ValueError</span> — TypeError is for wrong type operations. "hello" is the right type (str) but not a valid integer value, so ValueError.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q">
+      <div class="q-text">What is the output of:<br><br>print(2 ** 3 ** 2)</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, false)">A) 64</button>
+        <button class="quiz-opt" onclick="answer(this, true)">B) 512</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) 36</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) 8</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">B) 512</span> — ** is right-associative. 3**2 = 9 first, then 2**9 = 512. NOT (2**3)**2 = 64.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q">
+      <div class="q-text">What does list.sort() return?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answer(this, true)">A) None</button>
+        <button class="quiz-opt" onclick="answer(this, false)">B) The sorted list</button>
+        <button class="quiz-opt" onclick="answer(this, false)">C) A new sorted list</button>
+        <button class="quiz-opt" onclick="answer(this, false)">D) True if sorted successfully</button>
+      </div>
+      <div class="quiz-answer"><span class="ans">A) None</span> — sort() modifies the list in-place and returns None. Use sorted(lst) if you need a new sorted list returned.</div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div>PCEP™ Study Guide · PCEP-30-02 · Python Institute Certification</div>
+  <div>Based on official exam syllabus · Supplemental to Edube.org</div>
+</footer>
+
+<script>
+function answer(btn, isCorrect) {
+  const qEl = btn.closest('.quiz-q');
+  const opts = qEl.querySelectorAll('.quiz-opt');
+  const ansEl = qEl.querySelector('.quiz-answer');
+
+  opts.forEach(o => o.disabled = true);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o => {
+      if (o.onclick && o.onclick.toString().includes('true')) {
+        o.classList.add('correct');
+      }
+    });
+  }
+
+  ansEl.classList.add('show');
+}
+</script>
+
+</body>
+</html>
