@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #2496ed; /* Docker blue */
+    --accent2: #ff4f6a;
+    --accent3: #47c8ff;
+    --accent4: #b47fff;
+    --accent5: #ffaa47;
+    --accent6: #47d4a0;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 48px 32px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(36,150,237,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(71,200,255,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(180,127,255,0.025) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--accent1);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(58px, 9vw, 108px);
+    line-height: 0.88;
+    letter-spacing: 0.015em;
+  }
+
+  h1 em { font-style: normal; color: var(--accent1); }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 2;
+    text-align: right;
+  }
+
+  .header-meta strong { color: var(--accent3); font-weight: 400; }
+
+  /* Intro strip */
+  .intro-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent1);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.08s ease both;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .intro-block { }
+  .intro-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+  }
+
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .card:hover { transform: translateY(-2px); }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.2s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.3s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+
+  .card-header {
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .card-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--border);
+    min-width: 36px;
+    flex-shrink: 0;
+    margin-top: -2px;
+    transition: color 0.2s;
+  }
+
+  .card:hover .card-number { color: var(--muted); }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 7px;
+    font-weight: 500;
+  }
+
+  .card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .card h2 .sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted2);
+    letter-spacing: 0;
+    display: block;
+    margin-top: 3px;
+  }
+
+  .card-body { padding: 18px 22px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+
+  .card-desc { font-size: 13.5px; color: var(--muted2); line-height: 1.7; }
+  .card-desc strong { color: var(--text); font-weight: 500; }
+
+  .stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .stat { flex: 1; padding: 10px 12px; border-right: 1px solid var(--border); text-align: center; }
+  .stat:last-child { border-right: none; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .stat-value { font-family: 'DM Mono', monospace; font-size: 11.5px; font-weight: 500; }
+
+  .use-cases-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10.5px; padding: 3px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+
+  /* Code block (replaces example block from cheatsheet) */
+  .code-block { background: #0c0c13; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .code-tab { display: flex; border-bottom: 1px solid var(--border); align-items: center; justify-content: space-between; padding: 0 14px; }
+  .code-tab-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 0; color: var(--muted2); }
+  .code-tab-lang { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: var(--muted); }
+  .code-content { padding: 14px 16px; }
+  .code-line { font-family: 'DM Mono', monospace; font-size: 11.5px; line-height: 1.75; color: #c8c8e0; display: block; }
+  .code-comment { color: var(--muted); font-style: italic; }
+  .code-key { color: var(--accent3); }
+  .code-val { color: var(--accent6); }
+  .code-cmd { color: var(--accent5); }
+  .code-flag { color: var(--accent4); }
+  .code-str { color: var(--accent1); }
+
+  .tip {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface2);
+    border-left: 2px solid;
+    border-radius: 0 2px 2px 0;
+    font-size: 12.5px;
+    color: var(--muted2);
+    line-height: 1.6;
+  }
+  .tip-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Card accent colours */
+  .card-1 { border-top: 2px solid var(--accent1); }
+  .card-1:hover { border-color: var(--accent1); }
+  .card-1 .card-tag { background: rgba(36,150,237,0.12); color: var(--accent1); }
+  .card-1 .tip { border-color: var(--accent1); }
+
+  .card-2 { border-top: 2px solid var(--accent3); }
+  .card-2:hover { border-color: var(--accent3); }
+  .card-2 .card-tag { background: rgba(71,200,255,0.1); color: var(--accent3); }
+  .card-2 .tip { border-color: var(--accent3); }
+
+  .card-3 { border-top: 2px solid var(--accent4); }
+  .card-3:hover { border-color: var(--accent4); }
+  .card-3 .card-tag { background: rgba(180,127,255,0.1); color: var(--accent4); }
+  .card-3 .tip { border-color: var(--accent4); }
+
+  .card-4 { border-top: 2px solid var(--accent5); }
+  .card-4:hover { border-color: var(--accent5); }
+  .card-4 .card-tag { background: rgba(255,170,71,0.1); color: var(--accent5); }
+  .card-4 .tip { border-color: var(--accent5); }
+
+  .card-5 { border-top: 2px solid var(--accent2); }
+  .card-5:hover { border-color: var(--accent2); }
+  .card-5 .card-tag { background: rgba(255,79,106,0.1); color: var(--accent2); }
+  .card-5 .tip { border-color: var(--accent2); }
+
+  .card-6 { border-top: 2px solid var(--accent6); }
+  .card-6:hover { border-color: var(--accent6); }
+  .card-6 .card-tag { background: rgba(71,212,160,0.1); color: var(--accent6); }
+  .card-6 .tip { border-color: var(--accent6); }
+
+  .card-7 { border-top: 2px solid #e8a838; }
+  .card-7:hover { border-color: #e8a838; }
+  .card-7 .card-tag { background: rgba(232,168,56,0.1); color: #e8a838; }
+  .card-7 .tip { border-color: #e8a838; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--surface);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.3s ease both;
+    overflow-x: auto;
+  }
+
+  .arch-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin-bottom: 8px;
+  }
+
+  .arch-layer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 80px;
+    text-align: right;
+    padding-right: 16px;
+    flex-shrink: 0;
+  }
+
+  .arch-boxes { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .arch-box {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    padding: 7px 14px;
+    border-radius: 2px;
+    border: 1px solid;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .arch-box.container { border-color: rgba(36,150,237,0.4); background: rgba(36,150,237,0.08); color: var(--accent1); }
+  .arch-box.image { border-color: rgba(71,200,255,0.4); background: rgba(71,200,255,0.08); color: var(--accent3); }
+  .arch-box.volume { border-color: rgba(71,212,160,0.4); background: rgba(71,212,160,0.08); color: var(--accent6); }
+  .arch-box.network { border-color: rgba(180,127,255,0.4); background: rgba(180,127,255,0.08); color: var(--accent4); }
+  .arch-box.host { border-color: rgba(255,170,71,0.4); background: rgba(255,170,71,0.08); color: var(--accent5); }
+  .arch-box.registry { border-color: rgba(255,79,106,0.4); background: rgba(255,79,106,0.08); color: var(--accent2); }
+  .arch-box.engine { border-color: rgba(232,168,56,0.4); background: rgba(232,168,56,0.08); color: #e8a838; }
+
+  .arch-arrow {
+    font-size: 18px;
+    color: var(--border);
+    padding: 0 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .arch-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 16px;
+    letter-spacing: 0.08em;
+  }
+
+  .arch-divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 12px 0;
+  }
+
+  /* Comparison table */
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; }
+  th:first-child { color: var(--text); }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--text); white-space: nowrap; }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10.5px; font-family: 'DM Mono', monospace; }
+  .pill-blue { background: rgba(36,150,237,0.12); color: var(--accent1); }
+  .pill-green { background: rgba(71,200,100,0.12); color: #47c878; }
+  .pill-yellow { background: rgba(212,255,71,0.1); color: #d4ff47; }
+  .pill-orange { background: rgba(255,170,71,0.12); color: var(--accent5); }
+  .pill-red { background: rgba(255,79,106,0.1); color: var(--accent2); }
+  .pill-purple { background: rgba(180,127,255,0.1); color: var(--accent4); }
+
+  /* AI use-case grid */
+  .decision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; animation: fadeUp 0.5s 0.5s ease both; }
+  .decision-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; padding: 18px; }
+  .decision-q { font-size: 12.5px; color: var(--muted2); margin-bottom: 12px; line-height: 1.6; }
+  .decision-a { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; }
+  .decision-note { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 640px) {
+    body { padding: 28px 16px 60px; }
+    .cards { grid-template-columns: 1fr; }
+    .intro-strip { grid-template-columns: 1fr; }
+    .header-meta { display: none; }
+    .arch-row { flex-wrap: wrap; justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">Infrastructure Reference</div>
+      <h1>DOCKER<br><em>OVERVIEW</em></h1>
+    </div>
+    <div class="header-meta">
+      <strong>7 Core Concepts</strong><br>
+      Containers · Images · Volumes<br>
+      Networks · Compose · Registry<br>
+      AI Use Cases<br><br>
+      v1.0 · 2026
+    </div>
+  </header>
+
+  <!-- Intro strip -->
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">What is Docker?</div>
+      <div class="intro-text">Docker is a platform that lets you <strong>package and run software in isolated environments</strong> called containers. Think of it like a shipping container for code — it holds everything an app needs, and works the same anywhere.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">The Core Problem It Solves</div>
+      <div class="intro-text">Ever heard <strong>"it works on my machine"</strong>? Docker eliminates that. By bundling your app with its exact dependencies, it runs identically on every developer's laptop, every test server, and every production environment.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Why Teams Adopt It</div>
+      <div class="intro-text">Faster onboarding, consistent environments, easy scaling, and reproducible deployments. A single <strong>docker-compose up</strong> command can spin up an entire multi-service application stack in seconds.</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>Containers</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>Images</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>Dockerfile</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>Volumes</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>Networks</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent6)"></div>Compose</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e8a838"></div>Registry</div>
+  </div>
+
+  <!-- Architecture Diagram -->
+  <div class="section-label">How It Fits Together</div>
+  <div class="arch-diagram">
+    <div class="arch-row">
+      <div class="arch-layer-label">Registry</div>
+      <div class="arch-boxes">
+        <div class="arch-box registry">Docker Hub</div>
+        <div class="arch-box registry">Private Registry</div>
+        <div class="arch-box registry">AWS ECR / GCR</div>
+      </div>
+    </div>
+    <div class="arch-row" style="justify-content:center; padding-left:96px;">
+      <div class="arch-arrow">↓ pull</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-layer-label">Images</div>
+      <div class="arch-boxes">
+        <div class="arch-box image">Base OS Layer</div>
+        <div class="arch-box image">Dependencies Layer</div>
+        <div class="arch-box image">App Code Layer</div>
+      </div>
+    </div>
+    <div class="arch-row" style="justify-content:center; padding-left:96px;">
+      <div class="arch-arrow">↓ run</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-layer-label">Containers</div>
+      <div class="arch-boxes">
+        <div class="arch-box container">App Container</div>
+        <div class="arch-box container">DB Container</div>
+        <div class="arch-box container">AI Model Container</div>
+        <div class="arch-box container">Cache Container</div>
+      </div>
+    </div>
+    <hr class="arch-divider">
+    <div class="arch-row">
+      <div class="arch-layer-label">Storage</div>
+      <div class="arch-boxes">
+        <div class="arch-box volume">Named Volume</div>
+        <div class="arch-box volume">Bind Mount</div>
+        <div class="arch-box volume">Tmpfs Mount</div>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-layer-label">Networking</div>
+      <div class="arch-boxes">
+        <div class="arch-box network">Bridge Network</div>
+        <div class="arch-box network">Host Network</div>
+        <div class="arch-box network">Overlay Network</div>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-layer-label">Host OS</div>
+      <div class="arch-boxes">
+        <div class="arch-box host">Docker Engine (daemon)</div>
+        <div class="arch-box engine">Linux Kernel (cgroups + namespaces)</div>
+      </div>
+    </div>
+    <div class="arch-note">Images are built from Dockerfiles · Containers are running instances of images · Volumes persist data beyond container lifecycle</div>
+  </div>
+
+  <!-- CONCEPT CARDS -->
+  <div class="section-label">Core Concepts</div>
+  <div class="cards">
+
+    <!-- CARD 1: Containers -->
+    <div class="card card-1">
+      <div class="card-header">
+        <div class="card-number">01</div>
+        <div class="card-title-block">
+          <span class="card-tag">Runtime Unit</span>
+          <h2>CONTAINERS <span class="sub">Isolated, lightweight process environments</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">A container is a <strong>running instance of an image</strong>. It's an isolated process on your machine that has its own filesystem, networking, and process space — but shares the host OS kernel. Far lighter than a virtual machine.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Startup Time</div><div class="stat-value" style="color:var(--accent6)">Milliseconds</div></div>
+          <div class="stat"><div class="stat-label">vs VM</div><div class="stat-value" style="color:var(--accent6)">~10× lighter</div></div>
+          <div class="stat"><div class="stat-label">Isolation</div><div class="stat-value" style="color:var(--text)">Process-level</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">Common Commands</span>
+            <span class="code-tab-lang">bash</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-cmd">docker run</span> <span class="code-flag">-d -p 8080:80</span> <span class="code-str">nginx</span>  <span class="code-comment"># start</span></span>
+            <span class="code-line"><span class="code-cmd">docker ps</span>                      <span class="code-comment"># list running</span></span>
+            <span class="code-line"><span class="code-cmd">docker stop</span> <span class="code-str">&lt;id&gt;</span>              <span class="code-comment"># stop</span></span>
+            <span class="code-line"><span class="code-cmd">docker exec</span> <span class="code-flag">-it</span> <span class="code-str">&lt;id&gt;</span> bash   <span class="code-comment"># shell</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Key properties</div>
+          <div class="tags">
+            <span class="tag">Immutable by default</span><span class="tag">Ephemeral</span><span class="tag">Port-mapped</span><span class="tag">Namespaced</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Containers are <em>disposable</em>. Never store important data inside a container — use volumes instead. Stopping a container does not delete it; <code style="color:var(--accent3)">docker rm</code> does.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Images -->
+    <div class="card card-2">
+      <div class="card-header">
+        <div class="card-number">02</div>
+        <div class="card-title-block">
+          <span class="card-tag">Blueprint</span>
+          <h2>IMAGES <span class="sub">Read-only snapshot of an environment</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">An image is the <strong>template your container is created from</strong>. It's a layered, read-only stack: a base OS, then runtime, then libraries, then your app code. Each layer is cached, so rebuilds are fast — only changed layers re-download.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Format</div><div class="stat-value" style="color:var(--accent3)">OCI Standard</div></div>
+          <div class="stat"><div class="stat-label">Layers</div><div class="stat-value" style="color:var(--accent3)">Cached</div></div>
+          <div class="stat"><div class="stat-label">Built from</div><div class="stat-value" style="color:var(--text)">Dockerfile</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">Image Commands</span>
+            <span class="code-tab-lang">bash</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-cmd">docker build</span> <span class="code-flag">-t</span> <span class="code-str">myapp:1.0</span> .  <span class="code-comment"># build</span></span>
+            <span class="code-line"><span class="code-cmd">docker images</span>                  <span class="code-comment"># list local</span></span>
+            <span class="code-line"><span class="code-cmd">docker pull</span> <span class="code-str">python:3.11-slim</span>  <span class="code-comment"># download</span></span>
+            <span class="code-line"><span class="code-cmd">docker push</span> <span class="code-str">myapp:1.0</span>          <span class="code-comment"># publish</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Image naming</div>
+          <div class="tags">
+            <span class="tag">registry/name:tag</span><span class="tag">latest = default tag</span><span class="tag">Digest = immutable ID</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Prefer <strong>slim</strong> or <strong>alpine</strong> base images for AI workloads when possible. For GPU-dependent work, use official <span style="color:var(--accent3)">nvidia/cuda</span> base images to ensure CUDA compatibility.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Dockerfile -->
+    <div class="card card-3">
+      <div class="card-header">
+        <div class="card-number">03</div>
+        <div class="card-title-block">
+          <span class="card-tag">Build Script</span>
+          <h2>DOCKERFILE <span class="sub">Recipe for building your image</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">A Dockerfile is a <strong>plain-text recipe</strong> that tells Docker how to build your image step by step. Each instruction creates a new layer. Well-written Dockerfiles use multi-stage builds to keep final images small and secure.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">File name</div><div class="stat-value" style="color:var(--accent4)">Dockerfile</div></div>
+          <div class="stat"><div class="stat-label">Language</div><div class="stat-value" style="color:var(--accent4)">DSL</div></div>
+          <div class="stat"><div class="stat-label">Each line</div><div class="stat-value" style="color:var(--text)">= 1 layer</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">Python AI App Example</span>
+            <span class="code-tab-lang">Dockerfile</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-key">FROM</span>   <span class="code-str">python:3.11-slim</span></span>
+            <span class="code-line"><span class="code-key">WORKDIR</span> <span class="code-val">/app</span></span>
+            <span class="code-line"><span class="code-key">COPY</span>   <span class="code-val">requirements.txt .</span></span>
+            <span class="code-line"><span class="code-key">RUN</span>    <span class="code-cmd">pip install</span> <span class="code-flag">--no-cache-dir</span> <span class="code-flag">-r</span> requirements.txt</span>
+            <span class="code-line"><span class="code-key">COPY</span>   <span class="code-val">. .</span></span>
+            <span class="code-line"><span class="code-key">EXPOSE</span> <span class="code-str">8000</span></span>
+            <span class="code-line"><span class="code-key">CMD</span>    <span class="code-val">["python", "main.py"]</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Key instructions</div>
+          <div class="tags">
+            <span class="tag">FROM</span><span class="tag">RUN</span><span class="tag">COPY</span><span class="tag">ENV</span><span class="tag">EXPOSE</span><span class="tag">CMD</span><span class="tag">ENTRYPOINT</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Order matters for cache efficiency. Put <strong>frequently changing lines last</strong> (e.g. COPY app code after installing dependencies) so Docker reuses earlier cached layers on rebuild.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Volumes -->
+    <div class="card card-4">
+      <div class="card-header">
+        <div class="card-number">04</div>
+        <div class="card-title-block">
+          <span class="card-tag">Persistent Storage</span>
+          <h2>VOLUMES <span class="sub">Data that survives container restarts</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Containers are <strong>ephemeral</strong> — when removed, their internal data disappears. Volumes solve this by mounting external storage into the container. Critical for databases, model weights, training data, and logs.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Survives</div><div class="stat-value" style="color:var(--accent5)">rm / restart</div></div>
+          <div class="stat"><div class="stat-label">Shareable</div><div class="stat-value" style="color:var(--accent5)">Multi-container</div></div>
+          <div class="stat"><div class="stat-label">Managed by</div><div class="stat-value" style="color:var(--text)">Docker Engine</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">Volume Usage</span>
+            <span class="code-tab-lang">bash</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-comment"># Named volume (Docker manages path)</span></span>
+            <span class="code-line"><span class="code-cmd">docker run</span> <span class="code-flag">-v</span> <span class="code-str">model-data:/app/models</span> myapp</span>
+            <span class="code-line"> </span>
+            <span class="code-line"><span class="code-comment"># Bind mount (your local folder)</span></span>
+            <span class="code-line"><span class="code-cmd">docker run</span> <span class="code-flag">-v</span> <span class="code-str">$(pwd)/data:/app/data</span> myapp</span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Use volumes for</div>
+          <div class="tags">
+            <span class="tag">Database files</span><span class="tag">Model weights</span><span class="tag">Training datasets</span><span class="tag">Log output</span><span class="tag">Config files</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>For AI workloads, storing large model weights (e.g. LLM checkpoints) in a <strong>named volume</strong> means they download once and are reused across container restarts — saving significant time.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 5: Networks -->
+    <div class="card card-5">
+      <div class="card-header">
+        <div class="card-number">05</div>
+        <div class="card-title-block">
+          <span class="card-tag">Service Communication</span>
+          <h2>NETWORKS <span class="sub">How containers talk to each other</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Docker networking lets containers <strong>communicate securely</strong> without exposing ports to the outside world. Containers on the same network can reach each other by service name — no hard-coded IPs needed.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Default</div><div class="stat-value" style="color:var(--accent2)">Bridge</div></div>
+          <div class="stat"><div class="stat-label">Discovery</div><div class="stat-value" style="color:var(--accent2)">By name</div></div>
+          <div class="stat"><div class="stat-label">Isolation</div><div class="stat-value" style="color:var(--text)">Per-network</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">Network Example</span>
+            <span class="code-tab-lang">bash</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-cmd">docker network create</span> <span class="code-str">ai-net</span></span>
+            <span class="code-line"><span class="code-comment"># Both containers join same network</span></span>
+            <span class="code-line"><span class="code-cmd">docker run</span> <span class="code-flag">--network</span> <span class="code-str">ai-net</span> <span class="code-flag">--name</span> <span class="code-str">api</span> myapi</span>
+            <span class="code-line"><span class="code-cmd">docker run</span> <span class="code-flag">--network</span> <span class="code-str">ai-net</span> <span class="code-flag">--name</span> <span class="code-str">db</span> postgres</span>
+            <span class="code-line"><span class="code-comment"># api can reach db at: http://db:5432</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Network types</div>
+          <div class="tags">
+            <span class="tag">bridge (default)</span><span class="tag">host (no isolation)</span><span class="tag">overlay (Swarm/K8s)</span><span class="tag">none (air-gapped)</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Always create <strong>custom networks</strong> rather than using the default bridge. Custom networks support DNS-based service discovery — containers find each other by name automatically.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 6: Docker Compose -->
+    <div class="card card-6">
+      <div class="card-header">
+        <div class="card-number">06</div>
+        <div class="card-title-block">
+          <span class="card-tag">Multi-Service Orchestration</span>
+          <h2>COMPOSE <span class="sub">Define entire stacks in one file</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Docker Compose lets you define and run <strong>multi-container applications</strong> from a single YAML file. One command starts everything — your API, database, cache, message queue, and AI model server — fully wired together.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Command</div><div class="stat-value" style="color:var(--accent6)">compose up</div></div>
+          <div class="stat"><div class="stat-label">File</div><div class="stat-value" style="color:var(--accent6)">compose.yml</div></div>
+          <div class="stat"><div class="stat-label">Best for</div><div class="stat-value" style="color:var(--text)">Dev / staging</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">compose.yml — AI Stack</span>
+            <span class="code-tab-lang">yaml</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-key">services:</span></span>
+            <span class="code-line">  <span class="code-str">api:</span></span>
+            <span class="code-line">    <span class="code-key">build:</span> <span class="code-val">.</span></span>
+            <span class="code-line">    <span class="code-key">ports:</span> <span class="code-val">["8000:8000"]</span></span>
+            <span class="code-line">    <span class="code-key">depends_on:</span> <span class="code-val">[db, redis]</span></span>
+            <span class="code-line">  <span class="code-str">model-server:</span></span>
+            <span class="code-line">    <span class="code-key">image:</span> <span class="code-val">ollama/ollama</span></span>
+            <span class="code-line">    <span class="code-key">volumes:</span> <span class="code-val">["models:/root/.ollama"]</span></span>
+            <span class="code-line">  <span class="code-str">db:</span></span>
+            <span class="code-line">    <span class="code-key">image:</span> <span class="code-val">postgres:16</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Compose handles</div>
+          <div class="tags">
+            <span class="tag">Service dependencies</span><span class="tag">Shared networks</span><span class="tag">Volume definitions</span><span class="tag">Env vars</span><span class="tag">Health checks</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>Compose is the <strong>#1 tool for local AI development</strong>. Spin up a full stack — inference server, vector database, API, and UI — with a single <span style="color:var(--accent6)">docker compose up -d</span>.</span></div>
+      </div>
+    </div>
+
+    <!-- CARD 7: Registry -->
+    <div class="card card-7">
+      <div class="card-header">
+        <div class="card-number">07</div>
+        <div class="card-title-block">
+          <span class="card-tag">Image Distribution</span>
+          <h2>REGISTRY <span class="sub">Store, share and version your images</span></h2>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">A registry is a <strong>storage and distribution service for Docker images</strong>. Docker Hub is the public default. Teams typically use private registries (AWS ECR, GCP Artifact Registry, GitHub Packages) to control access and versioning.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Public</div><div class="stat-value" style="color:#e8a838">Docker Hub</div></div>
+          <div class="stat"><div class="stat-label">Cloud</div><div class="stat-value" style="color:#e8a838">ECR / GCR / ACR</div></div>
+          <div class="stat"><div class="stat-label">Self-hosted</div><div class="stat-value" style="color:var(--text)">Harbor / Nexus</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-tab">
+            <span class="code-tab-label">Publishing an Image</span>
+            <span class="code-tab-lang">bash</span>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="code-comment"># Tag image for your registry</span></span>
+            <span class="code-line"><span class="code-cmd">docker tag</span> <span class="code-str">myapp:1.0</span> <span class="code-val">registry.example.com/myapp:1.0</span></span>
+            <span class="code-line"> </span>
+            <span class="code-line"><span class="code-comment"># Login and push</span></span>
+            <span class="code-line"><span class="code-cmd">docker login</span> <span class="code-str">registry.example.com</span></span>
+            <span class="code-line"><span class="code-cmd">docker push</span>  <span class="code-val">registry.example.com/myapp:1.0</span></span>
+          </div>
+        </div>
+        <div>
+          <div class="use-cases-label">Best practices</div>
+          <div class="tags">
+            <span class="tag">Semantic versioning</span><span class="tag">Never use :latest in prod</span><span class="tag">Scan for CVEs</span><span class="tag">Sign images</span>
+          </div>
+        </div>
+        <div class="tip"><span class="tip-icon">→</span><span>For AI models shipped as containers, tag images with both <strong>version + model size</strong> (e.g. <span style="color:#e8a838">inference:2.1-7b</span>) so teams can pull the right variant without guessing.</span></div>
+      </div>
+    </div>
+
+  </div><!-- /cards -->
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-label">Docker vs. Alternatives</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>Isolation</th>
+          <th>Startup</th>
+          <th>Portability</th>
+          <th>Best For</th>
+          <th>Docker Advantage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent1)">Docker Container</td>
+          <td>Process-level</td>
+          <td><span class="pill pill-green">Milliseconds</span></td>
+          <td>Any OS w/ Docker</td>
+          <td>Microservices, AI services, local dev</td>
+          <td>Lightweight, reproducible, versioned</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted2)">Virtual Machine</td>
+          <td>Full OS-level</td>
+          <td><span class="pill pill-red">Minutes</span></td>
+          <td>Hypervisor required</td>
+          <td>Full OS isolation, legacy apps</td>
+          <td>Docker is ~10× faster and smaller</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted2)">Bare Metal</td>
+          <td>None</td>
+          <td><span class="pill pill-green">Instant</span></td>
+          <td>Machine-specific</td>
+          <td>Max performance (e.g. GPU training)</td>
+          <td>Docker adds portability with minimal overhead</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted2)">Python venv</td>
+          <td>Packages only</td>
+          <td><span class="pill pill-green">Instant</span></td>
+          <td>Partial</td>
+          <td>Dev-only Python isolation</td>
+          <td>Docker isolates OS, system libs, not just Python</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4)">Kubernetes (K8s)</td>
+          <td>Container-level</td>
+          <td><span class="pill pill-yellow">Seconds</span></td>
+          <td>Cloud-native</td>
+          <td>Production orchestration at scale</td>
+          <td>K8s runs Docker containers — they complement each other</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- AI USE CASES -->
+  <div class="section-label">Docker for AI — Key Use Cases</div>
+  <div class="decision-grid">
+    <div class="decision-card">
+      <div class="decision-q">Run a local LLM inference server without polluting your machine with dependencies.</div>
+      <div class="decision-a" style="color:var(--accent1)">Local AI Dev</div>
+      <div class="decision-note">Use ollama/ollama or vllm images via Compose. Models stored in a volume.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">Guarantee the model your team tested is identical to what goes to production.</div>
+      <div class="decision-a" style="color:var(--accent3)">Reproducibility</div>
+      <div class="decision-note">Pin image tags to exact digests. CUDA version, packages, all locked in.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">Package a trained model as a REST API and ship it to any cloud provider.</div>
+      <div class="decision-a" style="color:var(--accent4)">Model Serving</div>
+      <div class="decision-note">FastAPI + model weights in one image. Deploy on AWS, GCP, Azure, or on-prem.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">Run parallel training experiments with different hyperparameters simultaneously.</div>
+      <div class="decision-a" style="color:var(--accent5)">Parallel Experiments</div>
+      <div class="decision-note">Launch multiple containers from the same image with different ENV variables.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">Spin up vector databases (Qdrant, Weaviate, Chroma) alongside your app instantly.</div>
+      <div class="decision-a" style="color:var(--accent6)">AI Data Layer</div>
+      <div class="decision-note">Vector DBs ship official Docker images. Add them to Compose in 3 lines.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q">Build automated CI/CD pipelines that test and evaluate AI models on every commit.</div>
+      <div class="decision-a" style="color:var(--accent2)">MLOps / CI-CD</div>
+      <div class="decision-note">GitHub Actions, GitLab CI, and Jenkins all run steps inside Docker containers.</div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE TABLE -->
+  <div class="section-label">Quick Command Reference</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Command</th>
+          <th>What it does</th>
+          <th>Common flags</th>
+          <th>Non-technical analogy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent3)">docker build</td>
+          <td>Create an image from a Dockerfile</td>
+          <td><span class="pill pill-blue">-t name:tag</span></td>
+          <td>Baking a cake from a recipe</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent1)">docker run</td>
+          <td>Start a new container from an image</td>
+          <td><span class="pill pill-blue">-d -p -v --name</span></td>
+          <td>Turning on an appliance</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent6)">docker compose up</td>
+          <td>Start all services in compose.yml</td>
+          <td><span class="pill pill-blue">-d --build</span></td>
+          <td>Powering on an entire kitchen at once</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted2)">docker ps</td>
+          <td>List running containers</td>
+          <td><span class="pill pill-blue">-a (all)</span></td>
+          <td>Checking which appliances are on</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent5)">docker logs</td>
+          <td>View container output / errors</td>
+          <td><span class="pill pill-blue">-f (follow)</span></td>
+          <td>Reading the appliance display</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4)">docker exec -it</td>
+          <td>Open a shell inside a running container</td>
+          <td><span class="pill pill-blue">bash / sh</span></td>
+          <td>Opening the appliance to look inside</td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent2)">docker pull / push</td>
+          <td>Download or upload an image to a registry</td>
+          <td><span class="pill pill-blue">:tag</span></td>
+          <td>Downloading or uploading a file</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Docker Overview · <span>7 Core Concepts</span> · AI Use Cases</p>
+    <p>Containers · Images · Dockerfile · Volumes · Networks · Compose · Registry</p>
+  </footer>
+
+</div>
+</body>
+</html>
