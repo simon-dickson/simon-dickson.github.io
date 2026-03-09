@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Analyst to AI Engineer — Phase 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #47d4a0;   /* LLM green */
+    --accent2: #ff4f6a;
+    --accent3: #b47fff;
+    --accent4: #47c8ff;
+    --accent5: #ffaa47;
+    --accent6: #ff8c42;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 48px 32px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(71,212,160,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(180,127,255,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(71,200,255,0.025) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--accent1);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.88;
+    letter-spacing: 0.015em;
+  }
+
+  h1 em { font-style: normal; color: var(--accent1); }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 2;
+    text-align: right;
+  }
+  .header-meta strong { color: var(--accent1); font-weight: 400; }
+
+  .intro-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent1);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.08s ease both;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .intro-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .callout {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .callout-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .callout-text strong { color: var(--text); font-weight: 500; }
+  .callout-text code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 1px 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--accent1);
+  }
+
+  .callout-goal {
+    background: rgba(71,212,160,0.04);
+    border-color: rgba(71,212,160,0.25);
+    border-left: 3px solid var(--accent1);
+  }
+  .callout-goal .callout-label { color: var(--accent1); }
+
+  .callout-order {
+    background: rgba(180,127,255,0.04);
+    border-color: rgba(180,127,255,0.25);
+    border-left: 3px solid var(--accent3);
+  }
+  .callout-order .callout-label { color: var(--accent3); }
+
+  .callout-next {
+    background: rgba(71,200,255,0.04);
+    border-color: rgba(71,200,255,0.25);
+    border-left: 3px solid var(--accent4);
+  }
+  .callout-next .callout-label { color: var(--accent4); }
+
+  .two-callout-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-bottom: 44px;
+    margin-top: 28px;
+    animation: fadeUp 0.6s 0.12s ease both;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+  }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-group {
+    margin-top: 52px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .section-group-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .section-group-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 4vw, 34px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .section-group-desc {
+    font-size: 13px;
+    color: var(--muted2);
+    margin-top: 6px;
+    max-width: 640px;
+    line-height: 1.65;
+  }
+
+  .course-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .course-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+  .course-card:hover { transform: translateY(-2px); }
+
+  .course-card-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .course-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .course-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+  }
+  .course-card h3 .instructor {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--muted2);
+    display: block;
+    margin-top: 3px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .course-card-body { padding: 14px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .course-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+
+  .course-stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .course-stat { flex: 1; padding: 8px 10px; border-right: 1px solid var(--border); text-align: center; }
+  .course-stat:last-child { border-right: none; }
+  .course-stat-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .course-stat-value { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+
+  .course-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+    margin-top: auto;
+  }
+  .course-link:hover { opacity: 0.75; }
+  .course-link::after { content: '↗'; font-size: 11px; }
+
+  /* Section colour variants */
+  .s1 { border-top: 2px solid var(--accent1); }
+  .s1:hover { border-color: var(--accent1); }
+  .s1 .course-badge { background: rgba(71,212,160,0.1); color: var(--accent1); }
+  .s1 .course-link { background: rgba(71,212,160,0.1); color: var(--accent1); border: 1px solid rgba(71,212,160,0.25); }
+  .s1-group .section-group-num { color: var(--accent1); }
+  .s1-group .section-group-title em { color: var(--accent1); font-style: normal; }
+
+  .s2 { border-top: 2px solid var(--accent5); }
+  .s2:hover { border-color: var(--accent5); }
+  .s2 .course-badge { background: rgba(255,170,71,0.1); color: var(--accent5); }
+  .s2 .course-link { background: rgba(255,170,71,0.1); color: var(--accent5); border: 1px solid rgba(255,170,71,0.25); }
+  .s2-group .section-group-num { color: var(--accent5); }
+  .s2-group .section-group-title em { color: var(--accent5); font-style: normal; }
+
+  .s3 { border-top: 2px solid var(--accent4); }
+  .s3:hover { border-color: var(--accent4); }
+  .s3 .course-badge { background: rgba(71,200,255,0.1); color: var(--accent4); }
+  .s3 .course-link { background: rgba(71,200,255,0.1); color: var(--accent4); border: 1px solid rgba(71,200,255,0.25); }
+  .s3-group .section-group-num { color: var(--accent4); }
+  .s3-group .section-group-title em { color: var(--accent4); font-style: normal; }
+
+  .s4 { border-top: 2px solid var(--accent3); }
+  .s4:hover { border-color: var(--accent3); }
+  .s4 .course-badge { background: rgba(180,127,255,0.1); color: var(--accent3); }
+  .s4 .course-link { background: rgba(180,127,255,0.1); color: var(--accent3); border: 1px solid rgba(180,127,255,0.25); }
+  .s4-group .section-group-num { color: var(--accent3); }
+  .s4-group .section-group-title em { color: var(--accent3); font-style: normal; }
+
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; white-space: nowrap; }
+  th:first-child { color: var(--text); }
+  td { padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-size: 13px; color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .pill-start { background: rgba(71,212,160,0.12); color: var(--accent1); }
+  .pill-high { background: rgba(255,170,71,0.12); color: var(--accent5); }
+  .pill-med { background: rgba(71,200,255,0.1); color: var(--accent4); }
+
+  /* Phase 5 preview grid */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .preview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px 18px;
+  }
+  .preview-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    color: var(--accent4);
+    margin-bottom: 6px;
+  }
+  .preview-card-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    line-height: 1.55;
+    letter-spacing: 0.03em;
+  }
+
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 700px) {
+    body { padding: 28px 16px 60px; }
+    .course-cards { grid-template-columns: 1fr; }
+    .intro-strip { grid-template-columns: 1fr; }
+    .two-callout-row { grid-template-columns: 1fr; }
+    .header-meta { display: none; }
+    .preview-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">Training Roadmap · Phase 4 of 4 · Most In-Demand Skill Set in AI</div>
+      <h1>LLMs &<br><em>GENERATIVE</em><br>AI APPS</h1>
+    </div>
+    <div class="header-meta">
+      <strong>4 Sections · 8 Courses</strong><br>
+      LLM Foundations · Prompt Eng<br>
+      RAG · Vector Databases<br>
+      AI Agents · LangChain<br><br>
+      Months 11–14 · Udemy
+    </div>
+  </header>
+
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">About Phase 4</div>
+      <div class="intro-text">Phase 4 is the <strong>most commercially relevant phase</strong> of your AI engineering journey. This is where you learn to build applications that leverage large language models — the technology behind ChatGPT, Claude, and virtually every new AI product launched in the last two years.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Your Analyst Advantage</div>
+      <div class="intro-text">Your data analyst background gives you a <strong>natural edge here</strong>: you already understand data pipelines, and RAG (the dominant architecture) is fundamentally a data retrieval problem. This is where your skills directly translate to the most in-demand AI engineering work.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Duration & Context</div>
+      <div class="intro-text">Approximately <strong>4 months</strong> (Months 11–14). Build on everything from Phases 1–3 to create production-ready LLM applications. The skills covered here are what employers are actively hiring for right now in 2025–2026.</div>
+    </div>
+  </div>
+
+  <div class="two-callout-row">
+    <div class="callout callout-goal">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content">
+        <div class="callout-label">Phase 4 Milestone Project</div>
+        <div class="callout-text">Build a <strong>RAG application</strong> over a document collection of your choice (company knowledge base, research papers, product docs, or data from your analyst work). Requirements: document ingestion → chunking → embedding → vector store → retrieval → LLM response → web UI. Stretch goal: add an <strong>AI agent layer</strong> that can call tools (search the web, query a database). Deploy with FastAPI + Streamlit or Gradio frontend. Push to GitHub with full README. <strong>This single project demonstrates all the skills employers are hiring for in 2025–2026.</strong></div>
+      </div>
+    </div>
+    <div class="callout callout-order">
+      <div class="callout-icon">💡</div>
+      <div class="callout-content">
+        <div class="callout-label">Study Order Recommendation</div>
+        <div class="callout-text">
+          <strong>1.</strong> Start with AI Engineer Core Track (Section 1) — covers everything end-to-end.<br><br>
+          <strong>2.</strong> Use Master OpenAI API (Section 2) alongside it for hands-on API practice from day one.<br><br>
+          <strong>3.</strong> LangChain Mastery (Section 3) once you understand LLM basics — RAG is the priority.<br><br>
+          <strong>4.</strong> Complete Agentic AI Bootcamp (Section 4) once your RAG project is built.<br><br>
+          <strong>5.</strong> Dip into remaining courses for specific topics as needed (MCP, advanced prompting).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>🧠 LLM Foundations</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>✍️ Prompt Engineering</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>🔍 RAG & Vector DBs</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>🤖 AI Agents</div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section-group s1-group">
+    <div class="section-group-num">Section 1 · LLM Foundations</div>
+    <div class="section-group-title">🧠 LLM FOUNDATIONS — <em>Understanding & Engineering Large Language Models</em></div>
+    <p class="section-group-desc">Before building LLM applications you need a solid mental model of how these systems work: tokenisation, context windows, temperature, embeddings, and the difference between prompting versus fine-tuning.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation — Start Here</span>
+        <h3>AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents
+          <span class="instructor">Ed Donner, Ligency</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">The flagship LLM engineering course on Udemy. Build and deploy 8 real LLM apps in 8 weeks, covering RAG, LoRA fine-tuning, AI Agents and the full generative AI engineering stack.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.7</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">214K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">33.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">OpenAI API</span><span class="tag">Anthropic API</span><span class="tag">Hugging Face</span><span class="tag">RAG pipelines</span><span class="tag">QLoRA fine-tuning</span><span class="tag">AI Agents</span><span class="tag">LangChain</span><span class="tag">Embeddings</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2</span>
+        <h3>LLM Engineering, RAG, & AI Agents Masterclass [2026]
+          <span class="instructor">Prof. Ryan Ahmed, Ph.D., MBA — Stemplicity Inc.</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">14-day bootcamp structure covering LLMs, RAG, LangGraph, MCP, CrewAI, AutoGen and the OpenAI Agents SDK. Very current — includes tools that only became mainstream in 2025.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">9K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">24h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">LangGraph</span><span class="tag">MCP</span><span class="tag">CrewAI</span><span class="tag">AutoGen</span><span class="tag">OpenAI Agents SDK</span><span class="tag">N8N</span><span class="tag">Multi-agent workflows</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/become-an-llm-agentic-ai-engineer-14-day-bootcamp-2025/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-group s2-group">
+    <div class="section-group-num">Section 2 · Prompt Engineering</div>
+    <div class="section-group-title">✍️ PROMPT ENGINEERING — <em>Structuring Inputs for Maximum Output Quality</em></div>
+    <p class="section-group-desc">Prompt engineering is deceptively powerful. The difference between a good and a bad prompt can make a mediocre model perform brilliantly. These skills are also essential for AI Agent design and RAG query construction.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>Master OpenAI API and ChatGPT API with Python
+          <span class="instructor">Andrei Dumitrescu, Crystal Mind Academy</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Project-based course mastering the OpenAI API with Python. Covers GPT-4o, prompt engineering, structured outputs, function calling, embeddings and building production-ready applications.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">8.5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">12.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">OpenAI API</span><span class="tag">GPT-4o</span><span class="tag">Prompt engineering</span><span class="tag">Function calling</span><span class="tag">Structured outputs</span><span class="tag">Embeddings</span><span class="tag">Streaming</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/openai-api-chatgpt-gpt4-with-python-bootcamp/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2</span>
+        <h3>Prompt Engineering for Developers: The Definitive Guide
+          <span class="instructor">Lauro Fialho Müller</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Deep dive into advanced prompt engineering patterns — zero-shot, few-shot, chain-of-thought, role-play, meta-prompting and prompt chaining for real-world AI-powered automations.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2.7K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">16h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Zero-shot</span><span class="tag">Few-shot</span><span class="tag">Chain-of-thought</span><span class="tag">ReAct</span><span class="tag">Role prompting</span><span class="tag">Prompt chaining</span><span class="tag">Output formatting</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/prompt-engineering-definitive-guide/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-group s3-group">
+    <div class="section-group-num">Section 3 · RAG & Vector Databases</div>
+    <div class="section-group-title">🔍 RAG — <em>Retrieval-Augmented Generation & Vector Databases</em></div>
+    <p class="section-group-desc">RAG is the most important architecture pattern in practical AI engineering right now. It lets you ground LLM outputs in your own data — eliminating hallucinations and enabling 'chat with your documents' applications. This is what most employer interviews will test you on.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>LangChain Mastery: Build GenAI Apps with LangChain & Pinecone
+          <span class="instructor">Andrei Dumitrescu, Crystal Mind Academy</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Step-by-step guide to building RAG pipelines with LangChain and Pinecone vector database. Covers document loading, chunking, embedding, retrieval and response generation end-to-end.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">24K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">10.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">LangChain chains</span><span class="tag">Document loaders</span><span class="tag">Text splitters</span><span class="tag">Embeddings</span><span class="tag">Pinecone vector DB</span><span class="tag">Retrieval chains</span><span class="tag">Memory</span><span class="tag">RAG</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/master-langchain-pinecone-openai-build-llm-applications/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2 — Very Current (2026)</span>
+        <h3>MCP Mastery: Build AI Apps with Claude, LangChain and Ollama
+          <span class="instructor">KGP Talkie | Laxmi Kant</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Very current course covering MCP (Model Context Protocol) — the emerging standard for connecting AI systems to external tools and data sources. Includes LangGraph v1, ChromaDB and Ollama.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.7</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">9.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">MCP (Model Context Protocol)</span><span class="tag">LangGraph v1</span><span class="tag">ChromaDB</span><span class="tag">Ollama</span><span class="tag">Streamlit</span><span class="tag">Local LLMs</span><span class="tag">Claude API</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/mcp-mastery-build-ai-apps-with-claude-langchain-and-ollama/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-group s4-group">
+    <div class="section-group-num">Section 4 · AI Agents</div>
+    <div class="section-group-title">🤖 AI AGENTS — <em>Autonomous, Tool-Using & Multi-Agent Systems</em></div>
+    <p class="section-group-desc">AI Agents are the frontier of applied LLM engineering. An agent uses an LLM as a reasoning engine to plan, use tools, and take actions in loops. Multi-agent systems have multiple specialised agents collaborating. This is one of the fastest-evolving areas in AI.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s4">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>Complete Agentic AI Bootcamp With LangGraph and Langchain
+          <span class="instructor">Krish Naik, KRISHAI Technologies</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">The most comprehensive agentic AI course available. Build real-world AI agents, multi-agent workflows and autonomous applications using LangGraph and LangChain from scratch.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">40K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">38.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">12/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">LangGraph state machines</span><span class="tag">Tool use</span><span class="tag">ReAct agents</span><span class="tag">Multi-agent orchestration</span><span class="tag">LangChain tools</span><span class="tag">Memory</span><span class="tag">Human-in-the-loop</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/complete-agentic-ai-bootcamp-with-langgraph-and-langchain/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s4">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2 — Focused Intro</span>
+        <h3>AI Agents: Develop Autonomous AI Agents with LangGraph
+          <span class="instructor">Paulo Dichone | Software Engineer, AWS Cloud Practitioner</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Focused, fast-paced introduction to building autonomous agents with LangGraph. Great companion or warm-up to the Complete Agentic AI Bootcamp above.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3.6K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">3h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">LangGraph fundamentals</span><span class="tag">Agent loops</span><span class="tag">Tool calling</span><span class="tag">State management</span><span class="tag">Conditional edges</span><span class="tag">Agent checkpointing</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-agents/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE TABLE -->
+  <div class="section-label" style="margin-top:56px;">Quick Reference — All Phase 4 Courses</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Course Title</th>
+          <th>Topic Area</th>
+          <th>Rating</th>
+          <th>Hours</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent1)">AI Engineer Core Track: LLM Engineering</td>
+          <td>LLM Engineering Flagship</td>
+          <td>4.7</td>
+          <td>33.5h</td>
+          <td><span class="pill pill-start">⭐ Start here</span></td>
+        </tr>
+        <tr>
+          <td>LLM Engineering, RAG & AI Agents [2026]</td>
+          <td>LLM + RAG + Agents Overview</td>
+          <td>4.6</td>
+          <td>24h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent5)">Master OpenAI API & ChatGPT API with Python</td>
+          <td>Prompt Eng + OpenAI API</td>
+          <td>4.6</td>
+          <td>12.5h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>Prompt Engineering: The Definitive Guide</td>
+          <td>Advanced Prompt Engineering</td>
+          <td>4.5</td>
+          <td>16h</td>
+          <td><span class="pill pill-med">High</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4)">LangChain Mastery: LangChain & Pinecone</td>
+          <td>RAG + Vector Databases</td>
+          <td>4.5</td>
+          <td>10.5h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>MCP Mastery: Claude, LangChain & Ollama</td>
+          <td>MCP + Local LLMs + ChromaDB</td>
+          <td>4.7</td>
+          <td>9.5h</td>
+          <td><span class="pill pill-med">High</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent3)">Complete Agentic AI Bootcamp — LangGraph</td>
+          <td>AI Agents (Comprehensive)</td>
+          <td>4.5</td>
+          <td>38.5h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>AI Agents: Autonomous Agents with LangGraph</td>
+          <td>AI Agents (Focused Intro)</td>
+          <td>4.6</td>
+          <td>3h</td>
+          <td><span class="pill pill-med">Medium</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PHASE 5 PREVIEW -->
+  <div class="section-label" style="margin-top:56px;">What's Next — Phase 5 Preview</div>
+  <div class="callout callout-next" style="margin-bottom:16px; animation: fadeUp 0.5s 0.45s ease both;">
+    <div class="callout-icon">🚀</div>
+    <div class="callout-content">
+      <div class="callout-label">Phase 5 · Months 15–18 · MLOps, Cloud & Portfolio</div>
+      <div class="callout-text">Phase 5 builds on everything you've built in Phase 4 to take AI systems into production. Target certification at the end: <strong>AWS Certified Machine Learning – Specialty</strong> or <strong>Azure AI-102</strong>.</div>
+    </div>
+  </div>
+  <div class="preview-grid" style="animation: fadeUp 0.5s 0.5s ease both;">
+    <div class="preview-card">
+      <div class="preview-card-title">MLOps</div>
+      <div class="preview-card-desc">Experiment tracking with MLflow & Weights & Biases, model versioning, CI/CD for ML pipelines</div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-title">Cloud AI</div>
+      <div class="preview-card-desc">AWS SageMaker, Azure ML, Google Vertex AI — deploying models at scale on cloud platforms</div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-title">Monitoring</div>
+      <div class="preview-card-desc">Drift detection, performance degradation, LLM observability with LangSmith and Helicone</div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-title">Portfolio & Jobs</div>
+      <div class="preview-card-desc">Polishing your 4–6 GitHub projects, LinkedIn presence, interview preparation and job readiness</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Data Analyst to AI Engineer · <span>Phase 4 of 4</span> · Udemy Course Guide</p>
+    <p>LLMs · Prompt Engineering · RAG · Vector Databases · AI Agents · LangChain · Months 11–14</p>
+  </footer>
+
+</div>
+</body>
+</html>

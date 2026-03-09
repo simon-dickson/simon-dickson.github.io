@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Analyst to AI Engineer — Phase 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #b47fff;   /* DL purple */
+    --accent2: #ff4f6a;
+    --accent3: #47c8ff;
+    --accent4: #47d4a0;
+    --accent5: #ffaa47;
+    --accent6: #ff8c42;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 48px 32px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(180,127,255,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(71,200,255,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(71,212,160,0.025) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--accent1);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.88;
+    letter-spacing: 0.015em;
+  }
+
+  h1 em { font-style: normal; color: var(--accent1); }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 2;
+    text-align: right;
+  }
+  .header-meta strong { color: var(--accent1); font-weight: 400; }
+
+  .intro-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent1);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.08s ease both;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .intro-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .callout {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .callout-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .callout-text strong { color: var(--text); font-weight: 500; }
+
+  .callout-goal {
+    background: rgba(180,127,255,0.04);
+    border-color: rgba(180,127,255,0.25);
+    border-left: 3px solid var(--accent1);
+  }
+  .callout-goal .callout-label { color: var(--accent1); }
+
+  .callout-tip {
+    background: rgba(71,212,160,0.04);
+    border-color: rgba(71,212,160,0.25);
+    border-left: 3px solid var(--accent4);
+  }
+  .callout-tip .callout-label { color: var(--accent4); }
+
+  .two-callout-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.12s ease both;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+  }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-group {
+    margin-top: 52px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .section-group-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .section-group-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 4vw, 34px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .section-group-desc {
+    font-size: 13px;
+    color: var(--muted2);
+    margin-top: 6px;
+    max-width: 640px;
+    line-height: 1.65;
+  }
+
+  .course-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .course-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+  .course-card:hover { transform: translateY(-2px); }
+
+  .course-card-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .course-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .course-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+  }
+  .course-card h3 .instructor {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--muted2);
+    display: block;
+    margin-top: 3px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .course-card-body { padding: 14px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .course-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+
+  .course-stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .course-stat { flex: 1; padding: 8px 10px; border-right: 1px solid var(--border); text-align: center; }
+  .course-stat:last-child { border-right: none; }
+  .course-stat-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .course-stat-value { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+
+  .course-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+    margin-top: auto;
+  }
+  .course-link:hover { opacity: 0.75; }
+  .course-link::after { content: '↗'; font-size: 11px; }
+
+  /* Section colour variants */
+  .s1 { border-top: 2px solid var(--accent1); }
+  .s1:hover { border-color: var(--accent1); }
+  .s1 .course-badge { background: rgba(180,127,255,0.1); color: var(--accent1); }
+  .s1 .course-link { background: rgba(180,127,255,0.1); color: var(--accent1); border: 1px solid rgba(180,127,255,0.25); }
+  .s1-group .section-group-num { color: var(--accent1); }
+  .s1-group .section-group-title em { color: var(--accent1); font-style: normal; }
+
+  .s2 { border-top: 2px solid var(--accent2); }
+  .s2:hover { border-color: var(--accent2); }
+  .s2 .course-badge { background: rgba(255,79,106,0.1); color: var(--accent2); }
+  .s2 .course-link { background: rgba(255,79,106,0.1); color: var(--accent2); border: 1px solid rgba(255,79,106,0.25); }
+  .s2-group .section-group-num { color: var(--accent2); }
+  .s2-group .section-group-title em { color: var(--accent2); font-style: normal; }
+
+  .s3 { border-top: 2px solid var(--accent3); }
+  .s3:hover { border-color: var(--accent3); }
+  .s3 .course-badge { background: rgba(71,200,255,0.1); color: var(--accent3); }
+  .s3 .course-link { background: rgba(71,200,255,0.1); color: var(--accent3); border: 1px solid rgba(71,200,255,0.25); }
+  .s3-group .section-group-num { color: var(--accent3); }
+  .s3-group .section-group-title em { color: var(--accent3); font-style: normal; }
+
+  .s4 { border-top: 2px solid var(--accent5); }
+  .s4:hover { border-color: var(--accent5); }
+  .s4 .course-badge { background: rgba(255,170,71,0.1); color: var(--accent5); }
+  .s4 .course-link { background: rgba(255,170,71,0.1); color: var(--accent5); border: 1px solid rgba(255,170,71,0.25); }
+  .s4-group .section-group-num { color: var(--accent5); }
+  .s4-group .section-group-title em { color: var(--accent5); font-style: normal; }
+
+  .s5 { border-top: 2px solid var(--accent4); }
+  .s5:hover { border-color: var(--accent4); }
+  .s5 .course-badge { background: rgba(71,212,160,0.1); color: var(--accent4); }
+  .s5 .course-link { background: rgba(71,212,160,0.1); color: var(--accent4); border: 1px solid rgba(71,212,160,0.25); }
+  .s5-group .section-group-num { color: var(--accent4); }
+  .s5-group .section-group-title em { color: var(--accent4); font-style: normal; }
+
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; white-space: nowrap; }
+  th:first-child { color: var(--text); }
+  td { padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-size: 13px; color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .pill-start { background: rgba(180,127,255,0.12); color: var(--accent1); }
+  .pill-high { background: rgba(255,79,106,0.1); color: var(--accent2); }
+  .pill-med { background: rgba(71,212,160,0.1); color: var(--accent4); }
+
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 700px) {
+    body { padding: 28px 16px 60px; }
+    .course-cards { grid-template-columns: 1fr; }
+    .intro-strip { grid-template-columns: 1fr; }
+    .two-callout-row { grid-template-columns: 1fr; }
+    .header-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">Training Roadmap · Phase 3 of 4</div>
+      <h1>DEEP LEARNING<br>& <em>NEURAL</em><br>NETWORKS</h1>
+    </div>
+    <div class="header-meta">
+      <strong>5 Sections · 7 Courses</strong><br>
+      Neural Networks · PyTorch<br>
+      TensorFlow · Computer Vision<br>
+      NLP & Transformers<br><br>
+      Months 7–10 · Udemy
+    </div>
+  </header>
+
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">About Phase 3</div>
+      <div class="intro-text">Phase 3 is the <strong>most technically demanding phase</strong>. Deep learning requires genuine patience — the concepts are hard at first. Focus on building intuition before chasing mathematical perfection.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">What You'll Build</div>
+      <div class="intro-text">By the end you should be comfortable <strong>training neural networks, working with PyTorch</strong>, and using HuggingFace to fine-tune pre-trained models — the skills needed for most AI Engineer job descriptions.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Framework Strategy</div>
+      <div class="intro-text">Don't learn PyTorch AND TensorFlow simultaneously. <strong>Start with PyTorch</strong> (Section 2), build your milestone project in PyTorch, then learn TensorFlow/Keras as a secondary skill alongside the Neural Networks Bootcamp theory.</div>
+    </div>
+  </div>
+
+  <div class="two-callout-row">
+    <div class="callout callout-goal">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content">
+        <div class="callout-label">Phase 3 Milestone Project</div>
+        <div class="callout-text">Fine-tune a <strong>pre-trained HuggingFace model</strong> on a classification or NLP task of your own choosing. Cover: dataset prep → tokenisation → model selection → training → evaluation → <strong>FastAPI deployment</strong>. Push to GitHub. This project directly demonstrates the skills needed for most AI Engineer job descriptions.</div>
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <div class="callout-icon">💡</div>
+      <div class="callout-content">
+        <div class="callout-label">Study Tip</div>
+        <div class="callout-text">The Neural Networks Bootcamp (Section 1) is your <strong>theoretical backbone</strong> — read it alongside practical coding, not before. PyTorch is your primary framework; TensorFlow is the secondary skill. Building from scratch (Section 1 Option 2) gives a far deeper understanding of what frameworks actually do.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>🧬 DL Fundamentals</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>🔥 PyTorch</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>🤖 TensorFlow / Keras</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>🖼️ Computer Vision</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>💬 NLP & Transformers</div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section-group s1-group">
+    <div class="section-group-num">Section 1 · Deep Learning Theory</div>
+    <div class="section-group-title">🧬 DEEP LEARNING FUNDAMENTALS — <em>Neural Networks from First Principles</em></div>
+    <p class="section-group-desc">Before using PyTorch or TensorFlow, you need to understand what's happening inside a neural network. These courses build that understanding with both theory and hands-on code.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>The Complete Neural Networks Bootcamp: Theory, Applications
+          <span class="instructor">Fawaz Sammani</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Deep coverage of neural network theory AND practical applications using PyTorch. Includes Transformers, BERT and GPT chapters — exceptional breadth for one course.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">25K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">43.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">11/2021</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Backpropagation</span><span class="tag">Activation functions</span><span class="tag">CNNs</span><span class="tag">RNNs</span><span class="tag">LSTMs</span><span class="tag">Transformers</span><span class="tag">BERT</span><span class="tag">GPT</span><span class="tag">PyTorch</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/the-complete-neural-networks-bootcamp-theory-applications/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2</span>
+        <h3>Neural Networks in Python from Scratch: Complete Guide
+          <span class="instructor">Udemy Instructor</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Build neural networks from scratch before using frameworks — the Andrej Karpathy approach — giving you a far deeper understanding of what frameworks do under the hood.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">High enrol.</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">Subst.</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">Recent</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Forward pass</span><span class="tag">Backpropagation from scratch</span><span class="tag">Gradient descent</span><span class="tag">NumPy neural nets</span><span class="tag">Debugging models</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/neural-networks-in-python-a-guide-for-beginners/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-group s2-group">
+    <div class="section-group-num">Section 2 · PyTorch</div>
+    <div class="section-group-title">🔥 PYTORCH — <em>Your Primary Deep Learning Framework</em></div>
+    <p class="section-group-desc">PyTorch is the industry standard for AI engineering and research. It's used by most cutting-edge AI labs and companies. This is your core framework — invest serious time here.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>PyTorch for Deep Learning with Python Bootcamp
+          <span class="instructor">Jose Portilla, Pierian Training</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Build neural networks with PyTorch covering tensors, autograd, custom datasets, CNNs, RNNs and deployment. Jose Portilla's courses are consistently the best on Udemy for ML.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">37K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">17h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">09/2023</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">PyTorch tensors</span><span class="tag">Autograd</span><span class="tag">nn.Module</span><span class="tag">Custom DataLoader</span><span class="tag">CNN</span><span class="tag">RNN</span><span class="tag">LSTM</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/pytorch-for-deep-learning-with-python-bootcamp/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-group s3-group">
+    <div class="section-group-num">Section 3 · TensorFlow & Keras</div>
+    <div class="section-group-title">🤖 TENSORFLOW & KERAS — <em>Enterprise Deep Learning</em></div>
+    <p class="section-group-desc">TensorFlow is heavily used in enterprise environments. While PyTorch is your primary framework, being able to read and use TensorFlow/Keras code is essential for an AI engineer.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>Complete Tensorflow 2 and Keras Deep Learning Bootcamp
+          <span class="instructor">Jose Portilla, Pierian Training</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Master TensorFlow 2 and Keras for building ANNs, CNNs, RNNs and more. Essential for roles in enterprises that use Google's ML stack.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">55K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">19h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">06/2022</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">TensorFlow 2</span><span class="tag">Keras Sequential API</span><span class="tag">Keras Functional API</span><span class="tag">CNNs</span><span class="tag">RNNs</span><span class="tag">Transfer learning</span><span class="tag">Model deployment</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/complete-tensorflow-2-and-keras-deep-learning-bootcamp/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-group s4-group">
+    <div class="section-group-num">Section 4 · Computer Vision</div>
+    <div class="section-group-title">🖼️ COMPUTER VISION — <em>CNNs & Image Models</em></div>
+    <p class="section-group-desc">Computer vision is one of the most commercially deployed areas of AI. Understanding CNNs, transfer learning, and object detection opens up a huge range of real-world projects.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s4">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>Complete Computer Vision Bootcamp With PyTorch & Tensorflow
+          <span class="instructor">Krish Naik, Sourangshu Pal, KRISHAI Technologies</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">The most comprehensive CV course available. Covers CNNs, image classification, object detection, and advanced architectures using both PyTorch and TensorFlow.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">8.1K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">59.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">10/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">CNNs</span><span class="tag">VGG</span><span class="tag">ResNet</span><span class="tag">Transfer learning</span><span class="tag">Object detection</span><span class="tag">YOLO</span><span class="tag">Image segmentation</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/complete-computer-vision-bootcamp-with-pytoch-tensorflow/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s4">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2</span>
+        <h3>Convolutional Neural Networks in Python: CNN Computer Vision
+          <span class="instructor">Lazy Programmer Team</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Deep theoretical and practical treatment of CNNs with Keras and TensorFlow. Great companion to the PyTorch-based CV bootcamp above.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">Large</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">Subst.</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">Recent</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">CNN architecture</span><span class="tag">Pooling layers</span><span class="tag">Data augmentation</span><span class="tag">Transfer learning</span><span class="tag">Keras</span><span class="tag">Image preprocessing</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/cnn-for-computer-vision-with-keras-and-tensorflow-in-python/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section-group s5-group">
+    <div class="section-group-num">Section 5 · NLP & Transformers</div>
+    <div class="section-group-title">💬 NLP & TRANSFORMERS — <em>Language Models & Text AI</em></div>
+    <p class="section-group-desc">NLP and transformers are the bridge between Phase 3 and Phase 4 (LLMs). These courses take you from text preprocessing through to working with BERT and fine-tuning transformer models with HuggingFace.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s5">
+      <div class="course-card-header">
+        <span class="course-badge">⭐ Top Recommendation</span>
+        <h3>Natural Language Processing in Python
+          <span class="instructor">Maven Analytics — Alice Zhao</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Highly rated, recently updated NLP course from Maven Analytics. Covers text preprocessing, ML-based NLP, transformers and LLMs using scikit-learn, spaCy and HuggingFace.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.7</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">6.2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">12.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Text preprocessing</span><span class="tag">TF-IDF</span><span class="tag">Word embeddings</span><span class="tag">spaCy</span><span class="tag">Transformer models</span><span class="tag">HuggingFace pipelines</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/nlp-in-python-2025/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s5">
+      <div class="course-card-header">
+        <span class="course-badge">Option 2</span>
+        <h3>Natural Language Processing: NLP With Transformers in Python
+          <span class="instructor">James Briggs</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Deep dive into transformer-based NLP using HuggingFace. Covers sentiment analysis, Q&A, named entity recognition, similarity search, and more with real-world examples.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">33K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">11.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">08/2022</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">BERT</span><span class="tag">GPT</span><span class="tag">HuggingFace Transformers</span><span class="tag">Sentiment analysis</span><span class="tag">NER</span><span class="tag">Question answering</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/nlp-with-transformers/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s5">
+      <div class="course-card-header">
+        <span class="course-badge">Option 3</span>
+        <h3>Learn Hugging Face for Mastering Generative AI with LLMs
+          <span class="instructor">Tensor Teach</span>
+        </h3>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Focused and current introduction to the HuggingFace ecosystem — tokenisation, datasets, model hub, and fine-tuning. Perfect companion to the NLP courses above.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent5)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">2h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">05/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">HuggingFace Hub</span><span class="tag">Tokenizers</span><span class="tag">Datasets library</span><span class="tag">Model fine-tuning</span><span class="tag">Pipelines</span><span class="tag">Model cards</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/mastering-generative-ai-with-llms-a-hugging-face-guide/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE TABLE -->
+  <div class="section-label" style="margin-top:56px;">Quick Reference — All Phase 3 Courses</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Course Title</th>
+          <th>Topic Area</th>
+          <th>Rating</th>
+          <th>Hours</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent1)">The Complete Neural Networks Bootcamp</td>
+          <td>DL Theory + PyTorch + Transformers</td>
+          <td>4.5</td>
+          <td>43.5h</td>
+          <td><span class="pill pill-start">⭐ Start here</span></td>
+        </tr>
+        <tr>
+          <td>PyTorch for Deep Learning Bootcamp</td>
+          <td>PyTorch Core Framework</td>
+          <td>4.6</td>
+          <td>17h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>Complete TensorFlow 2 & Keras Bootcamp</td>
+          <td>TensorFlow / Keras</td>
+          <td>4.6</td>
+          <td>19h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>Complete Computer Vision Bootcamp</td>
+          <td>Computer Vision (CV)</td>
+          <td>4.5</td>
+          <td>59.5h</td>
+          <td><span class="pill pill-med">High</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4)">Natural Language Processing in Python</td>
+          <td>NLP + HuggingFace Intro</td>
+          <td>4.7</td>
+          <td>12.5h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>NLP With Transformers in Python</td>
+          <td>Transformer-Based NLP</td>
+          <td>4.5</td>
+          <td>11.5h</td>
+          <td><span class="pill pill-med">High</span></td>
+        </tr>
+        <tr>
+          <td>Learn Hugging Face for Gen AI with LLMs</td>
+          <td>HuggingFace Ecosystem</td>
+          <td>4.6</td>
+          <td>2h</td>
+          <td><span class="pill pill-med">Medium</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top:28px; animation: fadeUp 0.5s 0.5s ease both;">
+    <div class="callout-icon">🚀</div>
+    <div class="callout-content">
+      <div class="callout-label">Milestone Project</div>
+      <div class="callout-text">Fine-tune a pre-trained HuggingFace model on a <strong>classification or NLP task of your choice</strong>. Include: dataset prep, model selection, training loop, evaluation metrics, and deploy via a simple FastAPI endpoint. Push to GitHub with a thorough README explaining your approach and findings.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Data Analyst to AI Engineer · <span>Phase 3 of 4</span> · Udemy Course Guide</p>
+    <p>Neural Networks · PyTorch · TensorFlow · Computer Vision · NLP · HuggingFace · Months 7–10</p>
+  </footer>
+
+</div>
+</body>
+</html>
