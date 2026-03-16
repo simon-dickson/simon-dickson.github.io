@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analyst to AI Project Professional — Phase 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #47d4a0;   /* Strategy green */
+    --accent2: #ff4f6a;
+    --accent3: #ffaa47;
+    --accent4: #b47fff;
+    --accent5: #47c8ff;
+    --accent6: #2496ed;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.65; padding: 48px 32px 80px; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 70% 50% at 85% 5%, rgba(71,212,160,0.06) 0%, transparent 55%), radial-gradient(ellipse 50% 60% at 5% 95%, rgba(255,170,71,0.05) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 50% 50%, rgba(180,127,255,0.025) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; border-bottom: 1px solid var(--border); padding-bottom: 36px; margin-bottom: 52px; animation: fadeUp 0.6s ease both; }
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; color: var(--accent1); text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); line-height: 0.88; letter-spacing: 0.015em; }
+  h1 em { font-style: normal; color: var(--accent1); }
+  .header-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); line-height: 2; text-align: right; }
+  .header-meta strong { color: var(--accent1); font-weight: 400; }
+
+  .intro-strip { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent1); border-radius: 2px; padding: 20px 24px; margin-bottom: 28px; animation: fadeUp 0.6s 0.08s ease both; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .intro-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .callout { border: 1px solid var(--border); border-radius: 2px; padding: 18px 22px; margin-bottom: 16px; animation: fadeUp 0.6s 0.1s ease both; display: flex; gap: 14px; align-items: flex-start; }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .callout-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .callout-text strong { color: var(--text); font-weight: 500; }
+  .callout-goal { background: rgba(71,212,160,0.04); border-color: rgba(71,212,160,0.25); border-left: 3px solid var(--accent1); }
+  .callout-goal .callout-label { color: var(--accent1); }
+  .callout-time { background: rgba(255,170,71,0.04); border-color: rgba(255,170,71,0.25); border-left: 3px solid var(--accent3); }
+  .callout-time .callout-label { color: var(--accent3); }
+  .callout-tip { background: rgba(180,127,255,0.04); border-color: rgba(180,127,255,0.25); border-left: 3px solid var(--accent4); }
+  .callout-tip .callout-label { color: var(--accent4); }
+  .two-callout-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; animation: fadeUp 0.6s 0.1s ease both; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 44px; animation: fadeUp 0.6s 0.12s ease both; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); letter-spacing: 0.05em; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-group { margin-top: 52px; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .section-group-num { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 4px; }
+  .section-group-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 4vw, 34px); letter-spacing: 0.04em; line-height: 1; }
+  .section-group-desc { font-size: 13px; color: var(--muted2); margin-top: 6px; max-width: 640px; line-height: 1.65; }
+
+  .course-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .course-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; animation: fadeUp 0.5s ease both; text-decoration: none; color: inherit; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 12px; }
+  .course-badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; display: inline-block; margin-bottom: 6px; font-weight: 500; }
+  .course-card h3 { font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: var(--text); }
+  .course-card h3 .instructor { font-size: 11.5px; font-weight: 400; color: var(--muted2); display: block; margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
+  .course-card-body { padding: 14px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .course-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+  .course-stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .course-stat { flex: 1; padding: 8px 10px; border-right: 1px solid var(--border); text-align: center; }
+  .course-stat:last-child { border-right: none; }
+  .course-stat-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .course-stat-value { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+  .course-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 7px 12px; border-radius: 2px; transition: opacity 0.2s; margin-top: auto; }
+  .course-link:hover { opacity: 0.75; }
+  .course-link::after { content: '↗'; font-size: 11px; }
+
+  .s1 { border-top: 2px solid var(--accent1); } .s1:hover { border-color: var(--accent1); }
+  .s1 .course-badge { background: rgba(71,212,160,0.1); color: var(--accent1); }
+  .s1 .course-link { background: rgba(71,212,160,0.1); color: var(--accent1); border: 1px solid rgba(71,212,160,0.25); }
+  .s1-group .section-group-num { color: var(--accent1); } .s1-group .section-group-title em { color: var(--accent1); font-style: normal; }
+
+  .s2 { border-top: 2px solid var(--accent3); } .s2:hover { border-color: var(--accent3); }
+  .s2 .course-badge { background: rgba(255,170,71,0.1); color: var(--accent3); }
+  .s2 .course-link { background: rgba(255,170,71,0.1); color: var(--accent3); border: 1px solid rgba(255,170,71,0.25); }
+  .s2-group .section-group-num { color: var(--accent3); } .s2-group .section-group-title em { color: var(--accent3); font-style: normal; }
+
+  .s3 { border-top: 2px solid var(--accent4); } .s3:hover { border-color: var(--accent4); }
+  .s3 .course-badge { background: rgba(180,127,255,0.1); color: var(--accent4); }
+  .s3 .course-link { background: rgba(180,127,255,0.1); color: var(--accent4); border: 1px solid rgba(180,127,255,0.25); }
+  .s3-group .section-group-num { color: var(--accent4); } .s3-group .section-group-title em { color: var(--accent4); font-style: normal; }
+
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 40px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; white-space: nowrap; }
+  th:first-child { color: var(--text); }
+  td { padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-size: 13px; color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .pill-start { background: rgba(71,212,160,0.12); color: var(--accent1); }
+  .pill-high { background: rgba(255,170,71,0.12); color: var(--accent3); }
+  .pill-med { background: rgba(180,127,255,0.1); color: var(--accent4); }
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 700px) { body { padding: 28px 16px 60px; } .course-cards { grid-template-columns: 1fr; } .intro-strip { grid-template-columns: 1fr; } .two-callout-row { grid-template-columns: 1fr; } .header-meta { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">Training Roadmap · Phase 4 of 4</div>
+      <h1>BUSINESS ANALYST<br>TO <em>AI PROJECTS</em><br>PHASE 4</h1>
+    </div>
+    <div class="header-meta">
+      <strong>3 Sections · 7 Courses</strong><br>
+      Change Management<br>
+      AI Strategy &amp; Leadership<br>
+      Stakeholder Communication<br><br>
+      Months 10–12 · Udemy
+    </div>
+  </header>
+
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">What is this?</div>
+      <div class="intro-text"><strong>Phase 4 is where everything comes together.</strong> You'll learn to lead AI adoption, manage organisational change, build business cases for AI initiatives, and communicate AI strategy to executives and stakeholders — the capstone skills that make BAs indispensable on AI projects.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">The BA advantage</div>
+      <div class="intro-text">Most AI projects fail not because of technology but because of <strong>inadequate change management and stakeholder alignment</strong>. Your BA experience in facilitating workshops, managing expectations, and bridging technical and business teams is exactly what AI projects need most.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Duration &amp; Approach</div>
+      <div class="intro-text">Approximately <strong>3 months</strong>. This phase is the most action-oriented — pair the courses with real-world practice. Volunteer for an AI initiative at work, lead a lunch-and-learn, or build a business case for an AI opportunity you've identified.</div>
+    </div>
+  </div>
+
+  <div class="two-callout-row">
+    <div class="callout callout-goal">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content">
+        <div class="callout-label">Phase 4 Goal</div>
+        <div class="callout-text">Develop and present an <strong>AI business case</strong> to leadership. Include: opportunity assessment, feasibility analysis, data readiness review, risk and ethics considerations, change management plan, success metrics, and a phased implementation roadmap. This is your <strong>portfolio piece</strong> that demonstrates the full range of skills from all 4 phases.</div>
+      </div>
+    </div>
+    <div class="callout callout-time">
+      <div class="callout-icon">⏱️</div>
+      <div class="callout-content">
+        <div class="callout-label">Suggested Order</div>
+        <div class="callout-text"><strong>Section 1</strong> (Change Management) → <strong>Section 2</strong> (AI Strategy) → <strong>Section 3</strong> (Stakeholder Communication)<br><br>Then: Build your capstone business case using everything you've learned.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>🔄 Change Management</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>🚀 AI Strategy &amp; Business Cases</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>🎤 Stakeholder Communication</div>
+  </div>
+
+
+  <!-- SECTION 1: CHANGE MANAGEMENT -->
+  <div class="section-group s1-group">
+    <div class="section-group-num">Section 1 · Change Management for AI</div>
+    <div class="section-group-title">🔄 CHANGE MANAGEMENT — <em>Leading AI Adoption</em></div>
+    <p class="section-group-desc">Over 85% of AI initiatives fail due to inadequate change management, not technology. These courses teach you to manage resistance, align strategy, and drive sustainable AI adoption — skills that make you the critical link between AI teams and the wider organisation.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Change Management for AI (Leading in the AI Age)
+            <span class="instructor">Steve Ballinger, MBA</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Practical guide to leading change during AI adoption. Covers resistance management, stakeholder engagement, pilot design, governance, measurement, and reinforcement. Grounded in psychology and trust-building frameworks.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">4h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Resistance management</span><span class="tag">AI adoption strategy</span><span class="tag">Trust building</span><span class="tag">Pilot design</span><span class="tag">Measurement</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/change-management-for-ai-leadership-course/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>Change Management for Generative AI
+            <span class="instructor">AI Leadership Academy</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Focused on leading GenAI integration specifically. Covers AI adoption strategies, overcoming resistance, ethical concerns, and building AI-ready teams. Includes case studies from Amazon, Spotify, and Google.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">GenAI adoption</span><span class="tag">Cross-functional teams</span><span class="tag">Case studies</span><span class="tag">AI-ready infrastructure</span><span class="tag">Business alignment</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/change-management-for-generative-ai-p/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 2: AI STRATEGY -->
+  <div class="section-group s2-group">
+    <div class="section-group-num">Section 2 · AI Strategy &amp; Business Cases</div>
+    <div class="section-group-title">🚀 AI STRATEGY — <em>From Opportunity to Roadmap</em></div>
+    <p class="section-group-desc">These courses teach you to think strategically about AI — identifying where it creates value, building business cases that get funded, and creating implementation roadmaps. This is the skill that transforms you from a participant in AI projects to someone who shapes them.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Digital Transformation 3.0 — AI Unleashed: Building a Roadmap
+            <span class="instructor">Paul Cummings</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Strategic framework for AI-driven digital transformation. Covers the shift from automation to intelligence, building consensus, stakeholder engagement, and creating adaptive roadmaps. Management skills course, not technical.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">4h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">10/2024</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI transformation</span><span class="tag">Strategic roadmaps</span><span class="tag">Stakeholder buy-in</span><span class="tag">Intelligent Enterprise</span><span class="tag">Adaptive planning</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/defining-a-digital-transformation-roadmap/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>AI Product Management: A Business Masterclass
+            <span class="instructor">Uplatz</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Covers AI product strategy, lifecycle from MVP to production, stakeholder collaboration, human-centred AI design, measuring success with KPIs (impact, ROI, trust), and positioning responsible AI as competitive advantage.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">1.5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">4h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI product strategy</span><span class="tag">MVP to production</span><span class="tag">KPIs &amp; ROI</span><span class="tag">Human-centred design</span><span class="tag">Responsible AI</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-product-management/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 3: STAKEHOLDER COMMUNICATION -->
+  <div class="section-group s3-group">
+    <div class="section-group-num">Section 3 · Stakeholder Communication</div>
+    <div class="section-group-title">🎤 STAKEHOLDER MANAGEMENT — <em>Translating AI for the Business</em></div>
+    <p class="section-group-desc">The most valuable person on an AI project is often the one who can translate between data scientists and executives. These courses sharpen your ability to manage stakeholders, frame AI decisions, and use AI tools to enhance your own BA communication.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Stakeholder Management for Managers (with AI Role Plays)
+            <span class="instructor">Julia Lettinger, 1001skills</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Covers stakeholder management from basics to expert level with AI-powered role play exercises. Includes stakeholder analysis, engagement strategies, communication frameworks, and managing difficult stakeholders — all practised with AI simulation.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">3.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Stakeholder analysis</span><span class="tag">AI role plays</span><span class="tag">Engagement strategies</span><span class="tag">Communication frameworks</span><span class="tag">Conflict resolution</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/stakeholder-management-basics-for-project-product-managers/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>Mastering Claude for Product Management
+            <span class="instructor">AI PM Studio</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Learn to use Claude AI specifically for product and BA tasks: backlog management, stakeholder preparation, research structuring, and decision support. Teaches structured prompt design for consistent, high-quality professional outputs.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">500+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">3h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">03/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Claude AI</span><span class="tag">BA workflows</span><span class="tag">Stakeholder prep</span><span class="tag">Research structuring</span><span class="tag">Decision support</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/mastering-claude-for-product-management/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Optional — Certification</span>
+          <h3>AB-731 Microsoft Certified: AI Transformation Leader
+            <span class="instructor">Microsoft Certification Prep</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Prepares you for the Microsoft AI Transformation Leader certification. Covers AI opportunity identification, business value alignment, adoption strategies, responsible AI governance, and Microsoft Copilot ecosystem. No coding required.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">1K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">6h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">03/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Microsoft AI cert</span><span class="tag">AI business value</span><span class="tag">Copilot &amp; Azure AI</span><span class="tag">Adoption strategy</span><span class="tag">AI governance</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ab-731-microsoft-certified-ai-transformation-leader/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section-label" style="margin-top:56px;">Quick Reference — All Phase 4 Courses</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Course Title</th><th>Topic Area</th><th>Rating</th><th>Hours</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="color:var(--accent1)">Change Management for AI</td><td>AI Change Mgmt</td><td>4.5</td><td>4h</td><td><span class="pill pill-start">⭐ Start here</span></td></tr>
+        <tr><td>Change Management for Generative AI</td><td>GenAI Adoption</td><td>4.4</td><td>5h</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td style="color:var(--accent3)">Digital Transformation 3.0 — AI Unleashed</td><td>AI Strategy</td><td>4.5</td><td>4h</td><td><span class="pill pill-high">⭐ High</span></td></tr>
+        <tr><td>AI Product Management: Business Masterclass</td><td>AI Product Strategy</td><td>4.4</td><td>4h</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td style="color:var(--accent4)">Stakeholder Management (with AI Role Plays)</td><td>Stakeholder Mgmt</td><td>4.6</td><td>3.5h</td><td><span class="pill pill-high">⭐ High</span></td></tr>
+        <tr><td>Mastering Claude for Product Management</td><td>AI for BA Work</td><td>4.5</td><td>3h</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>AB-731 Microsoft AI Transformation Leader</td><td>AI Cert</td><td>4.5</td><td>6h</td><td><span class="pill pill-med">Optional</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top:28px; animation: fadeUp 0.5s 0.5s ease both;">
+    <div class="callout-icon">🎓</div>
+    <div class="callout-content">
+      <div class="callout-label">What You've Built</div>
+      <div class="callout-text">After completing all 4 phases, you'll have: <strong>AI literacy</strong> to speak confidently about ML, LLMs, and data pipelines. <strong>Requirements skills</strong> to write AI-specific PRDs and feasibility assessments. <strong>Governance expertise</strong> in AI ethics, EU AI Act compliance, and risk frameworks. <strong>Leadership capability</strong> to drive AI adoption, manage change, and present business cases. Your BA background isn't something you've moved past — it's the foundation that makes all of this uniquely valuable.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Business Analyst to AI Projects · <span>Phase 4 of 4</span> · Udemy Course Guide</p>
+    <p>Change Management · AI Strategy · Stakeholder Communication · Months 10–12</p>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analyst to AI Project Professional — Phase 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #47c8ff;   /* AI literacy blue */
+    --accent2: #ff4f6a;
+    --accent3: #b47fff;
+    --accent4: #ffaa47;
+    --accent5: #47d4a0;
+    --accent6: #2496ed;
+    --accent7: #ff8c42;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 48px 32px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(71,200,255,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(180,127,255,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(71,212,160,0.025) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 36px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--accent1);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.88;
+    letter-spacing: 0.015em;
+  }
+
+  h1 em { font-style: normal; color: var(--accent1); }
+
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    line-height: 2;
+    text-align: right;
+  }
+
+  .header-meta strong { color: var(--accent1); font-weight: 400; }
+
+  .intro-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent1);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.08s ease both;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .intro-block { }
+  .intro-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .callout {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.6s 0.1s ease both;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-content {}
+  .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .callout-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .callout-text strong { color: var(--text); font-weight: 500; }
+
+  .callout-goal {
+    background: rgba(71,200,255,0.04);
+    border-color: rgba(71,200,255,0.25);
+    border-left: 3px solid var(--accent1);
+  }
+  .callout-goal .callout-label { color: var(--accent1); }
+
+  .callout-time {
+    background: rgba(180,127,255,0.04);
+    border-color: rgba(180,127,255,0.25);
+    border-left: 3px solid var(--accent3);
+  }
+  .callout-time .callout-label { color: var(--accent3); }
+
+  .callout-tip {
+    background: rgba(71,212,160,0.04);
+    border-color: rgba(71,212,160,0.25);
+    border-left: 3px solid var(--accent5);
+  }
+  .callout-tip .callout-label { color: var(--accent5); }
+
+  .two-callout-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.12s ease both;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.05em;
+  }
+
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-group {
+    margin-top: 52px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .section-group-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .section-group-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 4vw, 34px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .section-group-desc {
+    font-size: 13px;
+    color: var(--muted2);
+    margin-top: 6px;
+    max-width: 640px;
+    line-height: 1.65;
+  }
+
+  .course-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .course-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease both;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .course-card:hover { transform: translateY(-2px); }
+
+  .course-card-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .course-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .course-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+  }
+
+  .course-card h3 .instructor {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--muted2);
+    display: block;
+    margin-top: 3px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .course-card-body { padding: 14px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .course-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+
+  .course-stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .course-stat { flex: 1; padding: 8px 10px; border-right: 1px solid var(--border); text-align: center; }
+  .course-stat:last-child { border-right: none; }
+  .course-stat-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .course-stat-value { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+
+  .course-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 12px;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+    margin-top: auto;
+  }
+  .course-link:hover { opacity: 0.75; }
+  .course-link::after { content: '↗'; font-size: 11px; }
+
+  /* Section 1: AI Literacy — accent1 cyan */
+  .s1 { border-top: 2px solid var(--accent1); }
+  .s1:hover { border-color: var(--accent1); }
+  .s1 .course-badge { background: rgba(71,200,255,0.1); color: var(--accent1); }
+  .s1 .course-link { background: rgba(71,200,255,0.1); color: var(--accent1); border: 1px solid rgba(71,200,255,0.25); }
+  .s1-group .section-group-num { color: var(--accent1); }
+  .s1-group .section-group-title em { color: var(--accent1); font-style: normal; }
+
+  /* Section 2: ML Concepts — accent3 purple */
+  .s2 { border-top: 2px solid var(--accent3); }
+  .s2:hover { border-color: var(--accent3); }
+  .s2 .course-badge { background: rgba(180,127,255,0.1); color: var(--accent3); }
+  .s2 .course-link { background: rgba(180,127,255,0.1); color: var(--accent3); border: 1px solid rgba(180,127,255,0.25); }
+  .s2-group .section-group-num { color: var(--accent3); }
+  .s2-group .section-group-title em { color: var(--accent3); font-style: normal; }
+
+  /* Section 3: Prompt Engineering — accent4 orange */
+  .s3 { border-top: 2px solid var(--accent4); }
+  .s3:hover { border-color: var(--accent4); }
+  .s3 .course-badge { background: rgba(255,170,71,0.1); color: var(--accent4); }
+  .s3 .course-link { background: rgba(255,170,71,0.1); color: var(--accent4); border: 1px solid rgba(255,170,71,0.25); }
+  .s3-group .section-group-num { color: var(--accent4); }
+  .s3-group .section-group-title em { color: var(--accent4); font-style: normal; }
+
+  /* Section 4: Data Literacy — accent5 green */
+  .s4 { border-top: 2px solid var(--accent5); }
+  .s4:hover { border-color: var(--accent5); }
+  .s4 .course-badge { background: rgba(71,212,160,0.1); color: var(--accent5); }
+  .s4 .course-link { background: rgba(71,212,160,0.1); color: var(--accent5); border: 1px solid rgba(71,212,160,0.25); }
+  .s4-group .section-group-num { color: var(--accent5); }
+  .s4-group .section-group-title em { color: var(--accent5); font-style: normal; }
+
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; white-space: nowrap; }
+  th:first-child { color: var(--text); }
+  td { padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-size: 13px; color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .pill-start { background: rgba(71,200,255,0.12); color: var(--accent1); }
+  .pill-high { background: rgba(255,170,71,0.12); color: var(--accent4); }
+  .pill-med { background: rgba(71,212,160,0.1); color: var(--accent5); }
+
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 700px) {
+    body { padding: 28px 16px 60px; }
+    .course-cards { grid-template-columns: 1fr; }
+    .intro-strip { grid-template-columns: 1fr; }
+    .two-callout-row { grid-template-columns: 1fr; }
+    .header-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div>
+      <div class="eyebrow">Training Roadmap · Phase 1 of 4</div>
+      <h1>BUSINESS ANALYST<br>TO <em>AI PROJECTS</em><br>PHASE 1</h1>
+    </div>
+    <div class="header-meta">
+      <strong>4 Sections · 8 Courses</strong><br>
+      AI Literacy · ML Concepts<br>
+      Prompt Engineering<br>
+      Data Literacy for AI<br><br>
+      Months 1–3 · Udemy
+    </div>
+  </header>
+
+  <!-- ── INTRO STRIP ── -->
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">What is this?</div>
+      <div class="intro-text">This is <strong>Phase 1 of a structured training roadmap</strong> designed to help business analysts transition into AI project roles. It builds the foundational AI literacy you need to contribute meaningfully to AI initiatives — without requiring you to write code.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Who it's for</div>
+      <div class="intro-text">Business analysts experienced with <strong>Power BI, Tableau, and stakeholder management</strong> who want to understand AI well enough to gather requirements, assess feasibility, and bridge the gap between technical AI teams and business stakeholders.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Duration &amp; Approach</div>
+      <div class="intro-text">Approximately <strong>3 months</strong> at 1–2 hours per day on weekdays. Focus on starred (⭐) courses first. You don't need to finish every course — use them as references and move on once you grasp the core concepts.</div>
+    </div>
+  </div>
+
+  <!-- ── GOAL + TIME CALLOUTS ── -->
+  <div class="two-callout-row">
+    <div class="callout callout-goal">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content">
+        <div class="callout-label">Phase 1 Goal</div>
+        <div class="callout-text">Be able to <strong>confidently explain</strong> what AI, ML, deep learning, and generative AI are. Understand how AI models are trained, what data they need, and what their limitations are. Use AI tools like ChatGPT effectively in your daily BA work. Create a <strong>one-page AI opportunity assessment</strong> for a real business process you know well.</div>
+      </div>
+    </div>
+    <div class="callout callout-time">
+      <div class="callout-icon">⏱️</div>
+      <div class="callout-content">
+        <div class="callout-label">Suggested Order</div>
+        <div class="callout-text">Follow this sequence for the best learning progression:<br><br>
+        <strong>Section 1</strong> (AI Foundations) → <strong>Section 2</strong> (ML Concepts) → <strong>Section 3</strong> (Prompt Engineering) → <strong>Section 4</strong> (Data Literacy)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LEGEND ── -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>🧠 AI Foundations</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>⚙️ ML Concepts</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>💬 Prompt Engineering</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>📊 Data Literacy for AI</div>
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- SECTION 1: AI FOUNDATIONS            -->
+  <!-- ════════════════════════════════════ -->
+  <div class="section-group s1-group">
+    <div class="section-group-num">Section 1 · AI Foundations</div>
+    <div class="section-group-title">🧠 AI FOUNDATIONS — <em>Understanding the Landscape</em></div>
+    <p class="section-group-desc">Before you can contribute to AI projects, you need to speak the language. These courses give you a solid, non-technical understanding of what AI is, how it works at a conceptual level, and why it matters for business.</p>
+  </div>
+
+  <div class="course-cards">
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>AI for Business — AI 101 Fundamentals for Managers &amp; Leaders
+            <span class="instructor">Axel Vanhooren</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Non-technical AI fundamentals designed for business professionals. Covers the "why" and "business implications" of AI rather than technical implementation. Includes getting your people on board with AI adoption.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">8K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">3h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI fundamentals</span><span class="tag">GenAI basics</span><span class="tag">Business implications</span><span class="tag">AI risks</span><span class="tag">People management</span><span class="tag">Use case identification</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-for-managers/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>Artificial Intelligence for Business 2026
+            <span class="instructor">Kirill Eremenko, Hadelin de Ponteves</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">The definitive AI course for business leaders. Takes you from AI basics to building an actual AI roadmap for your organisation. Covers ethics, disruption, and career impact of AI — all without code.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">25K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI strategy</span><span class="tag">AI roadmaps</span><span class="tag">Use cases</span><span class="tag">Ethics</span><span class="tag">Job market impact</span><span class="tag">Business applications</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/artificial-intelligence-for-business-ai-strategy/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- SECTION 2: ML CONCEPTS               -->
+  <!-- ════════════════════════════════════ -->
+  <div class="section-group s2-group">
+    <div class="section-group-num">Section 2 · ML Concepts</div>
+    <div class="section-group-title">⚙️ MACHINE LEARNING DEMYSTIFIED — <em>How AI Actually Works</em></div>
+    <p class="section-group-desc">As a BA on AI projects, you'll need to understand what ML models can and can't do. These courses explain ML concepts in plain English so you can assess feasibility and set realistic expectations with stakeholders.</p>
+  </div>
+
+  <div class="course-cards">
+
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Demystifying Machine Learning: An Overview for Non-Technical
+            <span class="instructor">David Pittman</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Purpose-built for non-technical professionals. Covers ML algorithm types, real-world applications, benefits and limitations. Focused on enabling you to communicate confidently with technical teams.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">1.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2023</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">ML algorithms</span><span class="tag">Supervised learning</span><span class="tag">Unsupervised learning</span><span class="tag">NLP</span><span class="tag">Predictive analytics</span><span class="tag">ML limitations</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/demystifying-machine-learning-an-overview-for-non-technical/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>Data Science for Business Leaders: ML Fundamentals
+            <span class="instructor">Mike West</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">A no-code introduction explaining ML as a business capability. Includes sections dedicated to identifying and quantifying ML opportunities — a perfect fit for BA skillsets.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">2.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">07/2022</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">ML as business capability</span><span class="tag">Identifying opportunities</span><span class="tag">Quantifying value</span><span class="tag">Model concepts</span><span class="tag">Data readiness</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/data-science-for-business-leaders-machine-learning-defined/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- SECTION 3: PROMPT ENGINEERING        -->
+  <!-- ════════════════════════════════════ -->
+  <div class="section-group s3-group">
+    <div class="section-group-num">Section 3 · Prompt Engineering</div>
+    <div class="section-group-title">💬 PROMPT ENGINEERING — <em>AI as Your Daily Tool</em></div>
+    <p class="section-group-desc">Prompt engineering is the most immediately applicable AI skill for a business analyst. Learn to get consistent, high-quality results from ChatGPT, Claude, and similar tools for requirements writing, stakeholder comms, and analysis work.</p>
+  </div>
+
+  <div class="course-cards">
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Prompt Engineering with ChatGPT Masterclass
+            <span class="instructor">RPATech — Aahana Singh</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Updated for 2026 with structured frameworks (CRISPE, RICE, AAA). Covers fundamentals through to advanced prompt design with live demos using the latest GPT models. Practical and business-focused.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">35K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">7.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Prompt frameworks</span><span class="tag">Chain-of-thought</span><span class="tag">Context engineering</span><span class="tag">Cross-industry use cases</span><span class="tag">GPT best practices</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/chatgpt-a-master-guide-for-professionals/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>AI Prompt Engineering Masterclass
+            <span class="instructor">Chris Hawkes</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Covers ChatGPT, Claude, Gemini and Grok. Teaches zero-shot, one-shot, few-shot, and chain-of-thought techniques. Includes prompt testing and refinement across different AI models.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">4h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">11/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Multi-model prompting</span><span class="tag">Role prompting</span><span class="tag">Few-shot techniques</span><span class="tag">Prompt refinement</span><span class="tag">ChatGPT</span><span class="tag">Claude</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-prompt-engineering-masterclass-2025/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- SECTION 4: DATA LITERACY FOR AI      -->
+  <!-- ════════════════════════════════════ -->
+  <div class="section-group s4-group">
+    <div class="section-group-num">Section 4 · Data Literacy</div>
+    <div class="section-group-title">📊 DATA LITERACY FOR AI — <em>What AI Needs to Succeed</em></div>
+    <p class="section-group-desc">AI projects live and die by data quality. Your existing BI skills give you a head start here. These courses help you understand what good data looks like from an AI perspective — and how to assess data readiness for ML projects.</p>
+  </div>
+
+  <div class="course-cards">
+
+    <div class="course-card s4">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Data Quality Masterclass — The Complete Course
+            <span class="instructor">George Smarts</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Covers data quality management from A to Z, including how AI tools like ChatGPT and Copilot are transforming data quality work. Practical examples and modern best practices.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">7h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Data quality principles</span><span class="tag">Data governance</span><span class="tag">AI-assisted workflows</span><span class="tag">Best practices</span><span class="tag">Data assessment</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/data-quality-management-masterclass-the-complete-course/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s4">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>Data Analysis &amp; AI: From Data to Intelligent Decisions 2026
+            <span class="instructor">365 Careers</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Practical course showing how data analysis and AI work together. Covers the end-to-end data-to-insight-to-AI-to-decision pipeline — ideal for understanding what AI teams need from data.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">6h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">EDA</span><span class="tag">Data pipelines</span><span class="tag">Statistical reasoning</span><span class="tag">AI concepts</span><span class="tag">Decision-making</span><span class="tag">Visualisation</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/data-analysis-ai-from-data-to-intelligent-decisions-2026/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ════════════════════════════════════ -->
+  <!-- QUICK REFERENCE TABLE               -->
+  <!-- ════════════════════════════════════ -->
+  <div class="section-label" style="margin-top:56px;">Quick Reference — All Phase 1 Courses</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Course Title</th>
+          <th>Topic Area</th>
+          <th>Rating</th>
+          <th>Hours</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--accent1)">AI for Business — AI 101 for Managers &amp; Leaders</td>
+          <td>AI Foundations</td>
+          <td>4.5</td>
+          <td>3h</td>
+          <td><span class="pill pill-start">⭐ Start here</span></td>
+        </tr>
+        <tr>
+          <td>Artificial Intelligence for Business 2026</td>
+          <td>AI Strategy</td>
+          <td>4.5</td>
+          <td>5h</td>
+          <td><span class="pill pill-high">High</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent3)">Demystifying ML: Overview for Non-Technical</td>
+          <td>ML Concepts</td>
+          <td>4.4</td>
+          <td>1.5h</td>
+          <td><span class="pill pill-start">⭐ Start here</span></td>
+        </tr>
+        <tr>
+          <td>Data Science for Business Leaders: ML Fundamentals</td>
+          <td>ML for Business</td>
+          <td>4.5</td>
+          <td>2.5h</td>
+          <td><span class="pill pill-med">Medium</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent4)">Prompt Engineering with ChatGPT Masterclass</td>
+          <td>Prompt Engineering</td>
+          <td>4.5</td>
+          <td>7.5h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>AI Prompt Engineering Masterclass</td>
+          <td>Multi-model Prompting</td>
+          <td>4.5</td>
+          <td>4h</td>
+          <td><span class="pill pill-med">Medium</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--accent5)">Data Quality Masterclass</td>
+          <td>Data Quality</td>
+          <td>4.6</td>
+          <td>7h</td>
+          <td><span class="pill pill-high">⭐ High</span></td>
+        </tr>
+        <tr>
+          <td>Data Analysis &amp; AI: From Data to Intelligent Decisions</td>
+          <td>Data &amp; AI Pipeline</td>
+          <td>4.5</td>
+          <td>6h</td>
+          <td><span class="pill pill-med">Medium</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── BA SKILL MAPPING ── -->
+  <div class="callout callout-tip" style="margin-top:28px; animation: fadeUp 0.5s 0.5s ease both;">
+    <div class="callout-icon">💡</div>
+    <div class="callout-content">
+      <div class="callout-label">BA Skill Transfer</div>
+      <div class="callout-text">Your existing BA skills are already valuable on AI projects. <strong>Stakeholder interviews</strong> → gathering AI requirements. <strong>Process mapping</strong> → identifying automation candidates. <strong>Data analysis in Power BI</strong> → understanding data readiness. <strong>Requirements documentation</strong> → writing AI-ready PRDs. This phase gives you the AI vocabulary to pair with skills you already have.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Business Analyst to AI Projects · <span>Phase 1 of 4</span> · Udemy Course Guide</p>
+    <p>AI Literacy · ML Concepts · Prompt Engineering · Data Quality · Months 1–3</p>
+  </footer>
+
+</div>
+</body>
+</html>

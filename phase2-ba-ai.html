@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analyst to AI Project Professional — Phase 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #ff8c42;   /* Requirements orange */
+    --accent2: #ff4f6a;
+    --accent3: #ffaa47;
+    --accent4: #b47fff;
+    --accent5: #47d4a0;
+    --accent6: #47c8ff;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 48px 32px 80px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 85% 5%, rgba(255,140,66,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 5% 95%, rgba(255,170,71,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(180,127,255,0.025) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; border-bottom: 1px solid var(--border); padding-bottom: 36px; margin-bottom: 52px; animation: fadeUp 0.6s ease both; }
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; color: var(--accent1); text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); line-height: 0.88; letter-spacing: 0.015em; }
+  h1 em { font-style: normal; color: var(--accent1); }
+  .header-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); line-height: 2; text-align: right; }
+  .header-meta strong { color: var(--accent1); font-weight: 400; }
+
+  .intro-strip { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent1); border-radius: 2px; padding: 20px 24px; margin-bottom: 28px; animation: fadeUp 0.6s 0.08s ease both; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .intro-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .callout { border: 1px solid var(--border); border-radius: 2px; padding: 18px 22px; margin-bottom: 16px; animation: fadeUp 0.6s 0.1s ease both; display: flex; gap: 14px; align-items: flex-start; }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .callout-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .callout-text strong { color: var(--text); font-weight: 500; }
+
+  .callout-goal { background: rgba(255,140,66,0.04); border-color: rgba(255,140,66,0.25); border-left: 3px solid var(--accent1); }
+  .callout-goal .callout-label { color: var(--accent1); }
+  .callout-time { background: rgba(180,127,255,0.04); border-color: rgba(180,127,255,0.25); border-left: 3px solid var(--accent4); }
+  .callout-time .callout-label { color: var(--accent4); }
+  .callout-tip { background: rgba(71,212,160,0.04); border-color: rgba(71,212,160,0.25); border-left: 3px solid var(--accent5); }
+  .callout-tip .callout-label { color: var(--accent5); }
+
+  .two-callout-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; animation: fadeUp 0.6s 0.1s ease both; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 44px; animation: fadeUp 0.6s 0.12s ease both; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); letter-spacing: 0.05em; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-group { margin-top: 52px; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .section-group-num { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 4px; }
+  .section-group-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 4vw, 34px); letter-spacing: 0.04em; line-height: 1; }
+  .section-group-desc { font-size: 13px; color: var(--muted2); margin-top: 6px; max-width: 640px; line-height: 1.65; }
+
+  .course-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .course-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; animation: fadeUp 0.5s ease both; text-decoration: none; color: inherit; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 12px; }
+  .course-badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; display: inline-block; margin-bottom: 6px; font-weight: 500; }
+  .course-card h3 { font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: var(--text); }
+  .course-card h3 .instructor { font-size: 11.5px; font-weight: 400; color: var(--muted2); display: block; margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
+  .course-card-body { padding: 14px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .course-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+  .course-stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .course-stat { flex: 1; padding: 8px 10px; border-right: 1px solid var(--border); text-align: center; }
+  .course-stat:last-child { border-right: none; }
+  .course-stat-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .course-stat-value { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+  .course-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 7px 12px; border-radius: 2px; transition: opacity 0.2s; margin-top: auto; }
+  .course-link:hover { opacity: 0.75; }
+  .course-link::after { content: '↗'; font-size: 11px; }
+
+  .s1 { border-top: 2px solid var(--accent1); }
+  .s1:hover { border-color: var(--accent1); }
+  .s1 .course-badge { background: rgba(255,140,66,0.1); color: var(--accent1); }
+  .s1 .course-link { background: rgba(255,140,66,0.1); color: var(--accent1); border: 1px solid rgba(255,140,66,0.25); }
+  .s1-group .section-group-num { color: var(--accent1); }
+  .s1-group .section-group-title em { color: var(--accent1); font-style: normal; }
+
+  .s2 { border-top: 2px solid var(--accent4); }
+  .s2:hover { border-color: var(--accent4); }
+  .s2 .course-badge { background: rgba(180,127,255,0.1); color: var(--accent4); }
+  .s2 .course-link { background: rgba(180,127,255,0.1); color: var(--accent4); border: 1px solid rgba(180,127,255,0.25); }
+  .s2-group .section-group-num { color: var(--accent4); }
+  .s2-group .section-group-title em { color: var(--accent4); font-style: normal; }
+
+  .s3 { border-top: 2px solid var(--accent5); }
+  .s3:hover { border-color: var(--accent5); }
+  .s3 .course-badge { background: rgba(71,212,160,0.1); color: var(--accent5); }
+  .s3 .course-link { background: rgba(71,212,160,0.1); color: var(--accent5); border: 1px solid rgba(71,212,160,0.25); }
+  .s3-group .section-group-num { color: var(--accent5); }
+  .s3-group .section-group-title em { color: var(--accent5); font-style: normal; }
+
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 40px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; white-space: nowrap; }
+  th:first-child { color: var(--text); }
+  td { padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-size: 13px; color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .pill-start { background: rgba(255,140,66,0.12); color: var(--accent1); }
+  .pill-high { background: rgba(255,170,71,0.12); color: var(--accent3); }
+  .pill-med { background: rgba(71,212,160,0.1); color: var(--accent5); }
+
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 700px) { body { padding: 28px 16px 60px; } .course-cards { grid-template-columns: 1fr; } .intro-strip { grid-template-columns: 1fr; } .two-callout-row { grid-template-columns: 1fr; } .header-meta { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">Training Roadmap · Phase 2 of 4</div>
+      <h1>BUSINESS ANALYST<br>TO <em>AI PROJECTS</em><br>PHASE 2</h1>
+    </div>
+    <div class="header-meta">
+      <strong>3 Sections · 7 Courses</strong><br>
+      AI Project Lifecycle<br>
+      Product Management for AI<br>
+      No-Code AI Tools<br><br>
+      Months 4–6 · Udemy
+    </div>
+  </header>
+
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">What is this?</div>
+      <div class="intro-text"><strong>Phase 2 builds on your AI literacy</strong> with the practical skills to participate in AI projects. You'll learn how AI projects differ from traditional IT projects, how to write requirements for AI, and how to use no-code AI tools to prototype solutions.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Why it matters for BAs</div>
+      <div class="intro-text">AI projects fail when requirements are vague, data isn't ready, or stakeholders have unrealistic expectations. <strong>Business analysts who understand AI project lifecycles</strong> are the bridge that prevents these failures.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Duration &amp; Approach</div>
+      <div class="intro-text">Approximately <strong>3 months</strong>. Start with the AI project management course, then move to product management for AI. The no-code tools section is hands-on — build something small to solidify your learning.</div>
+    </div>
+  </div>
+
+  <div class="two-callout-row">
+    <div class="callout callout-goal">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content">
+        <div class="callout-label">Phase 2 Goal</div>
+        <div class="callout-text">Write an <strong>AI project requirements document</strong> for a real business problem. Include: problem statement, data requirements, success metrics, feasibility assessment, risk register, and stakeholder impact analysis. Build a simple <strong>no-code AI prototype</strong> to demonstrate the concept.</div>
+      </div>
+    </div>
+    <div class="callout callout-time">
+      <div class="callout-icon">⏱️</div>
+      <div class="callout-content">
+        <div class="callout-label">Suggested Order</div>
+        <div class="callout-text"><strong>Section 1</strong> (AI Project Lifecycle) → <strong>Section 2</strong> (Product Management for AI) → <strong>Section 3</strong> (No-Code AI Tools)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>📋 AI Project Lifecycle</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>🎯 Product Management for AI</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>🔨 No-Code AI Tools</div>
+  </div>
+
+
+  <!-- SECTION 1: AI PROJECT LIFECYCLE -->
+  <div class="section-group s1-group">
+    <div class="section-group-num">Section 1 · AI Project Lifecycle</div>
+    <div class="section-group-title">📋 AI PROJECT MANAGEMENT — <em>How AI Projects Actually Run</em></div>
+    <p class="section-group-desc">AI projects don't follow the same lifecycle as traditional software projects. Models need experimentation, data needs iteration, and outcomes are probabilistic. These courses teach you the frameworks that AI teams actually use.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Artificial Intelligence for Project Managers
+            <span class="instructor">Cornelius Fichtner, PMP</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">14.5 hours of practical learning covering AI concepts through to integrating AI into project management frameworks. Taught by a PM expert with 60K+ students. Includes ethical AI integration and data-driven decision-making.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">10K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">14.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">10/2024</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI in PM workflows</span><span class="tag">Prompt writing for PMs</span><span class="tag">Ethical AI</span><span class="tag">Data-driven decisions</span><span class="tag">AI integration</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/artificial-intelligence-for-project-managers/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>AI in Technical Project Management — AI Tech PM (No Coding)
+            <span class="instructor">Sonali Maitra</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Focused specifically on managing AI software projects without coding. Covers interpreting AI diagrams, project plans, and managing AI technologies. Ideal for non-technical delivery professionals.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">8h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2024</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI project plans</span><span class="tag">AI diagrams</span><span class="tag">Non-technical PM</span><span class="tag">AI team management</span><span class="tag">Delivery</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-project-manager/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 3</span>
+          <h3>Generative AI for Project Management Professionals
+            <span class="instructor">AI PM Academy</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Covers using GenAI for project charters, SMART goals, WBS development, stakeholder mapping, risk management, and Scrum facilitation. Includes 1,000+ ready-made AI prompts for PM tasks.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">10h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">11/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">GenAI for PM</span><span class="tag">Stakeholder mapping</span><span class="tag">Risk management</span><span class="tag">Agile + AI</span><span class="tag">PM prompts</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/generative-ai-for-project-management-professionals/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 2: PRODUCT MANAGEMENT FOR AI -->
+  <div class="section-group s2-group">
+    <div class="section-group-num">Section 2 · Product Management for AI</div>
+    <div class="section-group-title">🎯 AI PRODUCT THINKING — <em>Requirements, Data &amp; Feasibility</em></div>
+    <p class="section-group-desc">These courses teach you how AI products differ from traditional software. You'll learn to write AI-specific requirements, assess data readiness, evaluate feasibility, and communicate with data science teams — all critical BA skills for AI projects.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Product Management for AI &amp; Data Science
+            <span class="instructor">Danielle Thé (ex-Google, Deloitte)</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Taught by a Senior PM for ML with Google and Deloitte experience. Covers AI vs traditional products, when to use ML vs non-ML, working with data scientists, and translating AI concepts for non-technical stakeholders.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">12K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">5.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI vs traditional PM</span><span class="tag">When to use ML</span><span class="tag">Data readiness</span><span class="tag">Stakeholder translation</span><span class="tag">AI model evaluation</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/the-product-management-for-data-science-ai-course/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>[Non-Technical] AI Product Manager Explorer Certificate
+            <span class="instructor">Shira Pasternak</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">A 7-day fast-paced course explicitly for non-technical professionals. Covers AI use case identification, AI roadmaps, success metrics, and communicating AI strategies to stakeholders. Includes a guided exercise to build a complete AI product plan.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">3.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">02/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI use cases</span><span class="tag">AI roadmaps</span><span class="tag">Success metrics</span><span class="tag">Non-technical AI PM</span><span class="tag">Stakeholder comms</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-product-manager-certificate/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 3: NO-CODE AI TOOLS -->
+  <div class="section-group s3-group">
+    <div class="section-group-num">Section 3 · No-Code AI Tools</div>
+    <div class="section-group-title">🔨 NO-CODE AI — <em>Build Without Coding</em></div>
+    <p class="section-group-desc">No-code AI platforms let you prototype AI solutions without writing code. As a BA, being able to quickly demo an AI concept to stakeholders is incredibly powerful — it transforms you from someone who writes about solutions to someone who shows them.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>ML for Business Professionals Using No-Code AI Tools
+            <span class="instructor">Rahul Shah</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Build ML models using drag-and-drop tools like Orange Data Mining and Tableau. Covers data-driven decision-making, statistical measures, bias recognition, and hands-on model building — all without writing code.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">3K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">6h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">2024</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">No-code ML</span><span class="tag">Orange Data Mining</span><span class="tag">Tableau</span><span class="tag">Classification</span><span class="tag">Regression</span><span class="tag">Clustering</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/no-code-ai-for-business-professionals/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>Build No-Code AI Agents / Apps [AI Automation Course 2025]
+            <span class="instructor">Jad Khalili</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Learn to build AI agents and applications without code using MindStudio. Create agents for sales, customer support, and e-commerce automation. Integrates with Zapier, Google Docs, Notion, and Airtable.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent3)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">09/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI agents</span><span class="tag">MindStudio</span><span class="tag">Workflow automation</span><span class="tag">Zapier</span><span class="tag">No-code apps</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-automation-course/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section-label" style="margin-top:56px;">Quick Reference — All Phase 2 Courses</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Course Title</th><th>Topic Area</th><th>Rating</th><th>Hours</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="color:var(--accent1)">AI for Project Managers</td><td>AI Project Lifecycle</td><td>4.6</td><td>14.5h</td><td><span class="pill pill-start">⭐ Start here</span></td></tr>
+        <tr><td>AI in Technical PM (No Coding)</td><td>AI Project Delivery</td><td>4.5</td><td>8h</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>GenAI for PM Professionals</td><td>GenAI + PM</td><td>4.4</td><td>10h</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td style="color:var(--accent4)">Product Management for AI &amp; Data Science</td><td>AI Product Thinking</td><td>4.5</td><td>5.5h</td><td><span class="pill pill-high">⭐ High</span></td></tr>
+        <tr><td>AI Product Manager Explorer Certificate</td><td>Non-Technical AI PM</td><td>4.5</td><td>3.5h</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td style="color:var(--accent5)">ML for Business Professionals (No-Code)</td><td>No-Code ML</td><td>4.4</td><td>6h</td><td><span class="pill pill-high">⭐ High</span></td></tr>
+        <tr><td>Build No-Code AI Agents</td><td>AI Automation</td><td>4.4</td><td>5h</td><td><span class="pill pill-med">Medium</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top:28px; animation: fadeUp 0.5s 0.5s ease both;">
+    <div class="callout-icon">💡</div>
+    <div class="callout-content">
+      <div class="callout-label">Pro Tip</div>
+      <div class="callout-text">After the Product Management for AI course, try writing an <strong>AI-ready PRD</strong> (Product Requirements Document) for a process you know well at work. Include data availability, success metrics, model constraints, and ethical considerations. This is the single most transferable artefact you can create to demonstrate your new skills.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Business Analyst to AI Projects · <span>Phase 2 of 4</span> · Udemy Course Guide</p>
+    <p>AI Project Management · Product Thinking · No-Code AI · Months 4–6</p>
+  </footer>
+
+</div>
+</body>
+</html>

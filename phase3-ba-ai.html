@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analyst to AI Project Professional — Phase 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090e;
+    --surface: #101018;
+    --surface2: #15151f;
+    --border: #1f1f2e;
+    --accent1: #b47fff;   /* Governance purple */
+    --accent2: #ff4f6a;
+    --accent3: #47c8ff;
+    --accent4: #ffaa47;
+    --accent5: #47d4a0;
+    --accent6: #2496ed;
+    --text: #e4e4f0;
+    --muted: #5a5a78;
+    --muted2: #8888aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.65; padding: 48px 32px 80px; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 70% 50% at 85% 5%, rgba(180,127,255,0.06) 0%, transparent 55%), radial-gradient(ellipse 50% 60% at 5% 95%, rgba(71,200,255,0.05) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 50% 50%, rgba(71,212,160,0.025) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+  .container { max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; border-bottom: 1px solid var(--border); padding-bottom: 36px; margin-bottom: 52px; animation: fadeUp 0.6s ease both; }
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.18em; color: var(--accent1); text-transform: uppercase; margin-bottom: 10px; }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); line-height: 0.88; letter-spacing: 0.015em; }
+  h1 em { font-style: normal; color: var(--accent1); }
+  .header-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); line-height: 2; text-align: right; }
+  .header-meta strong { color: var(--accent1); font-weight: 400; }
+
+  .intro-strip { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent1); border-radius: 2px; padding: 20px 24px; margin-bottom: 28px; animation: fadeUp 0.6s 0.08s ease both; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .intro-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .intro-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .intro-text strong { color: var(--text); font-weight: 500; }
+
+  .callout { border: 1px solid var(--border); border-radius: 2px; padding: 18px 22px; margin-bottom: 16px; animation: fadeUp 0.6s 0.1s ease both; display: flex; gap: 14px; align-items: flex-start; }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-label { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .callout-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
+  .callout-text strong { color: var(--text); font-weight: 500; }
+  .callout-goal { background: rgba(180,127,255,0.04); border-color: rgba(180,127,255,0.25); border-left: 3px solid var(--accent1); }
+  .callout-goal .callout-label { color: var(--accent1); }
+  .callout-time { background: rgba(71,200,255,0.04); border-color: rgba(71,200,255,0.25); border-left: 3px solid var(--accent3); }
+  .callout-time .callout-label { color: var(--accent3); }
+  .callout-tip { background: rgba(71,212,160,0.04); border-color: rgba(71,212,160,0.25); border-left: 3px solid var(--accent5); }
+  .callout-tip .callout-label { color: var(--accent5); }
+  .two-callout-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; animation: fadeUp 0.6s 0.1s ease both; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 44px; animation: fadeUp 0.6s 0.12s ease both; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted2); letter-spacing: 0.05em; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .section-group { margin-top: 52px; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+  .section-group-num { font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 4px; }
+  .section-group-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(22px, 4vw, 34px); letter-spacing: 0.04em; line-height: 1; }
+  .section-group-desc { font-size: 13px; color: var(--muted2); margin-top: 6px; max-width: 640px; line-height: 1.65; }
+
+  .course-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .course-card { background: var(--surface); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; animation: fadeUp 0.5s ease both; text-decoration: none; color: inherit; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 12px; }
+  .course-badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; display: inline-block; margin-bottom: 6px; font-weight: 500; }
+  .course-card h3 { font-family: 'DM Sans', sans-serif; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: var(--text); }
+  .course-card h3 .instructor { font-size: 11.5px; font-weight: 400; color: var(--muted2); display: block; margin-top: 3px; font-family: 'DM Mono', monospace; letter-spacing: 0.02em; }
+  .course-card-body { padding: 14px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .course-desc { font-size: 13px; color: var(--muted2); line-height: 1.65; }
+  .course-stats { display: flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+  .course-stat { flex: 1; padding: 8px 10px; border-right: 1px solid var(--border); text-align: center; }
+  .course-stat:last-child { border-right: none; }
+  .course-stat-label { font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .course-stat-value { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 2px; color: var(--muted2); }
+  .course-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 7px 12px; border-radius: 2px; transition: opacity 0.2s; margin-top: auto; }
+  .course-link:hover { opacity: 0.75; }
+  .course-link::after { content: '↗'; font-size: 11px; }
+
+  .s1 { border-top: 2px solid var(--accent1); } .s1:hover { border-color: var(--accent1); }
+  .s1 .course-badge { background: rgba(180,127,255,0.1); color: var(--accent1); }
+  .s1 .course-link { background: rgba(180,127,255,0.1); color: var(--accent1); border: 1px solid rgba(180,127,255,0.25); }
+  .s1-group .section-group-num { color: var(--accent1); } .s1-group .section-group-title em { color: var(--accent1); font-style: normal; }
+
+  .s2 { border-top: 2px solid var(--accent3); } .s2:hover { border-color: var(--accent3); }
+  .s2 .course-badge { background: rgba(71,200,255,0.1); color: var(--accent3); }
+  .s2 .course-link { background: rgba(71,200,255,0.1); color: var(--accent3); border: 1px solid rgba(71,200,255,0.25); }
+  .s2-group .section-group-num { color: var(--accent3); } .s2-group .section-group-title em { color: var(--accent3); font-style: normal; }
+
+  .s3 { border-top: 2px solid var(--accent5); } .s3:hover { border-color: var(--accent5); }
+  .s3 .course-badge { background: rgba(71,212,160,0.1); color: var(--accent5); }
+  .s3 .course-link { background: rgba(71,212,160,0.1); color: var(--accent5); border: 1px solid rgba(71,212,160,0.25); }
+  .s3-group .section-group-num { color: var(--accent5); } .s3-group .section-group-title em { color: var(--accent5); font-style: normal; }
+
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; margin-top: 40px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .table-wrap { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; animation: fadeUp 0.5s 0.4s ease both; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 400; white-space: nowrap; }
+  th:first-child { color: var(--text); }
+  td { padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; color: var(--muted2); }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-size: 13px; color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 10px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .pill-start { background: rgba(180,127,255,0.12); color: var(--accent1); }
+  .pill-high { background: rgba(255,170,71,0.12); color: var(--accent4); }
+  .pill-med { background: rgba(71,212,160,0.1); color: var(--accent5); }
+  footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; }
+  footer p span { color: var(--accent1); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 700px) { body { padding: 28px 16px 60px; } .course-cards { grid-template-columns: 1fr; } .intro-strip { grid-template-columns: 1fr; } .two-callout-row { grid-template-columns: 1fr; } .header-meta { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div>
+      <div class="eyebrow">Training Roadmap · Phase 3 of 4</div>
+      <h1>BUSINESS ANALYST<br>TO <em>AI PROJECTS</em><br>PHASE 3</h1>
+    </div>
+    <div class="header-meta">
+      <strong>3 Sections · 7 Courses</strong><br>
+      AI Ethics &amp; Bias<br>
+      EU AI Act &amp; Regulation<br>
+      Responsible AI Frameworks<br><br>
+      Months 7–9 · Udemy
+    </div>
+  </header>
+
+  <div class="intro-strip">
+    <div class="intro-block">
+      <div class="intro-label">What is this?</div>
+      <div class="intro-text"><strong>Phase 3 focuses on AI ethics, governance, and regulation</strong> — the fastest-growing area of demand in AI projects. Organisations need people who can assess AI risk, ensure compliance, and build responsible AI practices. Your BA background in compliance and process makes this a natural fit.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Why this matters now</div>
+      <div class="intro-text">The <strong>EU AI Act is now being enforced</strong>, and organisations worldwide are scrambling to understand what it means for their AI systems. BAs who can conduct AI risk assessments and map compliance requirements are in extremely high demand.</div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-label">Duration &amp; Approach</div>
+      <div class="intro-text">Approximately <strong>3 months</strong>. Start with the practical ethics course, then move to EU AI Act specifics, then finish with governance frameworks. This phase pairs well with seeking out <strong>real AI governance tasks</strong> at your organisation.</div>
+    </div>
+  </div>
+
+  <div class="two-callout-row">
+    <div class="callout callout-goal">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content">
+        <div class="callout-label">Phase 3 Goal</div>
+        <div class="callout-text">Create an <strong>AI risk assessment</strong> for a real or hypothetical AI system at your organisation. Classify it under the EU AI Act risk framework, identify bias and fairness concerns, define transparency requirements, and propose a governance structure with clear accountability and human oversight.</div>
+      </div>
+    </div>
+    <div class="callout callout-time">
+      <div class="callout-icon">⏱️</div>
+      <div class="callout-content">
+        <div class="callout-label">Suggested Order</div>
+        <div class="callout-text"><strong>Section 1</strong> (Ethics &amp; Bias) → <strong>Section 2</strong> (EU AI Act) → <strong>Section 3</strong> (Governance Frameworks)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>⚖️ AI Ethics &amp; Bias</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>📜 EU AI Act &amp; Regulation</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>🏛️ Governance Frameworks</div>
+  </div>
+
+
+  <!-- SECTION 1: AI ETHICS -->
+  <div class="section-group s1-group">
+    <div class="section-group-num">Section 1 · AI Ethics &amp; Bias</div>
+    <div class="section-group-title">⚖️ AI ETHICS — <em>Fairness, Transparency &amp; Accountability</em></div>
+    <p class="section-group-desc">Understanding bias, fairness, and transparency isn't just a moral consideration — it's a business requirement. These courses teach you to identify ethical risks across the AI lifecycle, from data collection to deployment.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>The AI Ethics Course 2026: Work with AI Responsibly
+            <span class="instructor">365 Careers</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Covers AI ethics from user, business, and developer perspectives. Includes data bias, AI hallucinations, deepfakes, plagiarism, risk management, the EU AI Act, GDPR, and HIPAA. Practical with real-life case studies.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">18K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">6h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">01/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Data bias</span><span class="tag">Hallucinations</span><span class="tag">Deepfakes</span><span class="tag">Risk management</span><span class="tag">Privacy</span><span class="tag">Fairness</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/the-ai-ethics-course-2025-work-with-ai-responsibly/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s1">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>AI Ethics / Responsible Use
+            <span class="instructor">Vani Aggarwal, Vipesh Singla</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">A focused 60-minute course perfect for workplace AI adoption. Covers the five pillars of ethical AI, AI risk assessment frameworks, protecting sensitive data, and navigating governance frameworks. Rated 4.9.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.9</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">1.7K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">1h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">12/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Five AI pillars</span><span class="tag">Risk assessment</span><span class="tag">Data protection</span><span class="tag">GDPR/CCPA</span><span class="tag">Governance frameworks</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-ethicsresponsible-use/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 2: EU AI ACT -->
+  <div class="section-group s2-group">
+    <div class="section-group-num">Section 2 · EU AI Act &amp; Regulation</div>
+    <div class="section-group-title">📜 EU AI ACT — <em>The Regulatory Landscape</em></div>
+    <p class="section-group-desc">The EU AI Act is the world's first comprehensive AI regulation and it's now in force. Understanding how to classify AI systems by risk level and what compliance looks like is a highly marketable skill that directly complements BA expertise in regulatory compliance.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>EU AI Act Compliance Introduction
+            <span class="instructor">Robert Barcik</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Taught by a professional AI Act consultant. Designed for beginners. Covers scope, prohibited practices, risk classification, high-risk compliance, and practical compliance strategies. Constantly updated with latest regulatory changes.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.6</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">4h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">12/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">EU AI Act scope</span><span class="tag">Risk classification</span><span class="tag">Prohibited practices</span><span class="tag">High-risk compliance</span><span class="tag">Practical strategies</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/eu-ai-act-compliance/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s2">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>AI Literacy and EU AI Act Compliance Training
+            <span class="instructor">AI Compliance Academy</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Bridges AI literacy with the specific Article 4 literacy requirements mandated by the EU AI Act. Covers risk frameworks, bias mitigation, explainability, governance structures, and incident reporting processes.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">3.5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">12/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">Article 4 literacy</span><span class="tag">Risk assessment</span><span class="tag">Bias mitigation</span><span class="tag">Explainability</span><span class="tag">Incident reporting</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-literacy-and-eu-ai-act-compliance/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 3: GOVERNANCE FRAMEWORKS -->
+  <div class="section-group s3-group">
+    <div class="section-group-num">Section 3 · Governance Frameworks</div>
+    <div class="section-group-title">🏛️ RESPONSIBLE AI GOVERNANCE — <em>Building the Controls</em></div>
+    <p class="section-group-desc">Once you understand ethics and regulation, you need to know how to operationalise them. These courses cover governance structures, risk tiers, human oversight mechanisms, and documentation practices that make AI systems auditable and trustworthy.</p>
+  </div>
+
+  <div class="course-cards">
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">⭐ Top Recommendation</span>
+          <h3>Responsible AI and Governance for Modern Organisations
+            <span class="instructor">AI Governance Institute</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Practical, strategy-focused course on responsible AI adoption. Covers ethical principles, control frameworks, bias detection, governance models with defined roles, risk tiers, and human oversight. Uses real-world case studies across industries.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.5</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">2K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">8h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">11/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI governance models</span><span class="tag">Control frameworks</span><span class="tag">Bias detection</span><span class="tag">Human oversight</span><span class="tag">Risk tiers</span><span class="tag">Documentation</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ethical-ai-use-in-business/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Option 2</span>
+          <h3>AI Ethics, Governance &amp; Responsible Use for Enterprises
+            <span class="instructor">Enterprise AI Academy</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Focused on building a Generative AI Centre of Excellence. Covers governance frameworks, cross-functional teams, KPIs, scaling AI initiatives, and emerging trends like multi-modal AI and sustainable AI.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.4</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">1.5K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">5h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">11/2025</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AI CoE</span><span class="tag">Cross-functional teams</span><span class="tag">KPIs for AI</span><span class="tag">Scaling AI</span><span class="tag">Compliance practices</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/generative-ai-governance-build-a-responsible-ai-coe/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+
+    <div class="course-card s3">
+      <div class="course-card-header">
+        <div>
+          <span class="course-badge">Optional — Certification Prep</span>
+          <h3>AI Governance Professional (AIGP) 2026 Complete Training
+            <span class="instructor">Saahil (AIGP &amp; RAI Certified)</span>
+          </h3>
+        </div>
+      </div>
+      <div class="course-card-body">
+        <p class="course-desc">Comprehensive IAPP AIGP certification prep. Updated for BoK v2.1 (2026). Covers NIST AI RMF, ISO 42001, EU AI Act deep dive, agentic AI governance, and real-world implementation. Best option if you want a formal credential.</p>
+        <div class="course-stats">
+          <div class="course-stat"><div class="course-stat-label">Rating</div><div class="course-stat-value" style="color:var(--accent4)">⭐ 4.7</div></div>
+          <div class="course-stat"><div class="course-stat-label">Students</div><div class="course-stat-value">8K+</div></div>
+          <div class="course-stat"><div class="course-stat-label">Hours</div><div class="course-stat-value">15h</div></div>
+          <div class="course-stat"><div class="course-stat-label">Updated</div><div class="course-stat-value">03/2026</div></div>
+        </div>
+        <div>
+          <div class="skills-label">Skills Covered</div>
+          <div class="tags">
+            <span class="tag">AIGP certification</span><span class="tag">NIST AI RMF</span><span class="tag">ISO 42001</span><span class="tag">EU AI Act deep dive</span><span class="tag">Agentic AI</span><span class="tag">Risk frameworks</span>
+          </div>
+        </div>
+        <a class="course-link" href="https://www.udemy.com/course/ai-governance-professional-aigp-2025/" target="_blank" rel="noopener">View on Udemy</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="section-label" style="margin-top:56px;">Quick Reference — All Phase 3 Courses</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Course Title</th><th>Topic Area</th><th>Rating</th><th>Hours</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="color:var(--accent1)">The AI Ethics Course 2026</td><td>AI Ethics</td><td>4.6</td><td>6h</td><td><span class="pill pill-start">⭐ Start here</span></td></tr>
+        <tr><td>AI Ethics / Responsible Use</td><td>Workplace Ethics</td><td>4.9</td><td>1h</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td style="color:var(--accent3)">EU AI Act Compliance Introduction</td><td>EU AI Act</td><td>4.6</td><td>4h</td><td><span class="pill pill-high">⭐ High</span></td></tr>
+        <tr><td>AI Literacy &amp; EU AI Act Compliance</td><td>Article 4 Literacy</td><td>4.5</td><td>3.5h</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td style="color:var(--accent5)">Responsible AI &amp; Governance for Organisations</td><td>AI Governance</td><td>4.5</td><td>8h</td><td><span class="pill pill-high">⭐ High</span></td></tr>
+        <tr><td>AI Ethics, Governance for Enterprises</td><td>AI CoE</td><td>4.4</td><td>5h</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>AIGP 2026 Complete Training</td><td>AIGP Certification</td><td>4.7</td><td>15h</td><td><span class="pill pill-med">Optional</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top:28px; animation: fadeUp 0.5s 0.5s ease both;">
+    <div class="callout-icon">💡</div>
+    <div class="callout-content">
+      <div class="callout-label">Career Tip</div>
+      <div class="callout-text">The <strong>IAPP AIGP certification</strong> is rapidly becoming the gold standard for AI governance professionals. If you're serious about this direction, the certification prep course in Section 3 can prepare you for the exam. It's optional for this phase but a strong differentiator on your CV — and a natural complement to your BA background in compliance and process.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Business Analyst to AI Projects · <span>Phase 3 of 4</span> · Udemy Course Guide</p>
+    <p>AI Ethics · EU AI Act · Responsible AI · Governance · Months 7–9</p>
+  </footer>
+
+</div>
+</body>
+</html>
